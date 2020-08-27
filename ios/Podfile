@@ -58,7 +58,7 @@ def flipper_post_install(installer)
   end
 end
 
-target 'FashionAppMobile' do
+target 'Talla' do
   config = use_native_modules!
   use_react_native!(:path => config["reactNativePath"])
   # Pods for GogaApp
@@ -96,7 +96,7 @@ target 'FashionAppMobile' do
   pod 'Firebase/Analytics'
 
   
-  target 'FashionAppMobileTests' do
+  target 'TallaTests' do
     inherit! :complete
     # Pods for testing
   end
@@ -113,10 +113,10 @@ target 'FashionAppMobile' do
   end
 end
 
-target 'FashionAppMobile-tvOS' do
-  # Pods for FashionAppMobile-tvOS
+target 'Talla-tvOS' do
+  # Pods for Talla-tvOS
 
-  target 'FashionAppMobile-tvOSTests' do
+  target 'Talla-tvOSTests' do
     inherit! :search_paths
     # Pods for testing
   end

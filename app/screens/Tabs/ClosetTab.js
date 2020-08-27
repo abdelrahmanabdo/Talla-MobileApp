@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, ImageBackground , FlatList , ScrollView } from 'react-native';
+import { Text, View, ImageBackground , FlatList , ScrollView, StatusBar } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {Button} from 'native-base';
 import { RectButton, BorderlessButton } from 'react-native-gesture-handler';
@@ -23,7 +23,7 @@ import Color from '../../components/Color';
 //
 import I18n from '../../lang/I18n';
 
-const ClosetTab = ({...props}) => {
+const ClosetTab = props => {
     const [activeSeason , setActiveSeason ] = useState(1);
     const [activeCategoryIndex , setActiveCategoryIndex ] = useState(1);
     const [showFilterModal , setShowFilterModal ] = useState(false);
@@ -187,7 +187,9 @@ const ClosetTab = ({...props}) => {
             </View>
             <View style={{flexDirection:"column"}}>
                 <RectButton style={ModalStyle.selectRow}
-                            onPress={()=>{}}>
+                            onPress={()=>{
+                                   setShowMoreModal(false);
+                                   props.navigation.navigate('favourites') }}>
                     <FastImage source={require('../../assets/icons/mix-and-match.png')}
                                resizeMode={'contain'}
                                style={{width:35,height:35,marginEnd : 20}}/>
@@ -196,7 +198,9 @@ const ClosetTab = ({...props}) => {
                     </Text>
                 </RectButton>
                 <RectButton style={ModalStyle.selectRow}
-                            onPress={()=>{}}>
+                            onPress={()=>{
+                                setShowMoreModal(false);
+                                props.navigation.navigate('calendar') }}>
                     <FastImage source={require('../../assets/icons/modal-calendar.png')}
                                resizeMode={'contain'}
                                style={{width:35,height:35,marginEnd : 20}}/>
@@ -205,7 +209,9 @@ const ClosetTab = ({...props}) => {
                     </Text>
                 </RectButton>
                 <RectButton style={ModalStyle.selectRow}
-                            onPress={()=>{}}>
+                            onPress={()=>{
+                                setShowMoreModal(false);
+                                props.navigation.navigate('favourites') }}>
                     <FastImage source={require('../../assets/icons/modal-favourites.png')}
                                resizeMode={'contain'}
                                style={{width:35,height:35,marginEnd : 20}}/>
@@ -368,11 +374,14 @@ const ClosetTab = ({...props}) => {
 
 
     return <View style={[GeneralStyle.container]}>
+        <StatusBar hidden={false} />
         <ImageBackground source={require('../../assets/images/colored-bg.png')}
                          style={style.header}>
             <View style={[GeneralStyle.rowSpaceBetween,{width : '90%'}]}>
                 <RectButton>
-                    <FastImage source={require('../../assets/logo.png')} style={{width : 35 , height : 35}} />
+                    <FastImage source={require('../../assets/logo.png')}
+                               resizeMode={'contain'}
+                               style={{width : 35 , height : 35}} />
                 </RectButton>
                 <Text style={style.headerText}>
                     Your Closet
@@ -380,6 +389,7 @@ const ClosetTab = ({...props}) => {
                 <View style={{flexDirection : 'row'}}>
                     <BorderlessButton onPress={() => {setShowFilterModal(true)}}>
                         <FastImage source={require('../../assets/icons/filter.png')}
+                                   resizeMode={'contain'}
                                    style={{width : 25,height :  25}} />
                     </BorderlessButton>
                     <BorderlessButton onPress={() => {setShowMoreModal(true)}}>

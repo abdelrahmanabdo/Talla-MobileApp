@@ -10,6 +10,11 @@ import BodyShapeCalculator from '../screens/Profile/BodyShapeCalculator';
 import Profile from '../screens/Profile/Profile';
 import ClosetItemView from '../screens/Closet/ClosetItemView';
 import Gift from '../screens/Closet/Gift';
+import Favourites from '../screens/Favourites';
+import Notifications from '../screens/Notifications';
+import Messages from '../screens/Messages';
+import Calendar from '../screens/Calendar';
+import About from '../screens/About';
 
 const config = {
    animation :'spring',
@@ -71,7 +76,22 @@ export function AppNavigator () {
                        options = {{options}}/>
          <Stack.Screen name="gift" 
                        component={Gift}
-                       options = {{options}}/>                           
+                       options = {{options}}/>                          
+         <Stack.Screen name="favourites" 
+                       component={Favourites}
+                       options = {{options}}/>   
+         <Stack.Screen name="notifications" 
+                       component={Notifications}
+                       options = {{options}}/>
+         <Stack.Screen name="messages" 
+                       component={Messages}
+                       options = {{options}}/>                                               
+         <Stack.Screen name="calendar" 
+                       component={Calendar}
+                       options = {{options}}/>
+         <Stack.Screen name="about" 
+                       component={About}
+                       options = {{options}}/>                                              
     </Stack.Navigator>
    );
 }

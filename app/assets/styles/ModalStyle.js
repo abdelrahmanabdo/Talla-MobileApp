@@ -16,7 +16,6 @@ export default  StyleSheet.create({
    },
    actionModalContainer : {
       width : '100%',
-      maxHeight : height - 100,
       backgroundColor: '#FFF',
       padding: 20,
       borderTopRightRadius : 15,

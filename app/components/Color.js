@@ -34,7 +34,7 @@ const Color = ({...props}) => {
                              marginVertical : 15,alignItems:'center',flexWrap : 'wrap'}}>
                     {  
                         props.colors.map((item , index) => {
-                            return <BorderlessButton onPress ={()=>{
+                            return <BorderlessButton key={index} onPress ={()=>{
                                                                      setSelectedColorIndex(index);
                                                                      props.onChange(item.id)
                                                                   }}

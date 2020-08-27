@@ -9,7 +9,7 @@ import I18n from "../lang/I18n";
 //Tabs
 import ChicChatTab from '../screens/Tabs/ChicChatTab';
 import ClosetTab from '../screens/Tabs/ClosetTab';
-import StylistsTab from '../screens/Tabs/StylistsTab';
+import StylistTab from '../screens/Tabs/StylistTab';
 import MoreTab from '../screens/Tabs/MoreTab';
 import FastImage from 'react-native-fast-image';
 import AddTab from '../screens/Tabs/AddTab';
@@ -42,6 +42,8 @@ export const TabNavigator = ({params}) => (
                   fontFamily:'roboto'
                },
                tabStyle : {
+                  alignItems:'center',
+                  justifyContent:'center'
                },
                style: {
                        borderTopRightRadius : 20,
@@ -84,7 +86,7 @@ export const TabNavigator = ({params}) => (
             }}
             />
          <Tab.Screen name="stylistsTab" 
-            component={StylistsTab}
+            component={StylistTab}
             options={{
                tabBarLabel: setTabLabel("stylistsTab"),
                tabBarIcon: ({ focused }) => (

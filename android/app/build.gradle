@@ -129,7 +129,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.fashionappmobile"
+        applicationId "com.talla.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
