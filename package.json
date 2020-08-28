@@ -55,11 +55,13 @@
     "react-native-skeleton-placeholder": "^2.0.7",
     "react-native-smart-tip": "^2.1.0",
     "react-native-splash-screen": "^3.2.0",
+    "react-native-status-bar-height": "^2.5.0",
     "react-native-tab-view": "^2.14.4",
     "react-native-vector-icons": "^6.6.0",
     "react-native-video": "^4.4.5",
     "react-native-video-player": "^0.10.1",
     "react-redux": "^7.2.1",
+    "react-ripples": "^2.2.1",
     "redux": "^4.0.5"
   },
   "devDependencies": {

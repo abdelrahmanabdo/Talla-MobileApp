@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, ImageBackground } from 'react-native';
+import { Text, View, ImageBackground, StatusBar, SafeAreaView } from 'react-native';
 import { RectButton, BorderlessButton } from 'react-native-gesture-handler';
 
 //Styles
@@ -9,11 +9,12 @@ import FastImage from 'react-native-fast-image';
 
 const ChicChatTab = props => {
     return  <View style={[GeneralStyle.container]}>
+             <StatusBar hidden={false}  barStyle={'light-content'}  backgroundColor={'#012647'}/>
             <ImageBackground source={require('../../assets/images/colored-bg.png')}
                             style={GeneralStyle.header}>
                 <View style={[GeneralStyle.rowSpaceBetween,{width : '90%'}]}>
                     <RectButton>
-                        <FastImage  source={require('../../assets/logo.png')} 
+                        <FastImage source={require('../../assets/icons/small-logo-white.png')}
                                     resizeMode={'contain'}
                                     style={{width : 35 , height : 35}} />
                     </RectButton>

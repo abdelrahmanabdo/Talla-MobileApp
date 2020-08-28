@@ -7,13 +7,14 @@ import {I18nextProvider} from 'react-i18next';
 import AsyncStorage from '@react-native-community/async-storage';
 import { AppNavigator } from './app/navigation/AppNavigator';
 import {Provider} from 'react-redux';
-
+import SplashScreen from 'react-native-splash-screen';
 import store from './app/redux';
 import I18n from './app/lang/I18n';
 
+
 const App = () => {
   useEffect(()=> {
-  
+    SplashScreen.hide();
   });
 
   return (

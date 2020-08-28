@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, Dimensions } from 'react-native';
+import { Text, View, StyleSheet, Dimensions  , Pressable} from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 
 
@@ -51,19 +51,20 @@ const Checkbox = ({...props}) => {
 
    return <View style={{flexDirection:'row',alignItems:'center'}}>
       {
-         props.isRounded ?
-            <RectButton onPress ={async()=>{
-                                    await setIsChecked(!isChecked);
+         props.isModal ?
+           <Pressable onPress ={()=>{
+                                     setIsChecked(!isChecked);
                                     props.onChange(!isChecked)
                                  }}
-                   style={style.roundedContainer}>
-            </RectButton>
+                      android_ripple={{color:  ('#FFF')}}
+                      style={props.isRounded ? style.roundedContainer : style.container} >
+            </Pressable>
             :
-             <RectButton onPress ={async()=>{
-                                    await setIsChecked(!isChecked);
+             <RectButton onPress ={()=>{
+                                     setIsChecked(!isChecked);
                                     props.onChange(!isChecked)
                                  }}
-                         style={style.container}>
+                         style={props.isRounded ? style.roundedContainer : style.container}>
              </RectButton>
       }
 

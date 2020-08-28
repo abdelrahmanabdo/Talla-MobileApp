@@ -1,52 +1,40 @@
-import React, { useState } from 'react';
-import { Text, View } from 'react-native';
-import Modal from 'react-native-modal';
-import {Button} from 'native-base';
-import FastImage from 'react-native-fast-image';
-import { RectButton } from 'react-native-gesture-handler';
+import React from 'react';
+import { Text, View, ImageBackground, StatusBar, SafeAreaView } from 'react-native';
+import { RectButton, BorderlessButton } from 'react-native-gesture-handler';
 
 //Styles
-import ModalStyle from '../../assets/styles/ModalStyle';
+import GeneralStyle from '../../assets/styles/GeneralStyle';
+import style from '../../assets/styles/ChicChatTabStyle';
+import FastImage from 'react-native-fast-image';
 
 const AddTab = props => {
-    const [shoeModal , setShowModal ] = useState(true);
-
-    return <Modal  isVisible={shoeModal}
-                    style={{margin: 0,justifyContent:'flex-end'}}
-                    backdropOpacity={.7}>
-         <View style={ModalStyle.actionModalContainer}>
-            <View style={ModalStyle.actionModalHeader}>
-               <View></View>
-               <Text style={ModalStyle.headerText}>
-                  Find More
-               </Text>
-               <Button transparent  onPress={()=>{setShowModal(false)}}>
-                  <FastImage source={require('../../assets/icons/close-colored.png')}
-                              style={{width:25,height:25}} />
-               </Button>
-            </View>
-            <View style={{flexDirection:"column"}}>
-                <RectButton style={ModalStyle.selectRow}
-                            onPress={()=>{}}>
-                    <FastImage source={require('../../assets/icons/mix-and-match.png')}
-                               resizeMode={'contain'}
-                               style={{width:35,height:35,marginEnd : 20}}/>
-                    <Text style={ModalStyle.textBold}>
-                        Mix & match
+    return  <View style={[GeneralStyle.container]}>
+            <ImageBackground source={require('../../assets/images/colored-bg.png')}
+                            style={GeneralStyle.header}>
+                <View style={[GeneralStyle.rowSpaceBetween,{width : '90%'}]}>
+                    <RectButton>
+                         <FastImage source={require('../../assets/icons/small-logo-white.png')}
+                                    resizeMode={'contain'}
+                                    style={{width : 35 , height : 35}} />
+                    </RectButton>
+                    <Text style={GeneralStyle.headerText}>
+                        Add Item
                     </Text>
-                </RectButton>
-                <RectButton style={ModalStyle.selectRow}
-                            onPress={()=>{}}>
-                    <FastImage source={require('../../assets/icons/modal-calendar.png')}
-                               resizeMode={'contain'}
-                               style={{width:35,height:35,marginEnd : 20}}/>
-                    <Text style={ModalStyle.textBold}>
-                        Calendar
-                    </Text>
-                </RectButton>
-            </View>
-         </View>
-      </Modal>
+                    <View style={{flexDirection : 'row'}}>
+                        <BorderlessButton onPress={() => {props.navigation.navigate('notifications')}}>
+                            <FastImage source={require('../../assets/icons/notification.png')}  
+                                       resizeMode={'contain'}
+                                       style={{width : 25,height : 25}} />
+                        </BorderlessButton>
+                        {/* <BorderlessButton onPress={() => {setShowMoreModal(true)}}>
+                            <FastImage source={require('../../assets/icons/more-vertical.png')}
+                                    resizeMode={'contain'}
+                                    style={{width : 25,height :  25 , marginStart : 14}} />
+                        </BorderlessButton> */}
+                    </View>
+                </View>
+            </ImageBackground>
+    </View>
 };
 
 export default AddTab;

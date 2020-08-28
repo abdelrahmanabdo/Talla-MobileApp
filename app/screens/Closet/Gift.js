@@ -1,5 +1,5 @@
 import React , {useState} from 'react';
-import { Text, View,FlatList , SafeAreaView } from 'react-native';
+import { Text, View,FlatList , SafeAreaView ,StatusBar } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { RectButton, BorderlessButton,  } from 'react-native-gesture-handler';
 import * as Animatable from 'react-native-animatable';
@@ -57,7 +57,8 @@ const Gift = ({...props}) => {
    }
 
    return <SafeAreaView style={style.container}>
-         <View style={[GeneralStyle.rowSpaceBetween,{padding:20}]}>
+         <StatusBar hidden={false}  barStyle={'dark-content'}  backgroundColor={'#FFF'}/>
+          <View style={[GeneralStyle.rowSpaceBetween,{padding:20}]}>
             <BorderlessButton onPress={()=>{props.navigation.goBack()}}>
                <FastImage  source={require('../../assets/icons/close-primary.png')}
                         style={{width:20,height:20}}

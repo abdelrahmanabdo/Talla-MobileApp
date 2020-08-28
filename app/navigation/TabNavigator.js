@@ -57,7 +57,8 @@ export const TabNavigator = ({params}) => (
             options={{
                tabBarLabel: setTabLabel("chicChatTab"),
                tabBarIcon: ({ focused }) => (
-                  <FastImage source={require('../assets/icons/chic-chat.png')} 
+                  <FastImage source={focused ? require('../assets/icons/chic-chat-active.png') : 
+                                               require('../assets/icons/chic-chat.png')} 
                              resizeMode={'contain'}
                              style={{width : 20 , height:20}} />
                ),
@@ -68,7 +69,8 @@ export const TabNavigator = ({params}) => (
             options={{
                tabBarLabel: setTabLabel("closetTab"),
                tabBarIcon: ({ focused }) => (
-                  <FastImage source={require('../assets/icons/closet-icon.png')} 
+                  <FastImage source={focused ? require('../assets/icons/closet-active.png') :   
+                                               require('../assets/icons/closet-icon.png')} 
                              resizeMode={'contain'}
                              style={{width : 20 , height:20}} />
                ),
@@ -79,7 +81,8 @@ export const TabNavigator = ({params}) => (
             options={{
                tabBarLabel: setTabLabel("addTab"),
                tabBarIcon: ({ focused }) => (
-                  <FastImage source={require('../assets/icons/add-icon.png')} 
+                  <FastImage source={focused ? require('../assets/icons/closet-active.png') : 
+                                               require('../assets/icons/add-icon.png')} 
                              resizeMode={'contain'}
                              style={{width : 20 , height:20}} />
                ),
@@ -90,7 +93,8 @@ export const TabNavigator = ({params}) => (
             options={{
                tabBarLabel: setTabLabel("stylistsTab"),
                tabBarIcon: ({ focused }) => (
-                  <FastImage source={require('../assets/icons/stylist-icon.png')} 
+                  <FastImage source={focused ? require('../assets/icons/stylist-active.png') : 
+                                               require('../assets/icons/stylist-icon.png')} 
                              resizeMode={'contain'}
                              style={{width : 30 , height:30}} />
                ),
@@ -102,7 +106,8 @@ export const TabNavigator = ({params}) => (
             options={{
                tabBarLabel: setTabLabel("moreTab"),
                tabBarIcon: ({ focused }) => (
-                   <FastImage source={require('../assets/icons/more-icon.png')} 
+                   <FastImage source={focused ? require('../assets/icons/more-active.png') : 
+                                               require('../assets/icons/more-icon.png')} 
                              resizeMode={'contain'}
                              style={{width : 30 , height:30}} />
 

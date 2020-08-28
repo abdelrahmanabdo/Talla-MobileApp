@@ -20,5 +20,9 @@ export default StyleSheet.create({
       fontSize : 19,
       fontFamily : 'Roboto-Medium'
    },
+   favoruitesListContainer :{
+      padding : 25,
+      alignSelf:'center',
+   }
 
 });

@@ -15,16 +15,17 @@ import Notifications from '../screens/Notifications';
 import Messages from '../screens/Messages';
 import Calendar from '../screens/Calendar';
 import About from '../screens/About';
+import Settings from '../screens/Settings';
+
 
 const config = {
    animation :'spring',
    config: {
-     stiffness: 40,
-     damping: 40,
-     mass: 1,
-     restDisplacementThreshold: 0.00,
-     restSpeedThreshold: 0.00,      
-
+     stiffness: 50,
+     damping: 10,
+    //  mass: 1,
+    //  restDisplacementThreshold: 0.00,
+    //  restSpeedThreshold: 0.00,      
    },
  };
 
@@ -88,6 +89,9 @@ export function AppNavigator () {
                        options = {{options}}/>                                               
          <Stack.Screen name="calendar" 
                        component={Calendar}
+                       options = {{options}}/>
+         <Stack.Screen name="settings" 
+                       component={Settings}
                        options = {{options}}/>
          <Stack.Screen name="about" 
                        component={About}

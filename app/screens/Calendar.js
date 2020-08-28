@@ -11,12 +11,12 @@ const Calendar = props  => {
 
    return  <View style={[GeneralStyle.container]}>
             <ImageBackground source={require('../assets/images/colored-bg.png')}
-                            style={style.header}>
+                            style={GeneralStyle.header}>
                 <View style={[GeneralStyle.rowSpaceBetween,{width : '90%'}]}>
                     <RectButton onPress={()=>{props.navigation.goBack()}}>
                         <FastImage source={require('../assets/icons/back-white.png')} style={{width : 25 , height : 25}} />
                     </RectButton>
-                    <Text style={style.headerText}>
+                    <Text style={GeneralStyle.headerText}>
                        Calendar
                     </Text>
                     <View style={{flexDirection : 'row'}}>

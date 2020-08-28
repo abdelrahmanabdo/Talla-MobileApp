@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, ImageBackground } from 'react-native';
+import { Text, View, ImageBackground  , StatusBar} from 'react-native';
 import { RectButton, BorderlessButton } from 'react-native-gesture-handler';
 
 //Styles
@@ -14,7 +14,7 @@ const StylistTab = props => {
                              style={GeneralStyle.header}>
                 <View style={[GeneralStyle.rowSpaceBetween,{width : '90%'}]}>
                     <RectButton>
-                        <FastImage source={require('../../assets/logo.png')} 
+                        <FastImage source={require('../../assets/icons/small-logo-white.png')}
                                    style={{width : 35 , height : 35}}
                                    resizeMode={'contain'} />
                     </RectButton>

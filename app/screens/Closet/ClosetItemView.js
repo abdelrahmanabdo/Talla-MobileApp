@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, ImageBackground , SafeAreaView,FlatList } from 'react-native';
+import { Text, View, ImageBackground , SafeAreaView,FlatList , Statusbar } from 'react-native';
 import {Button} from 'native-base';
 import { RectButton, ScrollView, BorderlessButton } from 'react-native-gesture-handler';
 import FastImage from 'react-native-fast-image';
@@ -77,7 +77,8 @@ const ClosetItemView = ({...props}) => {
       return <Modal  isVisible={showEditModal}
                      style={{margin: 0,justifyContent:'flex-end'}}
                      backdropOpacity={.7}>
-         <ScrollView style={ModalStyle.actionModalContainer}>
+         <ScrollView style={ModalStyle.actionModalContainer}
+                     showsVerticalScrollIndicator={false}>
             <View style={ModalStyle.actionModalHeader}>
                <View></View>
                <Text style={ModalStyle.headerText}>
@@ -89,7 +90,9 @@ const ClosetItemView = ({...props}) => {
                </Button>
             </View>
             <View style={{flexDirection:"column"}}>
-               <Dropdown items={[]} name={I18n.t('category')} />
+               <Dropdown items={[]}
+                         isModal
+                         name={I18n.t('category')} />
                <View>
                   <Text style={ModalStyle.sectionHeaderText}>
                      Season
@@ -110,22 +113,26 @@ const ClosetItemView = ({...props}) => {
                   </View>
                </View>
                <Input  name={I18n.t('color')} />
-               <Input  name={I18n.t('brand')} />
+               <Dropdown items={[]}
+                         isModal
+                         name={I18n.t('brand')} />
                <Input  name={I18n.t('price')} />
                <Input  name={I18n.t('comment')} isTextarea rowsCount={3} />
                <View style={{flexDirection:'row',marginBottom : 10}}>
-               <TallaButton   onPress={()=>{ setShowEditModal(false) }}
-                        label ={'cancel'}
-                        labelColor={'#D1AD67'}
-                        style={[ModalStyle.SecondaryButton,{backgroundColor:'#FFF',
-                                                            marginEnd : 10,
-                                                            flex:1,
-                                                            borderColor  : '#D1AD67' , 
-                                                            borderWidth : 1}]}>
+               <TallaButton   onPress={()=>{setShowEditModal(false) }}
+                              label ={'cancel'}
+                              labelColor={'#D1AD67'}
+                              isModal
+                              style={[ModalStyle.SecondaryButton,{backgroundColor:'#FFF',
+                                                                  marginEnd : 10,
+                                                                  flex:1,
+                                                                  borderColor  : '#D1AD67' , 
+                                                                  borderWidth : 1}]}>
                </TallaButton>
                <TallaButton   onPress={()=>{ setShowDeleteModal(false)}}
                               label={'Save'}
                               labelColor={'#FFF'}
+                              isModal
                               style={[ModalStyle.SecondaryButton,{flex:1}]}>
                </TallaButton>
                </View>
@@ -151,17 +158,20 @@ const ClosetItemView = ({...props}) => {
                Are you sure that you want to delete this item?
             </Text>
             <View style={{flexDirection:"row"}}>
-               <TallaButton   onPress={()=>{ setShowDeleteModal(false) }}
+               <TallaButton   onPress={()=>{setShowDeleteModal(false) }}
                         label ={'Cancel'}
+                        isModal
                         labelColor={'#686868'}
                         style={[ModalStyle.SecondaryButton,{backgroundColor:'#FFF',
                                                             marginEnd : 10,
                                                             flex:1,
                                                             borderColor  : '#CCC' , 
                                                             borderWidth : 1}]}>
+                        
                </TallaButton>
                <TallaButton  onPress={()=>{ setShowDeleteModal(false)}}
                        label={'Delete'}
+                       isModal
                        labelColor={'#FFF'}
                        style={[ModalStyle.SecondaryButton,{backgroundColor:'#FF0000',flex:1}]}>
                </TallaButton>
@@ -215,30 +225,34 @@ const ClosetItemView = ({...props}) => {
    }
 
  
-   return <SafeAreaView style={GeneralStyle.container}>
-       <View  style={style.header}>
-            <RectButton onPress={()=>{props.navigation.goBack()}}>
-               <FastImage source={require('../../assets/icons/back-colored.png')}
-                          style={{width : 25 , height:25}}
-                          resizeMode={'contain'}
-               />
-            </RectButton>
-            <View style={{flexDirection:'row' , justifyContent:'space-between' }}>
-               <RectButton onPress={()=>{share()}} >
-                  <FastImage source={require('../../assets/icons/share-colored.png')}
+   return <View eaView style={GeneralStyle.container}>
+        {/* <Statusbar hidden={false}  barStyle={'light-content'} /> */}
+        <ImageBackground source={require('../../assets/images/colored-bg.png')}
+                         style={GeneralStyle.header}>
+            <View style={[GeneralStyle.rowSpaceBetween,{width : '90%'}]}>
+               <RectButton onPress={()=>{props.navigation.goBack()}}>
+                  <FastImage source={require('../../assets/icons/back-white.png')}
                            style={{width : 25 , height:25}}
                            resizeMode={'contain'}
                   />
                </RectButton>
-               <RectButton onPress={()=>{setShowDeleteModal(true)}} 
-                           style={{marginStart : 20}}>
-                  <FastImage source={require('../../assets/icons/delete-colored.png')}
-                           style={{width : 25 , height:25}}
-                           resizeMode={'contain'}
-                  />
-               </RectButton>
+               <View style={{flexDirection:'row' , justifyContent:'space-between' }}>
+                  <RectButton onPress={()=>{share()}} >
+                     <FastImage source={require('../../assets/icons/share-white.png')}
+                              style={{width : 25 , height:25}}
+                              resizeMode={'contain'}
+                     />
+                  </RectButton>
+                  <RectButton onPress={()=>{setShowDeleteModal(true)}} 
+                              style={{marginStart : 20}}>
+                     <FastImage source={require('../../assets/icons/delete-white.png')}
+                              style={{width : 25 , height:25}}
+                              resizeMode={'contain'}
+                     />
+                  </RectButton>
+               </View>
             </View>
-       </View>
+        </ImageBackground>
          <ImageBackground source={require('../../assets/images/closet-item-default.png')}
                           resizeMode={'stretch'}
                           style={style.bgImage}>
@@ -252,7 +266,7 @@ const ClosetItemView = ({...props}) => {
                   <View></View>
                   <BorderlessButton onPress={()=>{setShowEditModal(true)}}>
                      <FastImage source={require('../../assets/icons/edit.png')}
-                              style={{width:20,height:20}}
+                              style={{width:23,height:23}}
                      />
                   </BorderlessButton>
                </View>
@@ -261,7 +275,7 @@ const ClosetItemView = ({...props}) => {
                   <Text style={[style.rowInfo , {color : '#979797',fontSize : 16 , flex:1}]}>
                            {I18n.t('category')} :
                      </Text>
-                     <Text style={[style.rowInfo,{flex:1}]}>
+                     <Text style={[style.rowInfo, GeneralStyle.blackBoldText,{flex:1}]}>
                            Dresses
                      </Text>
                   </View>
@@ -269,7 +283,7 @@ const ClosetItemView = ({...props}) => {
                      <Text style={[style.rowInfo , {color : '#979797',fontSize : 16 , flex:1}]}>
                            {I18n.t('color')} :
                      </Text>
-                     <Text style={[style.rowInfo,{flex:1}]}>
+                     <Text style={[style.rowInfo, GeneralStyle.blackBoldText,{flex:1}]}>
                            Red
                      </Text>
                   </View>
@@ -279,15 +293,15 @@ const ClosetItemView = ({...props}) => {
                   <Text style={[style.rowInfo , {color : '#979797',fontSize : 16 , flex:1}]}>
                            {I18n.t('brand')} :
                      </Text>
-                     <Text style={[style.rowInfo,{flex:1}]}>
+                     <Text style={[style.rowInfo, GeneralStyle.blackBoldText,{flex:1}]}>
                            ZARA
                      </Text>
                   </View>
                   <View style={{flexDirection:'row',flex:1}}>
-                  <Text style={[style.rowInfo , {color : '#979797',fontSize : 16 , flex:1}]}>
+                  <Text style={[style.rowInfo , GeneralStyle.blackBoldText, {color : '#979797',fontSize : 16 , flex:1}]}>
                            {I18n.t('price')} :
                      </Text>
-                     <Text style={[style.rowInfo,{flex:1}]}>
+                     <Text style={[style.rowInfo, GeneralStyle.blackBoldText,{flex:1}]}>
                            20$
                      </Text>
                   </View>
@@ -297,7 +311,7 @@ const ClosetItemView = ({...props}) => {
                   <Text style={[style.rowInfo , {color : '#979797',fontSize : 16 , flex:1}]}>
                               {I18n.t('comment')} :
                      </Text>
-                     <Text style={[style.rowInfo,{flex:3,lineHeight : 23}]}>
+                     <Text style={[style.rowInfo , GeneralStyle.blackBoldText,{flex:3,lineHeight : 23}]}>
                            Lorem ipsum dolor sit amet, ectetur adipisicing elit, sed do eiusmod por incididunt
                      </Text>
                   </View>
@@ -305,12 +319,14 @@ const ClosetItemView = ({...props}) => {
                </View>
             </View>
             <View style={{flexDirection:'row',justifyContent:'space-between',padding :15}}>
-               <TallaButton  label={'Add To Calendar'}
-                        labelColor ={'#D1AD67'}
-                        style={{flex:1,backgroundColor: '#FFF',borderColor : '#D1AD67',borderWidth : 1}}/>
-               <TallaButton  label={'Add To Outfit'}
-                        labelColor ={'#D1AD67'}
-                        style={{flex:1,backgroundColor: '#FFF',borderColor : '#D1AD67',borderWidth : 1,marginStart : 15}}/>
+               <TallaButton   label={'Add To Calendar'}
+                              isModal
+                              labelColor ={'#D1AD67'}
+                              style={{flex:1,backgroundColor: '#FFF',borderColor : '#D1AD67',borderWidth : 1}}/>
+               <TallaButton   label={'Add To Outfit'}
+                              labelColor ={'#D1AD67'}
+                              isModal
+                              style={{flex:1,backgroundColor: '#FFF',borderColor : '#D1AD67',borderWidth : 1,marginStart : 15}}/>
             </View>
             <View style={style.line}></View>
             <View>
@@ -327,7 +343,7 @@ const ClosetItemView = ({...props}) => {
 
          <EditModal />
          <DeleteModal />
-    </SafeAreaView>
+    </View>
 };
 
 export default ClosetItemView;

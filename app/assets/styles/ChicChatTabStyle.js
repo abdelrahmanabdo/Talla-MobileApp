@@ -6,7 +6,7 @@ const height = Dimensions.get('window').height ;
 export default StyleSheet.create({
    header : {
       width : width,
-      height : height / 7,
+      padding :20,
       flexDirection : 'column',
       alignItems: 'center',
       justifyContent: 'center',

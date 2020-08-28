@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View  ,  StyleSheet , Dimensions, I18nManager ,TouchableOpacity ,ScrollView} from 'react-native';
+import { Text, View  ,  StyleSheet , Dimensions, I18nManager ,TouchableOpacity ,ScrollView , Pressable} from 'react-native';
 import Modal from 'react-native-modal';
 import ModalStyle from '../assets/styles/SelectModalStyle';
 import * as Animatable from 'react-native-animatable';
@@ -67,6 +67,18 @@ const Dropdown = ({...props}) => {
                         </Text>                     
                      }
                   </View>
+                  {
+                  props.isModal ?
+                  <Pressable onPress={()=> setShowModal(true)}
+                              android_ripple={{color:  ('#D1AD67')}}
+                              style={Style.dropdown}>
+                        <Text style={Style.placeholerText}>
+                           { I18nManager.isRTL ? props?.items[activeItem]?.name : props?.items[activeItem]?.name_en }
+                        </Text>
+                              <FastImage source={require('../assets/icons/down-arrow.png')}  
+                                        style={{width: 20 , height : 20}}/>
+                  </Pressable>
+                  :
                   <RectButton onPress={()=> setShowModal(true)}
                               style={{borderRadius : 8,justifyContent:'center'}}>
                      <View style={Style.dropdown}> 
@@ -77,7 +89,7 @@ const Dropdown = ({...props}) => {
                                         style={{width: 20 , height : 20}}/>
                      </View>
                   </RectButton>
-                   
+                  }
                   <DropDownModal />
                </Animatable.View>
          </View>

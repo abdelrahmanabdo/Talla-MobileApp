@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, ImageBackground , FlatList , ScrollView, StatusBar } from 'react-native';
+import { Text, View, ImageBackground , FlatList  ,Pressable  } from 'react-native';
 import FastImage from 'react-native-fast-image';
-import {Button} from 'native-base';
 import { RectButton, BorderlessButton } from 'react-native-gesture-handler';
 import Modal from 'react-native-modal';
 
@@ -15,7 +14,6 @@ import ClosetItem from '../../components/ClosetItem';
 import TallaButton from '../../components/Button';
 import Dropdown from '../../components/Dropdown';
 import Checkbox from '../../components/Checkbox';
-import Input from '../../components/Input';
 import Color from '../../components/Color';
 
 
@@ -23,7 +21,7 @@ import Color from '../../components/Color';
 //
 import I18n from '../../lang/I18n';
 
-const ClosetTab = props => {
+const ClosetTab = ({...props}) => {
     const [activeSeason , setActiveSeason ] = useState(1);
     const [activeCategoryIndex , setActiveCategoryIndex ] = useState(1);
     const [showFilterModal , setShowFilterModal ] = useState(false);
@@ -180,13 +178,15 @@ const ClosetTab = props => {
                <Text style={ModalStyle.headerText}>
                   Find More
                </Text>
-               <Button transparent  onPress={()=>{setShowMoreModal(false)}}>
+               <Pressable android_ripple={{color:  ('#D1AD67')}}
+                          onPress={()=>{setShowMoreModal(false)}}>
                   <FastImage source={require('../../assets/icons/close-colored.png')}
                               style={{width:25,height:25}} />
-               </Button>
+               </Pressable>
             </View>
             <View style={{flexDirection:"column"}}>
-                <RectButton style={ModalStyle.selectRow}
+                <Pressable  style={ModalStyle.selectRow}
+                            android_ripple={{color:  ('#D1AD67')}}
                             onPress={()=>{
                                    setShowMoreModal(false);
                                    props.navigation.navigate('favourites') }}>
@@ -196,8 +196,9 @@ const ClosetTab = props => {
                     <Text style={ModalStyle.textBold}>
                         Mix & match
                     </Text>
-                </RectButton>
-                <RectButton style={ModalStyle.selectRow}
+                </Pressable>
+                <Pressable style={ModalStyle.selectRow}
+                            android_ripple={{color:  ('#D1AD67')}}
                             onPress={()=>{
                                 setShowMoreModal(false);
                                 props.navigation.navigate('calendar') }}>
@@ -207,8 +208,9 @@ const ClosetTab = props => {
                     <Text style={ModalStyle.textBold}>
                         Calendar
                     </Text>
-                </RectButton>
-                <RectButton style={ModalStyle.selectRow}
+                </Pressable>
+                <Pressable style={ModalStyle.selectRow}
+                            android_ripple={{color:  ('#D1AD67')}}
                             onPress={()=>{
                                 setShowMoreModal(false);
                                 props.navigation.navigate('favourites') }}>
@@ -218,7 +220,7 @@ const ClosetTab = props => {
                     <Text style={ModalStyle.textBold}>
                         Favourites
                     </Text>
-                </RectButton>
+                </Pressable>
 
             </View>
          </View>
@@ -284,10 +286,11 @@ const ClosetTab = props => {
                <Text style={ModalStyle.headerText}>
                   Filter
                </Text>
-               <Button transparent  onPress={()=>{setShowFilterModal(false)}}>
+               <Pressable android_ripple={{color:  ('#D1AD67')}} 
+                         onPress={()=>{setShowFilterModal(false)}}>
                   <FastImage source={require('../../assets/icons/close-colored.png')}
                               style={{width:25,height:25}} />
-               </Button>
+               </Pressable>
             </View>
             <View style={{flexDirection:"column"}}>
                 <View>
@@ -298,27 +301,33 @@ const ClosetTab = props => {
                      <View style={{flex:1}}>
                         <Checkbox onChange={()=>{setSeason(0)}}
                                  isRounded
+                                 isModal
                                  isChecked={season == 0 }
                                  label={'Summer'}/>
                      </View>
                      <View style={{flex:1}}>
                         <Checkbox onChange={()=>{setSeason(1)}}
                                  isRounded
+                                 isModal
                                  isChecked={season == 1}
                                  label={'Winter'}/>
                      </View>
                   </View>
                 </View>
-                <Dropdown items={categories} name={I18n.t('category')} />
+                <Dropdown items={categories}
+                          isModal
+                          name={I18n.t('category')} />
                 <Color colors={colors}
                        onChange={colorId => setSelectedColor(colorId)}/>
-                <Dropdown items={categories} name={I18n.t('brand')} />
+                <Dropdown items={categories}
+                          isModal
+                          name={I18n.t('brand')} />
                 <View style={{flexDirection:'row',marginBottom : 10}}>
- 
-                    <TallaButton  onPress={()=>{ setShowFilterModal(false)}}
-                            label={'Done'}
-                            labelColor={'#FFF'}
-                            style={[ModalStyle.SecondaryButton,{flex:1}]} />
+                    <TallaButton onPress={()=>{ setShowFilterModal(false)}}
+                                label={'Done'}
+                                isModal
+                                labelColor={'#FFF'}
+                                style={[ModalStyle.SecondaryButton,{flex:1}]} />
                </View>
             </View>
          </View>
@@ -339,17 +348,18 @@ const ClosetTab = props => {
      * @param {} param0 
      */
     const renderCategoryBox = ({item , index}) => {
-        return <RectButton  key={index}
-                            style={style.categoryContainer}
-                            onPress={()=>{
-                                getActiveCategory(index)
-                            }}>
-            <View style={[style.categoryBox,{backgroundColor : activeCategoryIndex == index ? '#D1AD67' : '#FFF',
-                                             borderColor : activeCategoryIndex == index ? '#D1AD67' : '#000' }]}>
+        return <View    key={index}
+                        style={style.categoryContainer} >
+            <Pressable style={[style.categoryBox,{backgroundColor : activeCategoryIndex == index ? '#D1AD67' : '#FFF',
+                                             borderColor : activeCategoryIndex == index ? '#D1AD67' : '#000' }]}
+                        android_ripple={{color:  ('#D1AD67')}}
+                        onPress={()=>{
+                            getActiveCategory(index)
+                        }}>
                 <FastImage source={activeCategoryIndex == index ? item.iconActive : item.icon}
                             resizeMode={'contain'}
                             style={{width:30,height:30}}/>
-            </View>
+            </Pressable>
             {
                 index == activeCategoryIndex &&  
                 <Text style={[style.categoryName]}>
@@ -357,7 +367,7 @@ const ClosetTab = props => {
                 </Text>
             }
 
-        </RectButton>
+        </View>
     }
 
     /**
@@ -374,15 +384,13 @@ const ClosetTab = props => {
 
 
     return <View style={[GeneralStyle.container]}>
-        <StatusBar hidden={false} />
         <ImageBackground source={require('../../assets/images/colored-bg.png')}
-                         style={style.header}>
+                        resizeMode={'stretch'}
+                        style={GeneralStyle.header}>
             <View style={[GeneralStyle.rowSpaceBetween,{width : '90%'}]}>
-                <RectButton>
-                    <FastImage source={require('../../assets/logo.png')}
+                    <FastImage source={require('../../assets/icons/small-logo-white.png')}
                                resizeMode={'contain'}
                                style={{width : 35 , height : 35}} />
-                </RectButton>
                 <Text style={style.headerText}>
                     Your Closet
                 </Text>
@@ -390,12 +398,12 @@ const ClosetTab = props => {
                     <BorderlessButton onPress={() => {setShowFilterModal(true)}}>
                         <FastImage source={require('../../assets/icons/filter.png')}
                                    resizeMode={'contain'}
-                                   style={{width : 25,height :  25}} />
+                                   style={{width : 22 ,height :  22 ,flex:1}} />
                     </BorderlessButton>
                     <BorderlessButton onPress={() => {setShowMoreModal(true)}}>
                         <FastImage source={require('../../assets/icons/more-vertical.png')}
                                    resizeMode={'contain'}
-                                   style={{width : 25,height :  25 , marginStart : 14}} />
+                                   style={{width : 22,height :  22 , marginStart : 14}} />
                     </BorderlessButton>
                 </View>
             </View>
@@ -421,7 +429,7 @@ const ClosetTab = props => {
                 <Text style={[GeneralStyle.blackBoldText,{marginBottom :2}]}>
                     We have a special gift for you!
                 </Text>
-                <Text>
+                <Text style={[GeneralStyle.blackText,{marginBottom :2}]}>
                  Add up to 30 items or more to join our lovable ritzy Tallah ladies to receive your gift. 
                 </Text> 
                 {
@@ -442,6 +450,7 @@ const ClosetTab = props => {
                 horizontal
                 showsHorizontalScrollIndicator={false}
                 data={categories}
+                keyExtractor={(item,index) => index.toString()}
                 renderItem={renderCategoryBox}
             />
         </View>
@@ -449,6 +458,7 @@ const ClosetTab = props => {
             <FlatList 
                 showsVerticalScrollIndicator={false}
                 horizontal = {false}
+                keyExtractor={(item,index) => index.toString()}
                 numColumns={3}
                 data={closetItems}
                 renderItem={renderClosetItem}

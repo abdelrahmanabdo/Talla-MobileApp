@@ -10,11 +10,12 @@ export default  StyleSheet.create({
       alignSelf :'center',
       backgroundColor: '#FFF',
       borderRadius : 15,
-      padding: 20,
+      padding: 15,
       paddingTop : 30,
 
    },
    actionModalContainer : {
+      maxHeight :  '90%',
       width : '100%',
       backgroundColor: '#FFF',
       padding: 20,
@@ -34,7 +35,9 @@ export default  StyleSheet.create({
    sectionHeaderText : {
       fontSize : 18,
       fontFamily : 'Roboto',
-      color :'#000'
+      color :'#000',
+      marginHorizontal:15,
+      marginVertical: 10
    },
    text : {
       color : '#000',

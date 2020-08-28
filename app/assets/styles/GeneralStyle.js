@@ -1,4 +1,5 @@
-import {StyleSheet, Dimensions } from 'react-native';
+import {StyleSheet, Dimensions , Platform} from 'react-native';
+import { getStatusBarHeight } from 'react-native-status-bar-height';
 
 const width = Dimensions.get('window').width ;
 const height = Dimensions.get('window').height ;
@@ -10,7 +11,15 @@ export default StyleSheet.create({
    },
    header : {
       width : width,
-      height : height / 7,
+      ...Platform.select({
+         ios: {
+            paddingTop: getStatusBarHeight() + 10
+         },
+         android: {
+            paddingTop:  15
+
+      }}), 
+      paddingBottom :24,
       flexDirection : 'column',
       alignItems: 'center',
       justifyContent: 'center',
@@ -64,9 +73,6 @@ export default StyleSheet.create({
       color : '#000',
       fontFamily:'Roboto'
    }
-
-
-
 
 
 });
