@@ -131,10 +131,10 @@ const MoreTab = props => {
                             onPress={()=>{navigation.navigate('settings')}}/>
                 <ListItem   icon={require('../../assets/icons/help-support.png')} 
                             label={'Help & Support'} 
-                            onPress={()=>{navigation.navigate('')}}/>
+                            onPress={()=>{navigation.navigate('Support')}}/>
                 <ListItem   icon={require('../../assets/icons/T-&-C.png')} 
                             label={'T&C'} 
-                            onPress={()=>{navigation.navigate('')}}/>
+                            onPress={()=>{navigation.navigate('TAndC')}}/>
                 <ListItem   icon={require('../../assets/icons/profile.png')} 
                             label={'Logout'} 
                             onPress={()=>{navigation.navigate('')}}/>

@@ -16,6 +16,8 @@ import Messages from '../screens/Messages';
 import Calendar from '../screens/Calendar';
 import About from '../screens/About';
 import Settings from '../screens/Settings';
+import TAndC from '../screens/TAndC';
+import Support from '../screens/Support';
 
 
 const config = {
@@ -95,6 +97,12 @@ export function AppNavigator () {
                        options = {{options}}/>
          <Stack.Screen name="about" 
                        component={About}
+                       options = {{options}}/>     
+         <Stack.Screen name="TAndC" 
+                       component={TAndC}
+                       options = {{options}}/>     
+         <Stack.Screen name="Support" 
+                       component={Support}
                        options = {{options}}/>                                              
     </Stack.Navigator>
    );
