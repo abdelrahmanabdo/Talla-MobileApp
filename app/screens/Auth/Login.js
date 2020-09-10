@@ -45,6 +45,7 @@ const Login = ({...props}) => {
          <View style={{flex:1.5}}>
             <View style={{marginBottom : 50}}>
                <Button
+                     style={{width:'95%'}}
                      onPress={_login}
                      label = {'Login'}
                      bgColor = "#FFF"

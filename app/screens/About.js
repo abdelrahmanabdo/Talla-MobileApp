@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, ImageBackground } from 'react-native';
+import { Text, View, ImageBackground, SafeAreaView } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { BorderlessButton, RectButton, ScrollView } from 'react-native-gesture-handler';
 
@@ -24,7 +24,7 @@ const About = props  => {
                     </View>
                 </View>
             </ImageBackground>
-            <View style={{flex:1,}}>
+            <SafeAreaView style={{flex:1,}}>
                 <FastImage source={require('../assets/images/about-us-image.png')}
                                 resizeMode={'stretch'}
                                 style={style.bgImage} />
@@ -83,7 +83,7 @@ const About = props  => {
                             </Text>
                     </View>
                 </ScrollView>
-            </View>
+            </SafeAreaView>
     </View>
 }
  

@@ -72,7 +72,44 @@ export default StyleSheet.create({
    blackText : {
       color : '#000',
       fontFamily:'Roboto'
-   }
+   },
 
+   //Tabs
+   tabButtons : {
+      width : '90%',
+      flexDirection:'row',
+      marginTop : 20,
+      borderRadius : 12,
+      overflow:'hidden',
+      borderWidth :1.5,
+      borderColor : '#D1AD67'
+   },
+   tabButton : {
+      flex:1,
+      justifyContent : 'center',
+      alignItems:'center',
+      padding : 10,
+   },
+   tabButtonText : {
+      color: '#D1AD67'
+   },
 
+   //Category List container
+   categoryContainer : {
+      width : width / 4.8 ,
+      alignItems:'center',
+      justifyContent:'space-between'
+   },
+   categoryBox: {
+      borderWidth : 1.3 ,
+      borderColor : '#000',
+      padding : 10,
+      paddingHorizontal : 20,
+      borderRadius : 8,
+      justifyContent:'center',
+      alignItems:'center'
+   },
+   categoryName :{
+      color : '#D1AD67'
+   },
 });

@@ -6,7 +6,7 @@ import GeneralStyle from '../../assets/styles/GeneralStyle';
 import I18n from '../../lang/I18n';
 import style from '../../assets/styles/ProfileStyle';
 import FastImage from 'react-native-fast-image';
-import { RectButton, ScrollView } from 'react-native-gesture-handler';
+import { RectButton, ScrollView, BorderlessButton } from 'react-native-gesture-handler';
 
 //
 import Button from '../../components/Button';
@@ -14,16 +14,19 @@ import Button from '../../components/Button';
 const Profile = ({...props}) => {
     return <View style={[GeneralStyle.container,{flex:1,backgroundColor: "#FFF"}]}>
        <ImageBackground source={require('../../assets/images/header-bg.png')}
-                        style={style.header}>
-            <RectButton onPress={()=>{props.navigation.goBack()}}>
+                        style={[GeneralStyle.header,
+                               {flexDirection : 'row',justifyContent:'space-between',padding  :10 }]}>
+            <BorderlessButton onPress={()=>{props.navigation.goBack()}}
+                        style={{flex:1}}>
                <FastImage source={require('../../assets/icons/back-white.png')}
                           style={{width : 25 , height:25}}
                           resizeMode={'contain'}
                />
-            </RectButton>
-            <Text style={style.headerText}>
+            </BorderlessButton>
+            <Text style={[GeneralStyle.headerText,{flex:1,textAlign:'center'}]}>
                {I18n.t('profile')}
             </Text>
+            <View style={{flex:1}}></View>
        </ImageBackground>
        <View style={{flex:1,}}>
          <ImageBackground source={require('../../assets/images/profile-default.png')}
@@ -90,8 +93,10 @@ const Profile = ({...props}) => {
                   {I18n.t('yourStyle')} : fafafafa
             </Text>
          </View>
-         <Button onPress={()=>{props.navigation.navigate('Home')}} 
-               label={'Go To Home'}/>
+         <Button style={{width : '95%'}}
+                 onPress={()=>{props.navigation.navigate('Home')}} 
+                 label={'Go To Home'}
+                 labelColor={'#FFF'}/>
          </ScrollView>
        </View>
 

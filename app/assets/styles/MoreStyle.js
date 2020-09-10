@@ -29,18 +29,16 @@ export default StyleSheet.create({
       flex:1,
       justifyContent:'center',
       alignItems:'center',
-      marginBottom : 5
    },
    avatar : {
       width  :100 ,
-      height:100,
+      height:height * 0.1,
       borderRadius : 50,
       marginBottom : 3,
       justifyContent:'flex-end'
    },
    listSection : {
       flex:2
-
    },
    itemContainer:{
       width : width - 40,
@@ -48,7 +46,7 @@ export default StyleSheet.create({
       justifyContent:'space-between',
       alignSelf:'center',
       backgroundColor : '#F8F8F8',
-      padding : 15,
+      padding : 13,
       borderRadius : 20,
       marginBottom : 13
    }, 
@@ -60,7 +58,7 @@ export default StyleSheet.create({
    infoText: {
       color : '#161A28',
       fontFamily : "Roboto",
-      fontSize : 17,
+      fontSize : 14,
       marginTop :2
    } ,   
    line :{

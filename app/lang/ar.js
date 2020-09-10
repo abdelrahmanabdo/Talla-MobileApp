@@ -34,6 +34,7 @@ export default {
    next : "التالي",
    confirm : "تأكيد",
    cancel: "إالغاء",
+   selecte : "إختر",
    selectYourBirthDate : "إختر يوم ميلادك",
    uploadYourPicture : "قم برفع صورة لك",
    selectPhoto : "Select Your Picture",
@@ -76,7 +77,12 @@ export default {
    //Gift
    viewGift : "View Gift > ",
    yourGift : "Your Gift",
-   yourGiftText : "Select your favorite brands and we will send you regular shopping recommendations based on your shape and style"
+   yourGiftText : "Select your favorite brands and we will send you regular shopping recommendations based on your shape and style",
+
+   //Seasons
+   Season : "Season",
+   Winter : "Winter", 
+   Summer : "Summer"
 
 
 

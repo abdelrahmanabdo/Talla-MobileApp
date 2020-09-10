@@ -67,6 +67,7 @@ const Registeration = ({...props}) => {
             </View>
             <View>
                <Button
+                     style={{width:'95%'}}
                      onPress={_regiter}
                      label = {I18n.t('registration')}
                      bgColor = "#FFF"

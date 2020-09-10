@@ -18,7 +18,7 @@ export default ({children ,...props}) => {
          justifyContent:'center',
          backgroundColor: (props.bgColor || '#D1AD67') ,
          borderRadius:10,
-         padding:20,
+         padding:height * .021,
          overflow:'hidden'
 
       },
@@ -44,7 +44,7 @@ export default ({children ,...props}) => {
                }
          </Pressable>
       :
-      <BaseButton
+      <RectButton
               onPress ={props.onPress}
               style={[style.container,props.style]} >
          <View accessible>
@@ -52,7 +52,7 @@ export default ({children ,...props}) => {
                {props.label ?? ''}
             </Text>
          </View>
-      </BaseButton>
+      </RectButton>
    }
       
 

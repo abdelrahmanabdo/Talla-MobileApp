@@ -51,13 +51,14 @@ const MoreTab = props => {
                     <Image source={{uri: `data:image/gif;base64,${avatar}`}} 
                            style={style.avatar}/>
                   :
-                    <RectButton onPress={changeAvatar}>
+                    <BorderlessButton onPress={changeAvatar}>
                         <ImageBackground source={require('../../assets/icons/default-avatar.png')}
+                                         resizeMode={'contain'}
                                                 style={style.avatar}>
                                 <FastImage source={require('../../assets/icons/edit-avatar.png')}
                                             style={{width : 35 , height : 35, alignSelf:'flex-end'}}/>
                         </ImageBackground>
-                    </RectButton>
+                    </BorderlessButton>
                }
             </PhotoUpload>
             
@@ -66,7 +67,7 @@ const MoreTab = props => {
 
         return  <View style={style.topSection}>
             <Avatar />
-            <Text style={style.infoText}>
+            <Text style={[style.infoText,{fontSize : 19,marginTop:15}]}>
                  John Doe
             </Text>
             <Text style={style.infoText}>
@@ -122,7 +123,7 @@ const MoreTab = props => {
                             onPress={()=>{navigation.navigate('favourites')}}/>
                 <ListItem   icon={require('../../assets/icons/messages.png')}
                             label={'Messages'} 
-                            onPress={()=>{navigation.navigate('')}}/>
+                            onPress={()=>{navigation.navigate('messages')}}/>
                 <ListItem   icon={require('../../assets/icons/about-app.png')} 
                             label={'About the app'} 
                             onPress={()=>{navigation.navigate('about')}}/>
@@ -131,7 +132,7 @@ const MoreTab = props => {
                             onPress={()=>{navigation.navigate('settings')}}/>
                 <ListItem   icon={require('../../assets/icons/help-support.png')} 
                             label={'Help & Support'} 
-                            onPress={()=>{navigation.navigate('Support')}}/>
+                            onPress={()=>{navigation.navigate('support')}}/>
                 <ListItem   icon={require('../../assets/icons/T-&-C.png')} 
                             label={'T&C'} 
                             onPress={()=>{navigation.navigate('TAndC')}}/>
@@ -152,9 +153,9 @@ const MoreTab = props => {
                             style={GeneralStyle.header}>
                 <View style={[GeneralStyle.rowSpaceBetween,{width : '90%'}]}>
                     <RectButton>
-                        <FastImage source={require('../../assets/icons/back-white.png')}
-                                   resizeMode={'contain'}
-                                   style={{width : 25 , height : 25}} />
+                    <FastImage source={require('../../assets/icons/small-logo-white.png')}
+                                resizeMode={'contain'}
+                                style={{width : 35 , height : 35}} />
                     </RectButton>
                     <Text style={GeneralStyle.headerText}>
                         More

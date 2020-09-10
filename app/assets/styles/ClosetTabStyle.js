@@ -19,22 +19,6 @@ export default StyleSheet.create({
       color : '#FFF',
       fontSize : 19
    },
-   seasonButtons : {
-      width : '90%',
-      flexDirection:'row',
-      marginTop : 20,
-      overflow:'hidden',
-      backgroundColor: 'red',
-   },
-   seasonButton : {
-      flex:1,
-      justifyContent : 'center',
-      alignItems:'center',
-      padding : 10,
-   },
-   seasonButtonText : {
-      color: '#D1AD67'
-   },
    giftContainer : {
       width : '90%',
       alignSelf:'center',
@@ -48,23 +32,6 @@ export default StyleSheet.create({
       width : width,
       marginBottom: 20
    }, 
-   categoryContainer : {
-      width : width / 4.8 ,
-      alignItems:'center',
-      justifyContent:'space-between'
-   },
-   categoryBox: {
-      borderWidth : 1.3 ,
-      borderColor : '#000',
-      padding : 10,
-      paddingHorizontal : 20,
-      borderRadius : 8,
-      justifyContent:'center',
-      alignItems:'center'
-   },
-   categoryName :{
-      color : '#D1AD67'
-   },
    closetItemsListContainer :{
       flex:1,
       width : width - 20,

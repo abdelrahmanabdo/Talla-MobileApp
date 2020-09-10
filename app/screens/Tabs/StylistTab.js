@@ -5,10 +5,15 @@ import { RectButton, BorderlessButton } from 'react-native-gesture-handler';
 //Styles
 import GeneralStyle from '../../assets/styles/GeneralStyle';
 import style from '../../assets/styles/StylistTabStyle';
+
+//Components
 import FastImage from 'react-native-fast-image';
 import Button from '../../components/Button';
 
 const StylistTab = props => {
+
+
+    
     return  <View style={[GeneralStyle.container]}>
             <ImageBackground source={require('../../assets/images/colored-bg.png')}
                              style={GeneralStyle.header}>

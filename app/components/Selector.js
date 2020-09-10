@@ -38,7 +38,7 @@ const Selector = ({...props}) => {
                </Text>
             </BaseButton>
          :
-            <RectButton style={[style.container ,{height : props.hideText ? 130 : 175}]}
+            <RectButton style={[style.container ,props.style,{height : props.hideText ? 120 : 175}]}
                         rippleColor={'#F8F8f8'}
                         
                         onPress={onSelect}>

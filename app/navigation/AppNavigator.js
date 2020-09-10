@@ -13,11 +13,12 @@ import Gift from '../screens/Closet/Gift';
 import Favourites from '../screens/Favourites';
 import Notifications from '../screens/Notifications';
 import Messages from '../screens/Messages';
-import Calendar from '../screens/Calendar';
+import Calendars from '../screens/Calendars';
 import About from '../screens/About';
 import Settings from '../screens/Settings';
 import TAndC from '../screens/TAndC';
 import Support from '../screens/Support';
+import Intro from '../screens/ChicChat/Intro';
 
 
 const config = {
@@ -39,7 +40,7 @@ const Stack = createStackNavigator();
 export function AppNavigator () {
    return (
      <Stack.Navigator
-      initialRouteName = "Home"
+      initialRouteName = "onboarding"
       headerMode = 'none'
       screenOptions = {{
         gestureEnabled : false ,
@@ -50,15 +51,15 @@ export function AppNavigator () {
         close : config
         }
       }}>
+         <Stack.Screen name="onboarding" 
+                       component={OnBoarding}
+                       options = {{options}}/>
          <Stack.Screen name="Home" 
                        component={TabNavigator}
                        options = {{options}}/>
         <Stack.Screen  name="splashScreen" 
                        component={SplashScreen}
-                       options = {{options}}/> 
-         <Stack.Screen name="onboarding" 
-                       component={OnBoarding}
-                       options = {{options}}/> 
+                       options = {{options}}/>  
          <Stack.Screen name="login" 
                        component={Login}
                        options = {{options}}/> 
@@ -90,7 +91,7 @@ export function AppNavigator () {
                        component={Messages}
                        options = {{options}}/>                                               
          <Stack.Screen name="calendar" 
-                       component={Calendar}
+                       component={Calendars}
                        options = {{options}}/>
          <Stack.Screen name="settings" 
                        component={Settings}
@@ -101,9 +102,12 @@ export function AppNavigator () {
          <Stack.Screen name="TAndC" 
                        component={TAndC}
                        options = {{options}}/>     
-         <Stack.Screen name="Support" 
+         <Stack.Screen name="support" 
                        component={Support}
-                       options = {{options}}/>                                              
+                       options = {{options}}/>   
+         <Stack.Screen name="chicChatIntro" 
+                       component={Intro}
+                       options = {{options}}/>                                            
     </Stack.Navigator>
    );
 }

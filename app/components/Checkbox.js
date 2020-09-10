@@ -61,7 +61,7 @@ const Checkbox = ({...props}) => {
             </Pressable>
             :
              <RectButton onPress ={()=>{
-                                     setIsChecked(!isChecked);
+                                    setIsChecked(!isChecked);
                                     props.onChange(!isChecked)
                                  }}
                          style={props.isRounded ? style.roundedContainer : style.container}>

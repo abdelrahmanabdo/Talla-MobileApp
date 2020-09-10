@@ -22,7 +22,7 @@ import Color from '../../components/Color';
 import I18n from '../../lang/I18n';
 
 const ClosetTab = ({...props}) => {
-    const [activeSeason , setActiveSeason ] = useState(1);
+    const [activeTab , setActiveTab ] = useState(1);
     const [activeCategoryIndex , setActiveCategoryIndex ] = useState(1);
     const [showFilterModal , setShowFilterModal ] = useState(false);
     const [showMoreModal , setShowMoreModal ] = useState(false);
@@ -349,8 +349,8 @@ const ClosetTab = ({...props}) => {
      */
     const renderCategoryBox = ({item , index}) => {
         return <View    key={index}
-                        style={style.categoryContainer} >
-            <Pressable style={[style.categoryBox,{backgroundColor : activeCategoryIndex == index ? '#D1AD67' : '#FFF',
+                        style={GeneralStyle.categoryContainer} >
+            <Pressable style={[GeneralStyle.categoryBox,{backgroundColor : activeCategoryIndex == index ? '#D1AD67' : '#FFF',
                                              borderColor : activeCategoryIndex == index ? '#D1AD67' : '#000' }]}
                         android_ripple={{color:  ('#D1AD67')}}
                         onPress={()=>{
@@ -362,7 +362,7 @@ const ClosetTab = ({...props}) => {
             </Pressable>
             {
                 index == activeCategoryIndex &&  
-                <Text style={[style.categoryName]}>
+                <Text style={[GeneralStyle.categoryName]}>
                  {item.name}
                 </Text>
             }
@@ -388,9 +388,9 @@ const ClosetTab = ({...props}) => {
                         resizeMode={'stretch'}
                         style={GeneralStyle.header}>
             <View style={[GeneralStyle.rowSpaceBetween,{width : '90%'}]}>
-                    <FastImage source={require('../../assets/icons/small-logo-white.png')}
-                               resizeMode={'contain'}
-                               style={{width : 35 , height : 35}} />
+                <FastImage source={require('../../assets/icons/small-logo-white.png')}
+                            resizeMode={'contain'}
+                            style={{width : 35 , height : 35}} />
                 <Text style={style.headerText}>
                     Your Closet
                 </Text>
@@ -407,16 +407,16 @@ const ClosetTab = ({...props}) => {
                     </BorderlessButton>
                 </View>
             </View>
-            <View style={style.seasonButtons}>
-                    <RectButton onPress={()=>{setActiveSeason(1)}}
-                                style={[style.seasonButton,{backgroundColor: activeSeason == 1 ? '#D1AD67': '#FFF'}]}>
-                        <Text style={[style.seasonButtonText, { color: activeSeason == 1 ? '#FFF': '#D1AD67'}]}>
+            <View style={GeneralStyle.tabButtons}>
+                    <RectButton onPress={()=>{setActiveTab(1)}}
+                                style={[GeneralStyle.tabButton,{backgroundColor: activeTab == 1 ? '#D1AD67': '#FFF'}]}>
+                        <Text style={[GeneralStyle.tabButtonText, { color: activeTab == 1 ? '#FFF': '#D1AD67'}]}>
                             Summer
                         </Text>
                     </RectButton>
-                    <RectButton onPress={()=>{ setActiveSeason(2)}}
-                                style={[style.seasonButton, {backgroundColor: activeSeason == 2 ? '#D1AD67': '#FFF'}]}>
-                        <Text style={[style.seasonButtonText, { color: activeSeason == 2 ? '#FFF': '#D1AD67'}]}>
+                    <RectButton onPress={()=>{ setActiveTab(2)}}
+                                style={[GeneralStyle.tabButton, {backgroundColor: activeTab == 2 ? '#D1AD67': '#FFF'}]}>
+                        <Text style={[GeneralStyle.tabButtonText, { color: activeTab == 2 ? '#FFF': '#D1AD67'}]}>
                             Winter
                         </Text>
                     </RectButton>

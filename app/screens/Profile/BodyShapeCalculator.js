@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, View, ImageBackground, StatusBar , TextInput } from 'react-native';
+import { Text, View, ImageBackground, StatusBar , TextInput, SafeAreaView } from 'react-native';
 import { Button } from 'native-base';
 import { RectButton, BorderlessButton, BaseButton} from 'react-native-gesture-handler';
 import FastImage from 'react-native-fast-image';
@@ -76,7 +76,7 @@ const BodyShapeCalculator = ({...props}) => {
       setShowModal(true);
    }
 
-   return <View style={BodyShapeCalculatorStyle.container}>
+   return <SafeAreaView style={BodyShapeCalculatorStyle.container}>
       <StatusBar hidden  />
       <ImageBackground  style={{flex:1,justifyContent:'space-between'}} 
                         resizeMode="stretch"
@@ -161,7 +161,7 @@ const BodyShapeCalculator = ({...props}) => {
          </View>
       </ImageBackground>
       <InfoModal />
-   </View>
+   </SafeAreaView>
 };
 
 

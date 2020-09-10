@@ -34,6 +34,7 @@ export default {
    next : "Next",
    confirm : "Confirm",
    cancel: "Cancel",
+   select : "Select",
    selectYourBirthDate : "Select Your Birth Date",
    uploadYourPicture : "Upload Your Picture",
    selectPhoto : "Select Your Picture",
@@ -77,8 +78,12 @@ export default {
    //Gift
    viewGift : "View Gift > ",
    yourGift : "Your Gift",
-   yourGiftText : "Select your favorite brands and we will send you regular shopping recommendations based on your shape and style"
+   yourGiftText : "Select your favorite brands and we will send you regular shopping recommendations based on your shape and style",
 
+   //Seasons
+   Season : "Season",
+   Winter : "Winter", 
+   Summer : "Summer"
 
 
 
