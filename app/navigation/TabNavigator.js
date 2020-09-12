@@ -41,10 +41,7 @@ export const TabNavigator = ({params}) => (
                   fontSize:9 ,
                   fontFamily:'roboto'
                },
-               tabStyle : {
-                  alignItems:'center',
-                  justifyContent:'center'
-               },
+            
                style: {
                        borderTopRightRadius : 20,
                        borderTopLeftRadius : 20,
@@ -60,7 +57,7 @@ export const TabNavigator = ({params}) => (
                   <FastImage source={focused ? require('../assets/icons/chic-chat-active.png') : 
                                                require('../assets/icons/chic-chat.png')} 
                              resizeMode={'contain'}
-                             style={{width : 20 , height:20}} />
+                             style={{width : 21 , height:21,alignSelf:'center'}}  />
                ),
             }}
          />
@@ -72,7 +69,7 @@ export const TabNavigator = ({params}) => (
                   <FastImage source={focused ? require('../assets/icons/closet-active.png') :   
                                                require('../assets/icons/closet-icon.png')} 
                              resizeMode={'contain'}
-                             style={{width : 20 , height:20}} />
+                             style={{width : 21 , height:21,alignSelf:'center'}}  />
                ),
             }}
             />         
@@ -81,10 +78,10 @@ export const TabNavigator = ({params}) => (
             options={{
                tabBarLabel: setTabLabel("addTab"),
                tabBarIcon: ({ focused }) => (
-                  <FastImage source={focused ? require('../assets/icons/closet-active.png') : 
+                  <FastImage source={focused ? require('../assets/icons/add-active.png') : 
                                                require('../assets/icons/add-icon.png')} 
                              resizeMode={'contain'}
-                             style={{width : 20 , height:20}} />
+                             style={{width : 21 , height:21,alignSelf:'center'}} />
                ),
             }}
             />
@@ -96,7 +93,7 @@ export const TabNavigator = ({params}) => (
                   <FastImage source={focused ? require('../assets/icons/stylist-active.png') : 
                                                require('../assets/icons/stylist-icon.png')} 
                              resizeMode={'contain'}
-                             style={{width : 30 , height:30}} />
+                             style={{width : 31 , height:31,alignSelf:'center'}} />
                ),
             }}
             />

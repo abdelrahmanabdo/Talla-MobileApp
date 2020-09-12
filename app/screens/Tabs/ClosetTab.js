@@ -29,7 +29,7 @@ const ClosetTab = ({...props}) => {
     const [closetItems , setClosetItems ] = useState([
         {
             icon : require('../../assets/icons/hanger.png'),
-            iconActive : require('../../assets/icons/hanger.png'),
+            iconActive : require('../../assets/icons/hanger-active.png'),
             name : 'test'
         },
         {
@@ -39,7 +39,7 @@ const ClosetTab = ({...props}) => {
         },
         {
             icon : require('../../assets/icons/hanger.png'),
-            iconActive : require('../../assets/icons/hanger.png'),
+            iconActive : require('../../assets/icons/hanger-active.png'),
             name : 'test'
         },
         {
@@ -49,7 +49,7 @@ const ClosetTab = ({...props}) => {
         },
         {
             icon : require('../../assets/icons/hanger.png'),
-            iconActive : require('../../assets/icons/hanger.png'),
+            iconActive : require('../../assets/icons/hanger-active.png'),
             name : 'test'
         },
         {
@@ -59,7 +59,7 @@ const ClosetTab = ({...props}) => {
         },
         {
             icon : require('../../assets/icons/hanger.png'),
-            iconActive : require('../../assets/icons/hanger.png'),
+            iconActive : require('../../assets/icons/hanger-active.png'),
             name : 'test'
         },
         {
@@ -69,7 +69,7 @@ const ClosetTab = ({...props}) => {
         },
         {
             icon : require('../../assets/icons/hanger.png'),
-            iconActive : require('../../assets/icons/hanger.png'),
+            iconActive : require('../../assets/icons/hanger-active.png'),
             name : 'test'
         },
         {
@@ -79,7 +79,7 @@ const ClosetTab = ({...props}) => {
         },
         {
             icon : require('../../assets/icons/hanger.png'),
-            iconActive : require('../../assets/icons/hanger.png'),
+            iconActive : require('../../assets/icons/hanger-active.png'),
             name : 'test'
         },
         {
@@ -87,74 +87,57 @@ const ClosetTab = ({...props}) => {
             iconActive : require('../../assets/icons/dress-active.png'),
             name : 'Dresses'
         },
-        {
-            icon : require('../../assets/icons/hanger.png'),
-            iconActive : require('../../assets/icons/hanger.png'),
-            name : 'test'
-        },
-        {
-            icon : require('../../assets/icons/dress-active.png'),
-            iconActive : require('../../assets/icons/dress-active.png'),
-            name : 'Dresses'
-        },
-        {
-            icon : require('../../assets/icons/hanger.png'),
-            iconActive : require('../../assets/icons/hanger.png'),
-            name : 'test'
-        },
-        {
-            icon : require('../../assets/icons/dress-active.png'),
-            iconActive : require('../../assets/icons/dress-active.png'),
-            name : 'Dresses'
-        },
-        {
-            icon : require('../../assets/icons/hanger.png'),
-            iconActive : require('../../assets/icons/hanger.png'),
-            name : 'test'
-        },
-        {
-            icon : require('../../assets/icons/dress-active.png'),
-            iconActive : require('../../assets/icons/dress-active.png'),
-            name : 'Dresses'
-        },
+
 
     ]);
 
     const [categories , setCategories ] = useState([
         {
             icon : require('../../assets/icons/hanger.png'),
-            iconActive : require('../../assets/icons/hanger.png'),
-            name : 'test'
+            iconActive : require('../../assets/icons/hanger-active.png'),
+            name : 'test',
+            name_en : 'test',
+            
         },
         {
-            icon : require('../../assets/icons/dress-active.png'),
+            icon : require('../../assets/icons/dress.png'),
             iconActive : require('../../assets/icons/dress-active.png'),
-            name : 'Dresses'
+            name : 'Dresses',
+            name_en : 'Dresses',
         },
         {
             icon : require('../../assets/icons/hanger.png'),
-            iconActive : require('../../assets/icons/hanger.png'),
-            name : 'test'
+            iconActive : require('../../assets/icons/hanger-active.png'),
+            name : 'test',
+            name_en : 'test',
+
         },
         {
-            icon : require('../../assets/icons/dress-active.png'),
+            icon : require('../../assets/icons/dress.png'),
             iconActive : require('../../assets/icons/dress-active.png'),
-            name : 'Dresses'
+            name : 'Dresses',
+            name_en : 'Dresses',
+
         },
         {
             icon : require('../../assets/icons/hanger.png'),
-            iconActive : require('../../assets/icons/hanger.png'),
-            name : 'test'
+            iconActive : require('../../assets/icons/hanger-active.png'),
+            name : 'test',
+            name_en : 'test',
+
         },
         {
-            icon : require('../../assets/icons/dress-active.png'),
+            icon : require('../../assets/icons/dress.png'),
             iconActive : require('../../assets/icons/dress-active.png'),
-            name : 'Dresses'
+            name : 'Dresses',
+            name_en : 'Dresses',
+
         },
         {
             icon : require('../../assets/icons/hanger.png'),
-            iconActive : require('../../assets/icons/hanger.png'),
-            name : 'test'
+            iconActive : require('../../assets/icons/hanger-active.png'),
+            name : 'test',
+            name_en : 'test',
         },
 
     ]);
@@ -316,11 +299,13 @@ const ClosetTab = ({...props}) => {
                 </View>
                 <Dropdown items={categories}
                           isModal
+                          onChangeValue={()=>{}}
                           name={I18n.t('category')} />
                 <Color colors={colors}
                        onChange={colorId => setSelectedColor(colorId)}/>
                 <Dropdown items={categories}
                           isModal
+                          onChangeValue={()=>{}}
                           name={I18n.t('brand')} />
                 <View style={{flexDirection:'row',marginBottom : 10}}>
                     <TallaButton onPress={()=>{ setShowFilterModal(false)}}

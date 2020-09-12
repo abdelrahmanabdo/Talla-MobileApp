@@ -39,18 +39,22 @@ const Registeration = ({...props}) => {
             <Input name={I18n.t('userName')} 
                   placeholerText={I18n.t('userName')}
                   onChangeText={(value) => setUserName(value)}
+                  color={'#DCB77C'}
                   placeholderColor={'#DCB77C'} />
             <Input name={I18n.t('email')} 
+                  color={'#DCB77C'}
                   placeholerText={I18n.t('email')}
                   onChangeText={(value) => setEmail(value)}
                   placeholderColor={'#DCB77C'} />
             <Input name={I18n.t('password')} 
                   placeholerText={I18n.t('password')}
+                  color={'#DCB77C'}
                   onChangeText={(value) => setPassword(value)}
                   password= {true}
                   placeholderColor={'#DCB77C'} />
             <Input name={I18n.t('confirmPassword')} 
                   placeholerText={I18n.t('confirmPassword')}
+                  color={'#DCB77C'}
                   onChangeText={(value) => setConfirmPassword(value)}
                   password= {true}
                   placeholderColor={'#DCB77C'} />

@@ -19,6 +19,10 @@ import Settings from '../screens/Settings';
 import TAndC from '../screens/TAndC';
 import Support from '../screens/Support';
 import Intro from '../screens/ChicChat/Intro';
+import NewBlog from '../screens/ChicChat/NewBlog';
+import BlogItemView from '../screens/ChicChat/BlogItemView';
+import StylistsList from '../screens/Stylist/StylistsList';
+import StylistDetails from '../screens/Stylist/StylistDetails';
 
 
 const config = {
@@ -107,7 +111,19 @@ export function AppNavigator () {
                        options = {{options}}/>   
          <Stack.Screen name="chicChatIntro" 
                        component={Intro}
-                       options = {{options}}/>                                            
+                       options = {{options}}/> 
+         <Stack.Screen name="newBlog" 
+                       component={NewBlog}
+                       options = {{options}}/>      
+         <Stack.Screen name="blogView" 
+                       component={BlogItemView}
+                       options = {{options}}/>  
+         <Stack.Screen name="stylistsList" 
+                       component={StylistsList}
+                       options = {{options}}/>
+         <Stack.Screen name="stylistDetails" 
+                       component={StylistDetails}
+                       options = {{options}}/>                                                                                       
     </Stack.Navigator>
    );
 }

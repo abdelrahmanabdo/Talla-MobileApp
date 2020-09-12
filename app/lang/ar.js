@@ -82,8 +82,15 @@ export default {
    //Seasons
    Season : "Season",
    Winter : "Winter", 
-   Summer : "Summer"
+   Summer : "Summer",
 
+
+   //Create blog
+   post : 'نشر',
+   title : "العنوان",
+   addHashtag : "أضف هاشتاج",
+   body : "الموضوع",
+   blogBody : "Blog body"
 
 
    

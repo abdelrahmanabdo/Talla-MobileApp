@@ -9,7 +9,6 @@ export default  style = StyleSheet.create({
       width : width ,
       alignSelf: 'center',
       backgroundColor: '#FFF',
-      
    },
    notificationContainer : {
       width : width ,

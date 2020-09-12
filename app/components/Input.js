@@ -9,6 +9,7 @@ const Input = ({ ...props }) => {
    
    const Style = StyleSheet.create({
       container : {
+         flex:1,
          flexDirection:'column',
          width : width - 40,
          alignSelf:'center',
@@ -23,9 +24,14 @@ const Input = ({ ...props }) => {
          fontSize:16
       },
       placeholerText : {
-         color: props.placeholderColor || '#000',
+         color: props.placeholderColor || '#CCC',
          fontFamily : "Roboto",
          fontSize: 13,
+      },
+      title :{
+         color: props.color || '#5D0D57',
+         fontFamily : "Roboto",
+         fontSize: 15,
       },
       input:{
          borderRadius:7,
@@ -35,7 +41,7 @@ const Input = ({ ...props }) => {
          padding:13,
          borderWidth : 1,
          borderColor : '#C9C9C9',
-         color : props.placeholderColor || '#000',
+         color : props.color || '#000',
          textAlign : I18nManager.isRTL ? 'right' : 'left',
       }
    });
@@ -50,7 +56,7 @@ const Input = ({ ...props }) => {
                      }
                      {
                         props.name &&
-                        <Text style={[Style.placeholerText,{fontWeight : '700'}]}>
+                        <Text style={[Style.title,{fontWeight : '700'}]}>
                            {props.name}
                         </Text>                     
                      }
@@ -60,7 +66,7 @@ const Input = ({ ...props }) => {
                      <Textarea
                         autoFocus={props.autoFocus}
                         rowSpan={props.rowsCount ?? 7}
-                        style={Style.input}
+                        style={[Style.input , props.style]}
                         defaultValue={props.defaultValue}
                         onChangeText={props.onChangeText}
                         placeholder={props.placeholerText}
@@ -70,11 +76,11 @@ const Input = ({ ...props }) => {
                       />
                   :                  
                      <TextInput
-                        style={[Style.input]}
                         autoFocus={props.autoFocus}
                         onChangeText={props.onChangeText}
                         placeholder={props.placeholerText}
                         defaultValue={props.defaultValue}
+                        style={[Style.input , props.style]}
                         placeholderTextColor={props.placeholderColor}
                         secureTextEntry={props.password}
                         keyboardType={props.isNumeric ? 'number-pad' : 'default'}

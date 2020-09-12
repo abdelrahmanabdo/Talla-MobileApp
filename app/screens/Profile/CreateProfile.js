@@ -77,7 +77,8 @@ const CreateProfile = ({...props}) => {
             'id' : 1,
             'name' : 'القاهرة',
             'name_en' : 'Cairo'
-         }
+         },
+
       ]);
 
 
@@ -119,6 +120,7 @@ const CreateProfile = ({...props}) => {
                    isNumeric={true}                
                    onChangeText={(value) => setPhone(value)}
                    placeholderColor={'#5D0D57'} 
+                   color={'#5D0D57'}
             />
             <Dropdown 
                items={countries}
@@ -502,7 +504,7 @@ const CreateProfile = ({...props}) => {
       return (
          <>
           <Text style={style.stepHeaderText}>
-             {I18n.t('fashionGoal')}
+             {I18n.t('favouriteStyle')}
           </Text>
 
           <FlatList  contentContainerStyle={{alignSelf:'center',marginVertical: 5}}
@@ -541,6 +543,7 @@ const CreateProfile = ({...props}) => {
                   </Text>
                </RectButton>
             </View>
+            <View></View>
        </ImageBackground>
        <View style={style.stepsNumberContainer}>
           <View style={{width : '90%' , alignSelf:'center' , flexDirection:'row',justifyContent:'space-between',alignItems:'center'}}>

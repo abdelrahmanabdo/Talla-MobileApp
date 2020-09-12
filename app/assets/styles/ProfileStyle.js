@@ -43,6 +43,9 @@ export default StyleSheet.create({
       width:50,
       height : 50,
    },
+   title : {
+      color : '#000'
+   },
    grayContainer : {
       width ,
       padding : 20 ,
@@ -56,7 +59,8 @@ export default StyleSheet.create({
       fontFamily : 'Roboto-Bold'
    },
    rowInfo :{
-      marginTop : 20
+      marginTop : 20,
+      color : '#000'
    }
 
 

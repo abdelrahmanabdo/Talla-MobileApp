@@ -33,6 +33,9 @@ export default StyleSheet.create({
       fontSize : 19,
       fontFamily : 'Roboto-Medium'
    },
+   row :{
+      flexDirection:'row'
+   },
    rowSpaceBetween : {
       flexDirection : "row",
       justifyContent: 'space-between',
@@ -51,11 +54,26 @@ export default StyleSheet.create({
       color : '#5D0D57',
       fontFamily:'Roboto-Bold'
    },
+   goldText : {
+      color : '#D1AD67',
+      fontFamily:'Roboto'
+   },
+   goldBoldText : {
+      color : '#D1AD67',
+      fontFamily:'Roboto-Bold'
+   },
+   secondaryText : {
+      color : '#012647',
+      fontFamily:'Roboto'
+   },
+   secondaryBoldText : {
+      color : '#012647',
+      fontFamily:'Roboto-Bold'
+   },
    SecondaryButton : {
       backgroundColor: '#D1AD67',
-      width: '95%',
       borderRadius:10,
-      padding: 15,
+      padding: 10,
       alignSelf:'center',
       alignItems: 'center',
       justifyContent:'center'
@@ -63,7 +81,6 @@ export default StyleSheet.create({
    SecondaryButtonText : {
       color: '#FFF',
       fontFamily : 'Roboto',
-      fontSize : 17
    },
    blackBoldText : {
       color : '#000',
@@ -112,4 +129,15 @@ export default StyleSheet.create({
    categoryName :{
       color : '#D1AD67'
    },
+
+
+   //Badge
+   badge : {
+      backgroundColor:'#012647' ,
+      padding: 5,
+      paddingHorizontal : 20,
+      borderRadius: 20,
+      marginEnd : 4,
+      color: '#FFF'
+   }
 });

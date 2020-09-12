@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Text, View } from 'react-native';
-import { BorderlessButton } from 'react-native-gesture-handler';
+import { BorderlessButton, RectButton } from 'react-native-gesture-handler';
 import FastImage from 'react-native-fast-image';
 import Share from "react-native-share";
 
@@ -74,7 +74,8 @@ const BlogBox = props => {
                />
             </BorderlessButton>
         </View>
-        <View style={[style.blogSection]}>
+        <RectButton style={[style.blogSection]}
+              onPress={props.onPress}>
             <FastImage  source={require('../assets/images/blog-default.png')}
                         style={[style.blogImage]}
                         resizeMode={'stretch'}/>
@@ -82,7 +83,7 @@ const BlogBox = props => {
                   numberOfLines={3}>
                {blog.title} {blog.title}{blog.title}{blog.title}{blog.title}{blog.title}{blog.title}{blog.title} 
             </Text>
-        </View>
+        </RectButton>
     </View>
 };
 

@@ -136,38 +136,50 @@ const Favourites = props  => {
     const [categories , setCategories ] = useState([
         {
             icon : require('../assets/icons/hanger.png'),
-            iconActive : require('../assets/icons/hanger.png'),
-            name : 'test'
+            iconActive : require('../assets/icons/hanger-active.png'),
+            name : 'test',
+            name_en : 'test',
+            
         },
         {
-            icon : require('../assets/icons/dress-active.png'),
+            icon : require('../assets/icons/dress.png'),
             iconActive : require('../assets/icons/dress-active.png'),
-            name : 'Dresses'
+            name : 'Dresses',
+            name_en : 'Dresses',
         },
         {
             icon : require('../assets/icons/hanger.png'),
-            iconActive : require('../assets/icons/hanger.png'),
-            name : 'test'
+            iconActive : require('../assets/icons/hanger-active.png'),
+            name : 'test',
+            name_en : 'test',
+
         },
         {
-            icon : require('../assets/icons/dress-active.png'),
+            icon : require('../assets/icons/dress.png'),
             iconActive : require('../assets/icons/dress-active.png'),
-            name : 'Dresses'
+            name : 'Dresses',
+            name_en : 'Dresses',
+
         },
         {
             icon : require('../assets/icons/hanger.png'),
-            iconActive : require('../assets/icons/hanger.png'),
-            name : 'test'
+            iconActive : require('../assets/icons/hanger-active.png'),
+            name : 'test',
+            name_en : 'test',
+
         },
         {
-            icon : require('../assets/icons/dress-active.png'),
+            icon : require('../assets/icons/dress.png'),
             iconActive : require('../assets/icons/dress-active.png'),
-            name : 'Dresses'
+            name : 'Dresses',
+            name_en : 'Dresses',
+
         },
         {
             icon : require('../assets/icons/hanger.png'),
-            iconActive : require('../assets/icons/hanger.png'),
-            name : 'test'
+            iconActive : require('../assets/icons/hanger-active.png'),
+            name : 'test',
+            name_en : 'test',
         },
 
     ]);

@@ -21,7 +21,7 @@ const Onboarding = ({...props}) => {
             <ImageBackground style={{flex:.65,position: 'relative',justifyContent:'flex-end'}} 
                          resizeMode="stretch"
                          source={require('../assets/images/onboarding-top-bg.png')}>
-                    <Animatable.View animation="lightSpeedIn" duration={1600}>
+                    <Animatable.View animation="slideInRight" duration={1600}>
                         <FastImage source={require('../assets/icons/logo.png')}
                                 resizeMode="contain"
                                 style={OnboardingStyle.logo}/>
@@ -48,7 +48,7 @@ const Onboarding = ({...props}) => {
 
     const SecondScreen = () => {
         return   <>
-            <Animatable.View animation="lightSpeedIn" 
+            <Animatable.View animation="slideInRight" 
                              style={OnboardingStyle.secondImage}>
                 <FastImage  style={{height:'100%',width:'100%'}} 
                             resizeMode="stretch"

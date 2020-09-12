@@ -18,6 +18,9 @@ export default  style = StyleSheet.create({
       borderBottomWidth : 1 ,
       borderBottomColor : '#ECEFF2'
    },
+   title :{
+      color : '#242424'
+   },
    headerText : {
       color : '#000',
       fontSize : 20,

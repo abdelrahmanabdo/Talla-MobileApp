@@ -26,13 +26,14 @@ export default StyleSheet.create({
       flex:3,
       borderRadius : 13,
       backgroundColor:"#FFF",
+      padding : 10,
       shadowColor : '#CCC',
-      shadowOpacity : 1,
+      shadowOpacity : .5,
+      elevation: .9,
       shadowOffset : {
          width : 1,
          height : 1
       },
-      padding : 10
    },
    blogImage :{ 
       flex:3,

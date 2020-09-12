@@ -4,7 +4,7 @@ import {StyleSheet, Dimensions} from 'react-native';
 const {width , height} = Dimensions.get('screen');
 export default  StyleSheet.create({
    container : {
-      width : width - 30  ,
+      width : width - 50  ,
       justifyContent:'space-between',
       alignItems:'center',
       alignSelf :'center',

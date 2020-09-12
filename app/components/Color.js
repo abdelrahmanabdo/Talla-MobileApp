@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { BorderlessButton } from 'react-native-gesture-handler';
-import { Octagon } from 'react-native-shape';
+import { View, Text, StyleSheet, Pressable } from 'react-native';
+import { BaseButton, BorderlessButton } from 'react-native-gesture-handler';
+import {Octagon , Circle,Hexagon, Triangle } from 'react-native-shape';
 
 const Color = ({...props}) => {
    const [isClicked , setIsClicked] = useState(props.isClicked  ?? false);
@@ -34,14 +34,19 @@ const Color = ({...props}) => {
                              marginVertical : 15,alignItems:'center',flexWrap : 'wrap'}}>
                     {  
                         props.colors.map((item , index) => {
-                            return <BorderlessButton key={index} onPress ={()=>{
+                            return <Pressable  key={index} 
+                                                      onPress ={()=>{
                                                                      setSelectedColorIndex(index);
                                                                      props.onChange(item.id)
-                                                                  }}
-                                                            style={[style.container,
-                                                                   {borderColor : index == selectedColorIndex ? item.color : 'transparent' , borderWidth : 1}]}>
-                                             <Octagon color={item.color}   scale={.8}/>
-                                    </BorderlessButton>
+                                                                  }}>
+                                       <View  style={[style.container,
+                                                      {borderColor : index == selectedColorIndex ? item.color : 'transparent' ,
+                                                       borderWidth : 1,
+                                                       borderRadius : 20}]}>
+                                                         {/* <Octagon color={item.color}   scale={.8}/> */}
+                                                <Circle color={item.color}   scale={.8}/>
+                                       </View>
+                              </Pressable>
                         })
                     }
                </View>

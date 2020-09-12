@@ -35,11 +35,13 @@ const Login = ({...props}) => {
             <Input name={I18n.t('email')} 
                   placeholerText={I18n.t('email')}                  
                   onChangeText={(value) => setEmail(value)}
+                  color={'#DCB77C'}
                   placeholderColor={'#DCB77C'} />
             <Input name={I18n.t('password')}
                   onChangeText={(value) => setPassword(value)}
                   placeholerText={I18n.t('password')}
                   password={true}
+                  color={'#DCB77C'}
                   placeholderColor={'#DCB77C'} />
          </View>
          <View style={{flex:1.5}}>

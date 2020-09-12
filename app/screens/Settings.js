@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Text, View, ImageBackground, SafeAreaView , Switch } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { BorderlessButton, RectButton, ScrollView } from 'react-native-gesture-handler';
+import * as Animatable from 'react-native-animatable';
 
 //Styles
 import style from '../assets/styles/SettingsStyle';
@@ -40,18 +41,18 @@ const Settings = props  => {
                         Reservations
                     </Text>
                 </View>
-                <View style={style.itemContainer}>
+                <Animatable.View animation={'slideInRight'}  style={style.itemContainer}>
                     <Text style={style.title}>
                         Show my working hours
                     </Text>
                     <Switch value = {showWorkingHours}
                             ios_backgroundColor={'#D1AD67'}
                             trackColor={{ false: "#012647", true: "#012647" }}
-                            thumbColor={'#FFF'}
+                            thumbColor={showWorkingHours ? "#f4f3f4" : "#f5dd4b"}
                             onValueChange ={(isOn) =>{ setShowWorkingHours(isOn)}}
                             />
-                </View>
-                <View style={style.itemContainer}>
+                </Animatable.View>
+                <Animatable.View animation={'slideInRight'}  style={style.itemContainer}>
                     <Text style={style.title}>
                         Show me in stylist list
                     </Text>
@@ -59,9 +60,10 @@ const Settings = props  => {
                             ios_backgroundColor={'#D1AD67'}
                             trackColor={{ false: "#012647", true: "#012647" }}
                             thumbColor={'#FFF'}
+                            thumbColor={showStylistList ? "#f4f3f4" : "#f5dd4b"}
                             onValueChange ={(isOn) =>{ setShowStylistList(isOn)}}
                             />
-                </View>
+                </Animatable.View>
 
 
                 <View style={style.itemContainer}>
@@ -69,28 +71,28 @@ const Settings = props  => {
                         Notifications
                     </Text>
                 </View>
-                <View style={style.itemContainer}>
+                <Animatable.View animation={'slideInRight'}  style={style.itemContainer}>
                     <Text style={style.title}>
                          Send notifications for new reservations
                     </Text>
                     <Switch value = {newReservationNotifications}
                             ios_backgroundColor={'#D1AD67'}
                             trackColor={{ false: "#012647", true: "#012647" }}
-                            thumbColor={'#FFF'}
+                            thumbColor={newReservationNotifications ? "#f4f3f4" : "#f5dd4b"}
                             onValueChange ={(isOn) =>{ setNewReservationNotifications(isOn)}}
                             />
-                </View>
-                <View style={style.itemContainer}>
+                </Animatable.View>
+                <Animatable.View animation={'slideInRight'}  style={style.itemContainer}>
                     <Text style={style.title}>
                         Send notifications before sessions
                     </Text>
                     <Switch value = {notificationBeforeSession}
                             ios_backgroundColor={'#D1AD67'}
                             trackColor={{ false: "#012647", true: "#012647" }}
-                            thumbColor={'#FFF'}
+                            thumbColor={notificationBeforeSession ? "#f4f3f4" : "#f5dd4b"}
                             onValueChange ={(isOn) =>{ setNotificationBeforeSession(isOn)}}
                             />
-                </View>
+                </Animatable.View>
             </ScrollView>
     </View>
 }

@@ -32,7 +32,8 @@ export default StyleSheet.create({
    },
    stepsText :{
       color : "#FFF",
-      fontSize : 16
+      fontSize : 16 , 
+      textAlign:'center',
    },
    skipButton: {
    }, 

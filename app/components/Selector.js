@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {Text, View  ,  StyleSheet , Dimensions} from 'react-native';
 import FastImage from 'react-native-fast-image';
-import { RectButton, BaseButton } from 'react-native-gesture-handler';
+import { RectButton, BaseButton, BorderlessButton } from 'react-native-gesture-handler';
 import * as Animatable from 'react-native-animatable';
 
 const {width} = Dimensions.get('screen');
@@ -21,7 +21,7 @@ const Selector = ({...props}) => {
    return <>
        {
           props.isRadio ?
-            <BaseButton style={style.container}
+            <BorderlessButton style={style.container}
                         rippleColor={'#F8F8f8'}
                         onPress={onSelect}>
                <Animatable.View animation={'flipInY'} style={style.imageContainer}>
@@ -36,20 +36,21 @@ const Selector = ({...props}) => {
                <Text style={style.label}>
                   {item.label ?? ''}
                </Text>
-            </BaseButton>
+            </BorderlessButton>
          :
-            <RectButton style={[style.container ,props.style,{height : props.hideText ? 120 : 175}]}
+         <Animatable.View animation={'slideInUp'}>
+            <BorderlessButton style={[style.container ,props.style,{height : props.hideText ? 120 : 175}]}
                         rippleColor={'#F8F8f8'}
                         
                         onPress={onSelect}>
-               <Animatable.View animation={'flipInX'} style={style.imageContainer}>
+               <View  style={style.imageContainer}>
                   <FastImage source={item.image} 
                              resizeMode="stretch"
                              style={[style.image]}
                   />
                   <View  style={[style.check,{backgroundColor : props.isCurrentSelected ? '#5D0D57' : '#FFF'}]}>
                   </View>
-               </Animatable.View>
+               </View>
                {
                   !props.hideText &&
                   <Text style={style.label}>
@@ -57,7 +58,9 @@ const Selector = ({...props}) => {
                   </Text>
                }
 
-            </RectButton>
+            </BorderlessButton>
+         </Animatable.View>
+
        }
     </>
 };

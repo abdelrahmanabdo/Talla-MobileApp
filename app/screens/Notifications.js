@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Text, View, ImageBackground } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { BorderlessButton, RectButton, ScrollView } from 'react-native-gesture-handler';
+import * as Animatable from 'react-native-animatable';
 
 //Styles
 import style from '../assets/styles/NotificationsStyle';
@@ -82,7 +83,8 @@ const Notifications = props  => {
             <ScrollView style={style.container}>
                 {
                     notifications.map((item,index)=>{
-                        return <RectButton  key={index}
+                        return  <Animatable.View  key={index} animation={'slideInRight'} >
+                        <RectButton  
                                             style={[style.notificationContainer,{backgroundColor: item.isRead ? '#D1AD67' : '#FFF'}]}>
                             <FastImage  source={require('../assets/images/girl.png')}
                                         resizeMode={'contain'}
@@ -103,11 +105,13 @@ const Notifications = props  => {
                                         </Text>
                                     </View>
                                 </View>
-                                <Text>
+                                <Text style={[style.text]}>
                                     {item.text}
                                 </Text>
                             </View>
                         </RectButton>
+                        </Animatable.View>
+
                     })
                 }
             </ScrollView>

@@ -38,7 +38,7 @@ const Dropdown = ({...props}) => {
             setActiveSelectedItem(index);
          }
 
-          return <Modal 
+         return <Modal 
                        isVisible={showModal} 
                        backdropOpacity={.2} >
                   <View style={[ModalStyle.container]}>
@@ -65,11 +65,11 @@ const Dropdown = ({...props}) => {
                                                         onPress={()=>{props.isConfirmable ? selectItem(item,index) : submitModal(item,index)}} >
                                  <Checkbox isModal
                                            isChecked={activeSelectedItem == index }
-                                           onChangeValue={()=>{}} />
+                                           onChange={submitModal} />
                                  <Text style={[Style.itemText, 
                                               { color: (
                                                  props.isConfirmable ?
-                                                   activeSelectedItem == index  ? '#FFF' : '#000' :
+                                                   ( activeSelectedItem == index  ? '#FFF' : '#000') :
                                                    activeItem == index ? '#012647' : '#000' )
                                               }]}>
                                     {I18nManager.isRTL ? item.name : item.name_en}

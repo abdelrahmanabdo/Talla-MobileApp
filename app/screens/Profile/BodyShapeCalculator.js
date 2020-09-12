@@ -150,7 +150,7 @@ const BodyShapeCalculator = ({...props}) => {
                   onChangeText={(value)=>{setHips(value)}}
                />
             </View>
-            <RectButton style={[GeneralStyle.SecondaryButton]}
+            <RectButton style={[GeneralStyle.SecondaryButton , {width : '99%',padding : 15}]}
                         onPress={()=>{
                            calculate()
                         }}>

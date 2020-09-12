@@ -45,7 +45,8 @@ export default {
    whichSkinColor : "Which colors make your skin naturally glow?",
    whichSkinColorNote : "Your undertone  is based on the colors of your wrist veins. Stand in a good natural daylight and check",
    youArePretty :"You are pretty and ..... ",
-   fashionGoal :"Define your favorite Style(s)? ",
+   fashionGoal :"What is your fashion goal?",
+   favouriteStyle : "Define your favourite style(s) ?",
    bodyShapeCalculator : "Body Shape Calculator",
    bust : "Bust",
    bustInfo : "BUST: Use a measure tape and  measure  all around your full bust after wearing a right size bra",
@@ -83,7 +84,15 @@ export default {
    //Seasons
    Season : "Season",
    Winter : "Winter", 
-   Summer : "Summer"
+   Summer : "Summer",
+
+   //Create blog
+   post : 'Pst',
+   title : "Title",
+   addHashtag : "Add hashtag",
+   body : "Body",
+   blogBody : "Blog body"
+
 
 
 

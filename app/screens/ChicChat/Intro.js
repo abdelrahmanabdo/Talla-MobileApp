@@ -1,7 +1,7 @@
 import React from 'react';
-import { Text, View, ImageBackground } from 'react-native';
+import { Text, View, ImageBackground ,ScrollView} from 'react-native';
 import FastImage from 'react-native-fast-image';
-import { BorderlessButton, RectButton, ScrollView } from 'react-native-gesture-handler';
+import { BorderlessButton, RectButton  } from 'react-native-gesture-handler';
 
 //Styles
 import style from '../../assets/styles/ChicChatIntro';
@@ -9,9 +9,10 @@ import GeneralStyle from '../../assets/styles/GeneralStyle';
 import Button from '../../components/Button';
 
 const Intro = props  => {
-    const text = `1 - Contact us on smile@tallah.co for any inquiries or questions before publishing your content.
+    const text = `
+1 - Contact us on smile@tallah.co for any inquiries or questions before publishing your content.
 
- 2 -  Give your content a snappy and catchy title.
+2 -  Give your content a snappy and catchy title.
 
 3-  Should be in Bullet points & to the point.
 
@@ -25,7 +26,8 @@ const Intro = props  => {
 
 8 -  Read and agree on our terms and conditions
 
- 9 - Select at least 3 hashtags that are relevant to your topic for More exposure .` ;
+9 - Select at least 3 hashtags that are relevant to your topic for More exposure .
+` ;
 
 
 
@@ -49,14 +51,14 @@ const Intro = props  => {
                     Before writing with us, please..
                 </Text>
                 <ScrollView style={[style.grayContainer]}> 
-                    <Text style={{color  : '#000000' , fontSize : 13 , lineHeight : 22 , margin: 20,}}>
+                    <Text style={{color  : '#000000' , fontSize : 14 , lineHeight : 22 , margin: 20,}}>
                         {text}
                     </Text>
                 </ScrollView>
                 <Button label={'Start Sharing'}
                         labelColor = {'#FFF'}
                         style={{width : '93%'}}
-                        onPress={()=>{}}
+                        onPress={()=>{props.navigation.navigate('newBlog')}}
                 />
             </View>
     </View>

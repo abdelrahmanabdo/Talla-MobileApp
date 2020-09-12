@@ -14,7 +14,7 @@ export default ({children ,...props}) => {
          flexDirection:'column',
          alignSelf:'center',
          borderWidth : 0,
-         marginVertical : 20,
+         marginVertical : 10,
          justifyContent:'center',
          backgroundColor: (props.bgColor || '#D1AD67') ,
          borderRadius:10,

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, View, ImageBackground, StatusBar,FlatList , ScrollView, Dimensions } from 'react-native';
+import { Text, View, ImageBackground, StatusBar, FlatList , ScrollView, Dimensions } from 'react-native';
 import { RectButton, BorderlessButton, BaseButton } from 'react-native-gesture-handler';
 
 //Styles
@@ -101,7 +101,7 @@ const ChicChatTab = props => {
      * Render vertical new blogs
      */
     const renderBlogBox = ({item}) => {
-        return <BlogBox data={item} />
+        return <BlogBox data={item} onPress={ () => {props.navigation.navigate('blogView')}} />
     }
 
     return  <View style={[GeneralStyle.container]}>

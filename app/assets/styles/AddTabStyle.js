@@ -43,7 +43,6 @@ export default StyleSheet.create({
       height : '100%'
    },
    tabContainer : {
-      flex:2,
       width : width
    },
    tabContent :{

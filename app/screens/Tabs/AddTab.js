@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Text, View, ImageBackground, FlatList, PanResponder, Animated, Pressable, Dimensions } from 'react-native';
-import { RectButton, BorderlessButton, BaseButton } from 'react-native-gesture-handler';
+import { Text, View, ImageBackground, FlatList, PanResponder , ScrollView, Animated, Pressable, Dimensions } from 'react-native';
+import { RectButton, BorderlessButton, BaseButton,  } from 'react-native-gesture-handler';
 import FastImage from 'react-native-fast-image';
 
 //Styles
@@ -27,40 +27,51 @@ const AddTab = props => {
     const [categories , setCategories ] = useState([
         {
             icon : require('../../assets/icons/hanger.png'),
-            iconActive : require('../../assets/icons/hanger.png'),
-            name : 'test'
+            iconActive : require('../../assets/icons/hanger-active.png'),
+            name : 'test',
+            name_en : 'test',
+            
         },
         {
-            icon : require('../../assets/icons/dress-active.png'),
+            icon : require('../../assets/icons/dress.png'),
             iconActive : require('../../assets/icons/dress-active.png'),
-            name : 'Dresses'
+            name : 'Dresses',
+            name_en : 'Dresses',
         },
         {
             icon : require('../../assets/icons/hanger.png'),
-            iconActive : require('../../assets/icons/hanger.png'),
-            name : 'test'
-        },
-        {
-            icon : require('../../assets/icons/dress-active.png'),
-            iconActive : require('../../assets/icons/dress-active.png'),
-            name : 'Dresses'
-        },
-        {
-            icon : require('../../assets/icons/hanger.png'),
-            iconActive : require('../../assets/icons/hanger.png'),
-            name : 'test'
-        },
-        {
-            icon : require('../../assets/icons/dress-active.png'),
-            iconActive : require('../../assets/icons/dress-active.png'),
-            name : 'Dresses'
-        },
-        {
-            icon : require('../../assets/icons/hanger.png'),
-            iconActive : require('../../assets/icons/hanger.png'),
-            name : 'test'
-        },
+            iconActive : require('../../assets/icons/hanger-active.png'),
+            name : 'test',
+            name_en : 'test',
 
+        },
+        {
+            icon : require('../../assets/icons/dress.png'),
+            iconActive : require('../../assets/icons/dress-active.png'),
+            name : 'Dresses',
+            name_en : 'Dresses',
+
+        },
+        {
+            icon : require('../../assets/icons/hanger.png'),
+            iconActive : require('../../assets/icons/hanger-active.png'),
+            name : 'test',
+            name_en : 'test',
+
+        },
+        {
+            icon : require('../../assets/icons/dress.png'),
+            iconActive : require('../../assets/icons/dress-active.png'),
+            name : 'Dresses',
+            name_en : 'Dresses',
+
+        },
+        {
+            icon : require('../../assets/icons/hanger.png'),
+            iconActive : require('../../assets/icons/hanger-active.png'),
+            name : 'test',
+            name_en : 'test',
+        },
     ]);
 
 
@@ -201,20 +212,26 @@ const AddTab = props => {
             alert('New item Added')
         }
 
-        return <View style={style.tabContent}>
+        return <>
+            <ScrollView style={[style.tabContent , {flex:1.4}]}>
                     <Dropdown items={categories}
-                               name={I18n.t('brand')} />
+                            onChangeValue={()=>{}}
+                              name={I18n.t('brand')} />
                     <Input  name={I18n.t('price')}
+                            color={'#000'}
                             onPress={(value)=>{setPrice(value)}} />
                     <Input  name={I18n.t('comment')} 
                             onChange={(value)=>{setComment(value)}}
                             isTextarea 
+                            color={'#000'}
                             rowsCount={3} />             
-                    <Button label ={'Save'}
-                            style={{width : '98%',padding : 15}}
+
+            </ScrollView>
+            <Button label ={'Save'}
+                            style={{width : '90%',padding : 15}}
                             onPress={saveItemHandler}
                             labelColor={'#FFF'}/>
-            </View>
+            </>
     }
 
 
@@ -225,12 +242,12 @@ const AddTab = props => {
         const [seasons] = useState([
             {
                 id : 1 ,
-                name : 'الصيف',
+                name : 'Summer',
                 name_en : 'Summer',
             },
             {
                 id : 2 ,
-                name : 'الشتاء',
+                name : 'Winter',
                 name_en : 'Winter',
             }
         ]);
@@ -238,33 +255,29 @@ const AddTab = props => {
         {
             id : 1,
             image : require('../../assets/icons/closet-item-default.png'),
-            name : 'test'
+            name : 'test',
+            name_en : 'Summer',
         },
         {
             id : 2,
             image : require('../../assets/icons/closet-item-default.png'),
-            name : 'Dresses'
+            name : 'Dresses',
+            name_en : 'Summer',
         },
         {
             id : 3,
             image : require('../../assets/icons/closet-item-default.png'),
-            name : 'test'
+            name : 'test',
+            name_en : 'Summer',
         },
         {
             id : 4,
             image : require('../../assets/icons/closet-item-default.png'),
-            name : 'Dresses'
+            name : 'Dresses',
+            name_en : 'Summer',
         },
-        {
-            id : 5,
-            image : require('../../assets/icons/closet-item-default.png'),
-            name : 'test'
-        },
-        {
-            id : 6,
-            image : require('../../assets/icons/closet-item-default.png'),
-            name : 'Dresses'
-        },]);
+
+        ,]);
         const [selectedItem , setSelectedItem] = useState();
         const [selectedItems , setSelectedItems] = useState([]);
         const pan = selectedItems.map(() => new Animated.ValueXY() );
@@ -331,10 +344,12 @@ const AddTab = props => {
                     <Dropdown   items={seasons}
                                 isConfirmable
                                 style={{width : '49%'}}
+                                onChangeValue={()=>{}}
                                 name={I18n.t('Season')} />
                     <Dropdown   items={categories}
                                 style={{width : '49%',marginStart:5}}
                                 isConfirmable
+                                onChangeValue={()=>{}}
                                 name={I18n.t('category')} />
                 </View>
                 <FlatList 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, ImageBackground } from 'react-native';
+import { Text, View, ImageBackground, StatusBar } from 'react-native';
 
 import GeneralStyle from '../../assets/styles/GeneralStyle';
 
@@ -13,6 +13,7 @@ import Button from '../../components/Button';
 
 const Profile = ({...props}) => {
     return <View style={[GeneralStyle.container,{flex:1,backgroundColor: "#FFF"}]}>
+       <StatusBar hidden />
        <ImageBackground source={require('../../assets/images/header-bg.png')}
                         style={[GeneralStyle.header,
                                {flexDirection : 'row',justifyContent:'space-between',padding  :10 }]}>
