@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View, ImageBackground, StatusBar ,FlatList,ScrollView, Image } from 'react-native';
 import { Button } from 'native-base';
-import { RectButton } from 'react-native-gesture-handler';
+import { BorderlessButton, RectButton } from 'react-native-gesture-handler';
 import FastImage from 'react-native-fast-image';
 import PhotoUpload from 'react-native-photo-upload'
 import Modal from 'react-native-modal';
@@ -104,7 +104,8 @@ const CreateProfile = ({...props}) => {
                 }}>
                {
                   avatar ?
-                  <Image source={{uri: `data:image/gif;base64,${avatar}`}} style={style.uploadPictureButton}/>
+                  <Image source={{uri: `data:image/gif;base64,${avatar}`}} 
+                         style={style.uploadPictureButton}/>
                   :
                   <RectButton style={style.uploadPictureButton}>
                      <FastImage  source={require('../../assets/icons/camera.png')}
@@ -116,7 +117,7 @@ const CreateProfile = ({...props}) => {
 
             </PhotoUpload>
             <Input name={I18n.t('phone')} 
-                   placeholerText={I18n.t('phone')}  
+                   placeholderText={I18n.t('phone')}  
                    isNumeric={true}                
                    onChangeText={(value) => setPhone(value)}
                    placeholderColor={'#5D0D57'} 
@@ -429,8 +430,8 @@ const CreateProfile = ({...props}) => {
       const [data] = useState([
          {
             id : 1 ,
-            image : require('../../assets/images/modern-style.png'),
-            label : "Modern"
+            image : require('../../assets/images/classic-style.png'),
+            label : "Modern / Chic"
 
          },
          {
@@ -450,7 +451,7 @@ const CreateProfile = ({...props}) => {
          },
          {
             id : 5 ,
-            image : require('../../assets/images/classic-style.png'),
+            image : require('../../assets/images/modern-style.png'),
             label : "Classic / Traditional"
 
          },
@@ -485,11 +486,7 @@ const CreateProfile = ({...props}) => {
             image : require('../../assets/images/rocker-style.png'),
             label : "Rocker"
          },
-         {
-            id : 12 ,
-            image : require('../../assets/images/donnot-know-style.png'),
-            label : "Don't know"
-         },
+
       ])
 
       const renderItem = (item) => {
@@ -534,14 +531,18 @@ const CreateProfile = ({...props}) => {
                {I18n.t('completeYourProfile')}
             </Text>
             <View style={style.stepsContainer}>
-               <View></View>
+               <View style={{flex:1}}></View>
                <Text style={style.stepsText}>Step {activeStep} of 6</Text>
-               <RectButton style={style.skipButton}
-                           onPress={goToNext}>
-                  <Text style={style.skipText}>
-                     {I18n.t('skip')}
-                  </Text>
-               </RectButton>
+               <View
+                  style={style.skipButton}
+               >
+                  <RectButton 
+                              onPress={() => props.navigation.navigate('Home')}>
+                     <Text style={style.skipText}>
+                        {I18n.t('skip')}
+                     </Text>
+                  </RectButton>
+            </View>
             </View>
             <View></View>
        </ImageBackground>
@@ -551,30 +552,51 @@ const CreateProfile = ({...props}) => {
                           resizeMode="contain"
                           style={style.stepIcon} />
             <View style={style.activeLine}></View>
-            <FastImage  source={ activeStep >= 2 ? require('../../assets/icons/two-active.png') :
-                                                  require('../../assets/icons/two-inactive.png')}
-                        resizeMode="contain"
-                        style={style.stepIcon} />
+            <BorderlessButton
+               onPress={() => setActiveStep(2)}
+            >
+               <FastImage  source={ activeStep >= 2 ? require('../../assets/icons/two-active.png') :
+                                                   require('../../assets/icons/two-inactive.png')}
+                           resizeMode="contain"
+                           style={style.stepIcon} />
+            </BorderlessButton>
             <View style={activeStep > 2 ? style.activeLine : style.inActiveLine}></View>
-            <FastImage  source={ activeStep >= 3 ? require('../../assets/icons/three-active.png') :
-                                                  require('../../assets/icons/three-inactive.png')}
-                        resizeMode="contain"
-                        style={style.stepIcon} />
+            <BorderlessButton
+               onPress={() => setActiveStep(3)}
+            >
+               <FastImage  source={ activeStep >= 3 ? require('../../assets/icons/three-active.png') :
+                                                   require('../../assets/icons/three-inactive.png')}
+                           resizeMode="contain"
+                           style={style.stepIcon} />
+            </BorderlessButton>
             <View style={activeStep > 3 ? style.activeLine : style.inActiveLine}></View>
-            <FastImage source={ activeStep >= 4 ? require('../../assets/icons/four-active.png') :
-                                                  require('../../assets/icons/four-inactive.png')}
-                        resizeMode="contain"
-                        style={style.stepIcon} />
+            <BorderlessButton
+               onPress={() => setActiveStep(4)}
+            >
+               <FastImage source={ activeStep >= 4 ? require('../../assets/icons/four-active.png') :
+                                                   require('../../assets/icons/four-inactive.png')}
+                           resizeMode="contain"
+                           style={style.stepIcon} />
+            </BorderlessButton>
             <View style={activeStep > 4 ? style.activeLine : style.inActiveLine}></View>
-            <FastImage source={ activeStep >= 5 ? require('../../assets/icons/five-active.png') :
-                                                  require('../../assets/icons/five-inactive.png')}
-                        resizeMode="contain"
-                        style={style.stepIcon} />
+            <BorderlessButton
+               onPress={() => setActiveStep(5)}
+            >
+               <FastImage source={ activeStep >= 5 ? require('../../assets/icons/five-active.png') :
+                                                   require('../../assets/icons/five-inactive.png')}
+                           resizeMode="contain"
+                           style={style.stepIcon} />
+            </BorderlessButton>
             <View style={activeStep > 5 ? style.activeLine : style.inActiveLine}></View>
-            <FastImage source={ activeStep == 6 ? require('../../assets/icons/six-active.png') :
-                                                  require('../../assets/icons/six-inactive.png')}
-                          resizeMode="contain"
-                          style={style.stepIcon} />
+            <BorderlessButton
+               onPress={() => setActiveStep(6)}
+            >
+               <FastImage source={ activeStep == 6 ? require('../../assets/icons/six-active.png') :
+                                                   require('../../assets/icons/six-inactive.png')}
+                           resizeMode="contain"
+                           style={style.stepIcon} />
+            </BorderlessButton>
+                        
           </View>
        </View> 
        <View style={style.stepProcessContainer}>

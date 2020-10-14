@@ -26,7 +26,6 @@ export default  style = StyleSheet.create({
       marginVertical : 6,
       borderRadius : 8,
       
-      
    },
    notificationDetailsContainer :{
       flex:4,

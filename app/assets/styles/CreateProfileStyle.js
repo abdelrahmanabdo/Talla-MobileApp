@@ -31,11 +31,16 @@ export default StyleSheet.create({
       alignItems: 'center',
    },
    stepsText :{
+      flex:1,
       color : "#FFF",
       fontSize : 16 , 
       textAlign:'center',
    },
    skipButton: {
+      flex:1,
+      width : 30,
+      borderRadius : 10,
+      alignItems:'flex-end'
    }, 
    skipText :{
       color : "#FFF",
@@ -77,7 +82,8 @@ export default StyleSheet.create({
    //Step One
    stepHeaderText  : {
       color : "#5D0D57",
-      fontSize : 18
+      fontSize : 18 , 
+      marginBottom : 15
    },
    note :{
       marginVertical : 20,

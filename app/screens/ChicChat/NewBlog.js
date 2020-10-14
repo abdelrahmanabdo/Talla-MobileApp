@@ -1,16 +1,16 @@
 import React , {useState , useEffect} from 'react';
 import { Text, View, ImageBackground , FlatList , ScrollView, SafeAreaView } from 'react-native';
 import FastImage from 'react-native-fast-image';
-import { BorderlessButton, RectButton, BaseButton,  } from 'react-native-gesture-handler';
+import { BorderlessButton , BaseButton } from 'react-native-gesture-handler';
 import Modal from 'react-native-modal';
 import { Button } from 'native-base';
+import ImagePicker from 'react-native-image-picker';
 
 //Styles
 import style from '../../assets/styles/NewBlogStyle';
 import GeneralStyle from '../../assets/styles/GeneralStyle';
 import NewBlogStyle from '../../assets/styles/NewBlogStyle';
 import Input from '../../components/Input';
-import ImagePicker from 'react-native-image-picker';
 
 import I18n from '../../lang/I18n';
 import ModalStyle from '../../assets/styles/ModalStyle';
@@ -136,7 +136,7 @@ const NewBlog = props  => {
             </Button>
          </View>
       </Modal>
-    }
+   }
 
 
     /**
@@ -197,7 +197,7 @@ const NewBlog = props  => {
                </View>
                <View>
                   <Input name={'Title'}
-                        placeholerText={I18n.t('title')}  
+                        placeholderText={I18n.t('title')}  
                         onChangeText={(value) => setTitle(value)}
                         placeholderColor={'#C3C3C3'}  
                         title={title}
@@ -205,7 +205,7 @@ const NewBlog = props  => {
                   />
                   <View style={{flexDirection : 'row' , alignItems : 'center' , justifyContent:'center' , marginHorizontal : 20}}>
                      <Input name={I18n.t('addHashtag')}
-                           placeholerText={I18n.t('addHashtag')}  
+                           placeholderText={I18n.t('addHashtag')}  
                            defaultValue={currentHashtag}
                            style={{width : '95%'}}
                            onChangeText={(value) => setCurrentHashtag(value)}
@@ -227,7 +227,7 @@ const NewBlog = props  => {
                      }
                   </View>
                   <Input name={'Body'}
-                        placeholerText={I18n.t('blogBody')}  
+                        placeholderText={I18n.t('blogBody')}  
                         onChangeText={(value) => setBody(value)}
                         isTextarea={true}
                         defaultValue={body}

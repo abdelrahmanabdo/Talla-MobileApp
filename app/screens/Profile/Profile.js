@@ -18,7 +18,7 @@ const Profile = ({...props}) => {
                         style={[GeneralStyle.header,
                                {flexDirection : 'row',justifyContent:'space-between',padding  :10 }]}>
             <BorderlessButton onPress={()=>{props.navigation.goBack()}}
-                        style={{flex:1}}>
+                              style={{flex:1}}>
                <FastImage source={require('../../assets/icons/back-white.png')}
                           style={{width : 25 , height:25}}
                           resizeMode={'contain'}

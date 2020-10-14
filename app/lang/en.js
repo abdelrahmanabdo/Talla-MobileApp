@@ -21,7 +21,7 @@ export default {
    city : "City",
    country  :"Country",
    password : "Password",
-   confirmPassword : "Confirm address",
+   confirmPassword : "Confirm password",
    registration : "Register",
    haveAnAccount : "Have an account ? ",
    donotHaveAnAccount : "Don't have an account ? ",

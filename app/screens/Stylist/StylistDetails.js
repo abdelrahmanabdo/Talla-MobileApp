@@ -149,7 +149,7 @@ const StylistDetails = ({...props}) => {
                </View>
             </View>
          </ImageBackground>
-         <View style={{flex:1,}}>
+         <View style={{flex:1}}>
             <ImageBackground source={require('../../assets/images/closet-item-default.png')}
                            resizeMode={'stretch'}
                            style={style.bgImage}>
@@ -234,20 +234,18 @@ const StylistDetails = ({...props}) => {
                                     style={{width : 20 , height : 20}} />
                   </BorderlessButton>
                </View>   
-               <View style={[style.grayContainer  , GeneralStyle.rowSpaceBetween]}>
+               <BorderlessButton 
+                  style={[style.grayContainer  , GeneralStyle.rowSpaceBetween]}
+                  onPress={() => props.navigation.navigate('projects')}
+               >
                   <Text style={[GeneralStyle.secondaryText,{fontWeight : '500'}]}>
                        Portfolio 
                   </Text>
-                  <BorderlessButton>
-                        <FastImage source={require('../../assets/icons/right-colored-arrow.png')}
-                                    resizeMode={'contain'}
-                                    style={{width : 20 , height : 20}} />
-                  </BorderlessButton>
-               </View>  
-    
+                  <FastImage  source={require('../../assets/icons/right-colored-arrow.png')}
+                              resizeMode={'contain'}
+                              style={{width : 20 , height : 20}} />
+               </BorderlessButton>  
             </ScrollView>
-
-
          </View>
    </View>
 

@@ -28,6 +28,46 @@ const Dropdown = ({...props}) => {
             setShowModal(false);
       }
 
+      const Style = StyleSheet.create({
+         container : {
+            width : width - 40,
+            borderRadius:7,
+            alignSelf:'center',
+            padding : 5,
+         },
+         itemContainer :{
+            flexDirection : 'row',
+            alignItems:'center',
+            padding : 15,
+            backgroundColor:  '#F8F8F8',
+            marginVertical : 10,
+            borderRadius : 15
+         },
+         itemText : {
+            alignSelf: 'flex-start' ,
+            color: '#5D0D57',
+            fontFamily : "Roboto",
+            fontSize: 16,
+         },
+         placeholderText : {
+            color: props.placeholderText ?? '#5D0D57',
+            fontFamily : "Roboto",
+            fontSize: 14,
+         },
+         dropdown: {
+            backgroundColor:'#FFF',
+            flexDirection:'row',
+            justifyContent:'space-between',
+            alignItems:'center',
+            width: '100%',
+            padding:15,
+            borderWidth : 1.25 ,
+            borderColor:'#CCC',
+            maxHeight: height /2,
+            borderRadius : 8
+         }
+      });
+
       useEffect(()=>{
          setSelectedValue(selectedValue)
       },[])
@@ -97,7 +137,7 @@ const Dropdown = ({...props}) => {
 
                      {
                         props.name &&
-                        <Text style={[Style.placeholerText,{fontWeight : '700'}]}>
+                        <Text style={[Style.placeholderText,{fontWeight : '700'}]}>
                            {props.name}
                         </Text>                     
                      }
@@ -107,7 +147,7 @@ const Dropdown = ({...props}) => {
                   <Pressable onPress={()=> setShowModal(true)}
                               android_ripple={{color:  ('#D1AD67')}}
                               style={Style.dropdown}>
-                        <Text style={Style.placeholerText}>
+                        <Text style={Style.placeholderText}>
                            { I18nManager.isRTL ? props?.items[activeItem]?.name : props?.items[activeItem]?.name_en }
                         </Text>
                               <FastImage source={require('../assets/icons/down-arrow.png')}  
@@ -117,7 +157,7 @@ const Dropdown = ({...props}) => {
                   <RectButton onPress={()=> setShowModal(true)}
                               style={{borderRadius : 8,justifyContent:'center'}}>
                      <View style={Style.dropdown}> 
-                        <Text style={Style.placeholerText}>
+                        <Text style={Style.placeholderText}>
                            { I18nManager.isRTL ? props?.items[activeItem]?.name : props?.items[activeItem]?.name_en }
                         </Text>
                               <FastImage source={require('../assets/icons/down-arrow.png')}  
@@ -129,44 +169,6 @@ const Dropdown = ({...props}) => {
                </Animatable.View>
 };
 
-const Style = StyleSheet.create({
-   container : {
-      width : width - 40,
-      borderRadius:7,
-      alignSelf:'center',
-      padding : 5,
-   },
-   itemContainer :{
-      flexDirection : 'row',
-      alignItems:'center',
-      padding : 15,
-      backgroundColor:  '#F8F8F8',
-      marginVertical : 10,
-      borderRadius : 15
-   },
-   itemText : {
-      alignSelf: 'flex-start' ,
-      color: '#5D0D57',
-      fontFamily : "Roboto",
-      fontSize: 16,
-   },
-   placeholerText : {
-      color: '#5D0D57',
-      fontFamily : "Roboto",
-      fontSize: 14,
-   },
-   dropdown: {
-      backgroundColor:'#FFF',
-      flexDirection:'row',
-      justifyContent:'space-between',
-      alignItems:'center',
-      width: '100%',
-      padding:15,
-      borderWidth : 1.25 ,
-      borderColor:'#CCC',
-      maxHeight: height /2,
-      borderRadius : 8
-   }
-});
+
 
 export default Dropdown;

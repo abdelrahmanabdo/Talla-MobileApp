@@ -19,7 +19,7 @@ const Datepicker = ({...props}) => {
                   <View style={{flexDirection:'row',alignItems:'center'}}>
                      {
                         props.name &&
-                        <Text style={[Style.placeholerText,{fontWeight : '700'}]}>
+                        <Text style={[Style.placeholderText,{fontWeight : '700'}]}>
                            {props.name}
                         </Text>                     
                      }
@@ -74,7 +74,7 @@ const Style = StyleSheet.create({
       fontSize: 16,
       marginVertical : 14,
    },
-   placeholerText : {
+   placeholderText : {
       color: '#5D0D57',
       fontFamily : "Roboto",
       fontSize: 14,

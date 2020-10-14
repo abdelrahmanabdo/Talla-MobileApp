@@ -23,6 +23,12 @@ import NewBlog from '../screens/ChicChat/NewBlog';
 import BlogItemView from '../screens/ChicChat/BlogItemView';
 import StylistsList from '../screens/Stylist/StylistsList';
 import StylistDetails from '../screens/Stylist/StylistDetails';
+import WelcomeIntro from '../screens/Stylist/Request/WelcomeIntro';
+import PhoneConfirmation from '../screens/Stylist/Request/PhoneConfirmation';
+import StylistRequestSteps from '../screens/Stylist/Request/StylistRequestSteps';
+import ProjectDetails from '../screens/Stylist/Projects/ProjectDetails';
+import Projects from '../screens/Stylist/Projects/Projects';
+import Chat from '../screens/Chat/Chat';
 
 
 const config = {
@@ -93,7 +99,10 @@ export function AppNavigator () {
                        options = {{options}}/>
          <Stack.Screen name="messages" 
                        component={Messages}
-                       options = {{options}}/>                                               
+                       options = {{options}}/>   
+         <Stack.Screen name="chat" 
+                       component={Chat}
+                       options = {{options}}/>                                              
          <Stack.Screen name="calendar" 
                        component={Calendars}
                        options = {{options}}/>
@@ -123,7 +132,22 @@ export function AppNavigator () {
                        options = {{options}}/>
          <Stack.Screen name="stylistDetails" 
                        component={StylistDetails}
-                       options = {{options}}/>                                                                                       
+                       options = {{options}}/>     
+         <Stack.Screen name="stylistRequestIntro" 
+                       component={WelcomeIntro}
+                       options = {{options}}/>     
+         <Stack.Screen name="phoneConfirmation" 
+                       component={PhoneConfirmation}
+                       options = {{options}}/>                                                                                                   
+         <Stack.Screen name="stylistRequestSteps" 
+                       component={StylistRequestSteps}
+                       options = {{options}}/>       
+         <Stack.Screen name="projects" 
+                       component={Projects}
+                       options = {{options}}/>  
+         <Stack.Screen name="projectDetails" 
+                       component={ProjectDetails}
+                       options = {{options}}/>    
     </Stack.Navigator>
    );
 }

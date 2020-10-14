@@ -31,10 +31,13 @@ export default StyleSheet.create({
    headerText : {
       color : '#FFF',
       fontSize : 19,
-      fontFamily : 'Roboto-Medium'
+      fontFamily : 'Roboto-Medium',
+      textAlign: 'center',
+      alignSelf : 'center'
    },
    row :{
-      flexDirection:'row'
+      flexDirection:'row',
+      alignItems:'center'
    },
    rowSpaceBetween : {
       flexDirection : "row",
@@ -90,7 +93,14 @@ export default StyleSheet.create({
       color : '#000',
       fontFamily:'Roboto'
    },
-
+   grayBoldText : {
+      color : '#7B7B7B',
+      fontFamily:'Roboto-Bold'
+   },
+   grayText : {
+      color : '#7B7B7B',
+      fontFamily:'Roboto'
+   },
    //Tabs
    tabButtons : {
       width : '90%',

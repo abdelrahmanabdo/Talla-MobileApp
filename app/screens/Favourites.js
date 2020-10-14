@@ -247,7 +247,8 @@ const Favourites = props  => {
 
         },[season])
 
-        return <Modal  isVisible={showFilterModal}
+        return <Modal  
+                     isVisible={showFilterModal}
                      style={{margin: 0,justifyContent:'flex-end'}}
                      backdropOpacity={.7}>
          <View style={ModalStyle.actionModalContainer}>

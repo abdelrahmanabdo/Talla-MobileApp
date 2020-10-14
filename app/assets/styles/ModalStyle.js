@@ -28,7 +28,7 @@ export default  StyleSheet.create({
       alignItems:'center'
    },
    headerText :{
-      fontSize : 18,
+      fontSize : 17,
       fontFamily : 'Roboto-Bold',
       color :'#000'
    },

@@ -60,7 +60,7 @@ const BlogBox = props => {
    return <View style={[style.container]}>
         <View style={[style.actionsSection]}>
             <FastImage  source={blog.user.avatar}
-                        style={{height : 50 , width : 40 ,borderRadius : 20}} />
+                        style={{height : 50 , width : 50 ,borderRadius : 25}} />
             <View style={{alignItems:'center'}}>
                <AddToFavourites />
                <Text style={[style.likesNumber]}>
@@ -74,7 +74,7 @@ const BlogBox = props => {
                />
             </BorderlessButton>
         </View>
-        <RectButton style={[style.blogSection]}
+        <RectButton rippleColor={'#F8F8F8'} style={[style.blogSection]}
               onPress={props.onPress}>
             <FastImage  source={require('../assets/images/blog-default.png')}
                         style={[style.blogImage]}

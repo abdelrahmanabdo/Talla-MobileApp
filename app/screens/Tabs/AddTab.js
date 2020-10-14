@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Text, View, ImageBackground, FlatList, PanResponder , ScrollView, Animated, Pressable, Dimensions } from 'react-native';
+import { Text, View, ImageBackground, FlatList, PanResponder ,
+         ScrollView, Animated, Pressable, Dimensions } from 'react-native';
 import { RectButton, BorderlessButton, BaseButton,  } from 'react-native-gesture-handler';
 import FastImage from 'react-native-fast-image';
 
@@ -150,22 +151,29 @@ const AddTab = props => {
                 </Pressable>
                 {
                     index == activeCategoryIndex &&  
-                    <Text style={[GeneralStyle.categoryName]}>
-                    {item.name}
+                    <Text style={[GeneralStyle.categoryName , {fontWeight:'700'}]}>
+                        {item.name}
                     </Text>
                 }
 
             </View>
         }
 
-        return <View style={style.tabContainer}>
+        return <ScrollView 
+                        style={style.tabContainer}
+                >
+                <Text 
+                    style={[style.sectionHeaderText , {marginStart : 15}]}
+                >
+                    {I18n.t('category')}
+                </Text>
                 <FlatList 
-                                horizontal
-                                showsHorizontalScrollIndicator={false}
-                                data={categories}
-                                keyExtractor={(item,index) => index.toString()}
-                                renderItem={renderCategoryBox}
-                            />
+                                    horizontal
+                                    showsHorizontalScrollIndicator={false}
+                                    data={categories}
+                                    keyExtractor={(item,index) => index.toString()}
+                                    renderItem={renderCategoryBox}
+                                />
                 <View style={style.tabContent}>
                     <Text style={style.sectionHeaderText}>
                         Season
@@ -193,7 +201,7 @@ const AddTab = props => {
                             onPress={()=>{setAddItemActiveTab(2)}}
                             labelColor={'#FFF'}/>
                 </View>
-            </View>
+            </ScrollView>
     }
 
     /**
@@ -423,7 +431,6 @@ const AddTab = props => {
                         :
                         <AddItemSecondTab />
                     }
-
                     </>
                     :
                     <AddOutfitTab />

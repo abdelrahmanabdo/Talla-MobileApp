@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, View, ImageBackground, SafeAreaView } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { BorderlessButton, RectButton, ScrollView } from 'react-native-gesture-handler';
-import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
+import {Calendar} from 'react-native-calendars';
 
 
 //Styles
@@ -33,10 +33,10 @@ const Calendars = props  => {
                        Calendar
                     </Text>
                     <View style={{flexDirection : 'row'}}>
-                        <BorderlessButton onPress={() => {props.navigation.navigate('notifications')}}>
+                        {/* <BorderlessButton onPress={() => {props.navigation.navigate('notifications')}}>
                             <FastImage source={require('../assets/icons/add-colored.png')}
                                     style={{width : 35,height : 35}} />
-                        </BorderlessButton>
+                        </BorderlessButton> */}
                     </View>
                 </View>
             </ImageBackground>

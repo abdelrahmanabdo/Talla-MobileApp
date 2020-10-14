@@ -28,10 +28,10 @@ const Checkbox = ({...props}) => {
          alignSelf:'center',
          padding : 12,
          borderWidth : .5,
-         borderColor: isChecked  ? '#D1AD67' : '#000',
+         borderColor: isChecked  ? '#D1AD67' : '#F8F8F8',
          padding : 10,
          justifyContent:'center',
-         backgroundColor: isChecked ? '#D1AD67' : '#FFF',
+         backgroundColor: isChecked ? '#D1AD67' : '#F8F8F8',
          borderRadius:14,
          marginHorizontal: 10
       },

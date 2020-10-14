@@ -87,7 +87,9 @@ const MoreTab = props => {
         const navigation = useNavigation();
 
         const ListItem = ({icon , label ,onPress}) => {
-            return <RectButton style={style.itemContainer}
+            return <RectButton 
+                                rippleColor={'#CCC'}
+                               style={style.itemContainer}
                                onPress={onPress}>
                 <View style={{flexDirection : 'row',alignItems:'center'}}>
                     <FastImage  source={icon}
@@ -139,6 +141,15 @@ const MoreTab = props => {
                 <ListItem   icon={require('../../assets/icons/profile.png')} 
                             label={'Logout'} 
                             onPress={()=>{navigation.navigate('')}}/>
+                <BorderlessButton 
+                    rippleColor={'#CCC'}
+                    style={style.beStylistButton}
+                    onPress={() => props.navigation.navigate('stylistRequestIntro')}
+                >
+                    <Text style={style.beStylistButtonText}>
+                        Be a Stylist
+                    </Text>
+                </BorderlessButton>
             </ScrollView>
         </View>
     }
@@ -173,11 +184,7 @@ const MoreTab = props => {
                 <UserInfo />
                 <Line />
                 <ListItems />
-                <BorderlessButton style={style.beStylistButton}>
-                    <Text style={style.beStylistButtonText}>
-                        Be a Stylist
-                    </Text>
-                </BorderlessButton>
+
             </View>
     </View>
 };

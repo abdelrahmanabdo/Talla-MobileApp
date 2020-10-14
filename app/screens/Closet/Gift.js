@@ -64,7 +64,7 @@ const Gift = ({...props}) => {
                         style={{width:20,height:20}}
                         resizeMode={'contain'}/>
             </BorderlessButton>
-            <Text style={[GeneralStyle.blackBoldText,{fontSize:18}]}>
+            <Text style={[GeneralStyle.blackBoldText,{fontSize:18 , color : '#000'}]}>
                {I18n.t('yourGift')}
             </Text>
             <View></View>

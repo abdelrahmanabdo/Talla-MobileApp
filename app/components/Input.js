@@ -9,8 +9,6 @@ const Input = ({ ...props }) => {
    
    const Style = StyleSheet.create({
       container : {
-         flex:1,
-         flexDirection:'column',
          width : width - 40,
          alignSelf:'center',
          marginVertical : 7,
@@ -23,7 +21,7 @@ const Input = ({ ...props }) => {
          color : "#F90909",
          fontSize:16
       },
-      placeholerText : {
+      placeholderText : {
          color: props.placeholderColor || '#CCC',
          fontFamily : "Roboto",
          fontSize: 13,
@@ -48,7 +46,7 @@ const Input = ({ ...props }) => {
 
 
    return <Animatable.View animation={'pulse'}  
-                           style={Style.container}>
+                           style={[Style.container, props.style]}>
       <View style={{flexDirection:'row',alignItems:'center'}}>
                      {
                         props.required &&
@@ -69,7 +67,7 @@ const Input = ({ ...props }) => {
                         style={[Style.input , props.style]}
                         defaultValue={props.defaultValue}
                         onChangeText={props.onChangeText}
-                        placeholder={props.placeholerText}
+                        placeholder={props.placeholderText}
                         placeholderTextColor={props.placeholderColor || '#000'}
                         secureTextEntry={props.password}
                         keyboardType={props.isNumeric ? 'number-pad' : 'default'}
@@ -78,7 +76,7 @@ const Input = ({ ...props }) => {
                      <TextInput
                         autoFocus={props.autoFocus}
                         onChangeText={props.onChangeText}
-                        placeholder={props.placeholerText}
+                        placeholder={props.placeholderText}
                         defaultValue={props.defaultValue}
                         style={[Style.input , props.style]}
                         placeholderTextColor={props.placeholderColor}

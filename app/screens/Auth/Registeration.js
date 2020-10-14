@@ -37,23 +37,23 @@ const Registeration = ({...props}) => {
                {I18n.t('joinNow')}
             </Text>
             <Input name={I18n.t('userName')} 
-                  placeholerText={I18n.t('userName')}
+                  placeholderText={I18n.t('userName')}
                   onChangeText={(value) => setUserName(value)}
                   color={'#DCB77C'}
                   placeholderColor={'#DCB77C'} />
             <Input name={I18n.t('email')} 
                   color={'#DCB77C'}
-                  placeholerText={I18n.t('email')}
+                  placeholderText={I18n.t('email')}
                   onChangeText={(value) => setEmail(value)}
                   placeholderColor={'#DCB77C'} />
             <Input name={I18n.t('password')} 
-                  placeholerText={I18n.t('password')}
+                  placeholderText={I18n.t('password')}
                   color={'#DCB77C'}
                   onChangeText={(value) => setPassword(value)}
                   password= {true}
                   placeholderColor={'#DCB77C'} />
             <Input name={I18n.t('confirmPassword')} 
-                  placeholerText={I18n.t('confirmPassword')}
+                  placeholderText={I18n.t('confirmPassword')}
                   color={'#DCB77C'}
                   onChangeText={(value) => setConfirmPassword(value)}
                   password= {true}
@@ -81,7 +81,10 @@ const Registeration = ({...props}) => {
                   <Text style={LoginStyle.whiteSmallText}>
                      {I18n.t('haveAnAccount')} 
                   </Text>
-                  <RectButton onPress={navigateToLogin}>
+                  <RectButton 
+                     rippleColor={'#CCC'}
+                     onPress={navigateToLogin}
+                  >
                      <Text style={LoginStyle.whiteMediumText}>
                         {I18n.t('signIn')}
                      </Text>

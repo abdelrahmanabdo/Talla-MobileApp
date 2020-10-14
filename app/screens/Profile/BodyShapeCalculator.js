@@ -41,9 +41,11 @@ const BodyShapeCalculator = ({...props}) => {
                   {modalSubText}
                 </Text>
             }
-            <Button onPress={()=>{  setModalSubText('');
+            <Button onPress={() => {  setModalSubText('');
                                     setModalImage('');
-                                    setShowModal(false)}}
+                                    setShowModal(false);
+                                    props.navigation.goBack()
+                                 }}
                         style={ModalStyle.SecondaryButton}>
                <Text style={ModalStyle.SecondaryButtonText}>
                   ok
@@ -107,7 +109,7 @@ const BodyShapeCalculator = ({...props}) => {
                               style={{width:24,height:24}}/>
                </BaseButton>
                <TextInput 
-                  style={{flex:1,padding:7,backgroundColor: "#FFF",borderRadius:10}}
+                  style={{flex:1,padding:7,backgroundColor: "#FFF" , color :'#000',borderRadius:10}}
                   keyboardType={'number-pad'}
                   onChangeText={(value)=>{setBust(value)}}
                />
@@ -126,7 +128,7 @@ const BodyShapeCalculator = ({...props}) => {
                               style={{width:24,height:24}}/>
                </RectButton>
                <TextInput 
-                  style={{flex:1,padding:7,backgroundColor: "#FFF",borderRadius:10}}
+                  style={{flex:1,padding:7,backgroundColor: "#FFF" , color :'#000',borderRadius:10}}
                   keyboardType={'number-pad'}
                   onChangeText={(value)=>{setWaist(value)}}
                />
@@ -145,7 +147,7 @@ const BodyShapeCalculator = ({...props}) => {
                               style={{width:24,height:24}}/>
                </RectButton>
                <TextInput 
-                  style={{flex:1,padding:7,backgroundColor: "#FFF",borderRadius:10}}
+                  style={{flex:1,padding:7,backgroundColor: "#FFF" , color :'#000',borderRadius:10}}
                   keyboardType={'number-pad'}
                   onChangeText={(value)=>{setHips(value)}}
                />

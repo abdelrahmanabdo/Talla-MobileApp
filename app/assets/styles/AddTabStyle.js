@@ -20,16 +20,14 @@ export default StyleSheet.create({
       fontSize : 19
    },
    container : {
+      flex:1,
       width : width ,
       height : height,
-      flex:1
    }, 
    imageContainer :{
-      flex:1,
       width : width - 80,
       alignSelf:'center',
       padding : 20,
-      position: 'relative',
    },
    editIcon : {
       width : 30,
@@ -40,10 +38,12 @@ export default StyleSheet.create({
    },
    imageBackground : {  
       width : '100%',
-      height : '100%'
+      height : height / 4
    },
    tabContainer : {
-      width : width
+      flex:1,
+      width : width,
+      marginTop : 30
    },
    tabContent :{
       width : width - 30 ,
@@ -67,7 +67,7 @@ export default StyleSheet.create({
       flexWrap :'wrap'
    },
    whiteBox :{
-      flex: 1 ,
+      flex: 1.8 ,
       width : width ,
       backgroundColor : '#FFF',
       borderTopRightRadius : 25,

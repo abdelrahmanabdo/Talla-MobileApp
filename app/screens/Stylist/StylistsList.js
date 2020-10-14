@@ -147,9 +147,9 @@ const StylistsList = props => {
                            numberOfLines={1}>
                         {item.name}
                      </Text>
-                     <Text style={[GeneralStyle.blackText,{marginTop : 5 , color : '#BBB'}]} >
+                     {/* <Text style={[GeneralStyle.blackText,{marginTop : 5 , color : '#BBB'}]} >
                      {item.sessions} Session
-                     </Text>
+                     </Text> */}
                   </View>
                </View>
                <View>
@@ -202,7 +202,10 @@ const StylistsList = props => {
             </View>
       </ImageBackground>
       <View style={[GeneralStyle.rowSpaceBetween,{padding:15}]}>
-         <BorderlessButton style={[GeneralStyle.SecondaryButton]}>
+         <BorderlessButton 
+            style={[GeneralStyle.SecondaryButton]}
+            onPress={() => props.navigation.navigate('stylistRequestIntro')}
+         >
             <Text style={[GeneralStyle.SecondaryButtonText]}>
                Be a Stylist
             </Text>

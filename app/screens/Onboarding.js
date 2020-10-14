@@ -3,7 +3,7 @@ import { Text, View, ImageBackground, StatusBar } from 'react-native';
 import OnboardingStyle from '../assets/styles/OnboardingStyle';
 import FastImage from 'react-native-fast-image';
 import * as Animatable from 'react-native-animatable';
-import { RectButton } from 'react-native-gesture-handler';
+import { BaseButton, BorderlessButton, RectButton } from 'react-native-gesture-handler';
 
 import I18n from '../lang/I18n';
 
@@ -90,12 +90,12 @@ const Onboarding = ({...props}) => {
                 :
                 <FirstScreen />
             }
-            <RectButton style={OnboardingStyle.skipButton} 
+            <BaseButton style={OnboardingStyle.skipButton} 
                         onPress={()=>skipClickHandler()}>
                     <Text style={OnboardingStyle.skipButtonText}>
                          {I18n.t('skip')}
                     </Text>
-            </RectButton>
+            </BaseButton>
         </ImageBackground>
     </View>
 };

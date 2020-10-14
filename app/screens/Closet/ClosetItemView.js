@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, ImageBackground , SafeAreaView,FlatList , Statusbar } from 'react-native';
+import { Text, View, ImageBackground , SafeAreaView,FlatList , Statusbar, Pressable } from 'react-native';
 import {Button} from 'native-base';
 import { RectButton, ScrollView, BorderlessButton } from 'react-native-gesture-handler';
 import FastImage from 'react-native-fast-image';
@@ -84,10 +84,12 @@ const ClosetItemView = ({...props}) => {
                <Text style={ModalStyle.headerText}>
                   Edit item data
                </Text>
-               <Button transparent  onPress={()=>{setShowEditModal(false)}}>
+               <Pressable 
+                  transparent  
+                  onPress={()=>{setShowEditModal(false)}}>
                   <FastImage source={require('../../assets/icons/close-colored.png')}
-                              style={{width:25,height:25}} />
-               </Button>
+                              style={{width:20,height:20}} />
+               </Pressable>
             </View>
             <View style={{flexDirection:"column"}}>
                <Dropdown items={[]}
@@ -112,29 +114,40 @@ const ClosetItemView = ({...props}) => {
                      </View>
                   </View>
                </View>
-               <Input  name={I18n.t('color')} />
+               <Input  
+                  name={I18n.t('color')}
+                  placeholderText={'Color'}
+                  placeholderColor={'#CCC'}
+               />
                <Dropdown items={[]}
                          isModal
                          name={I18n.t('brand')} />
-               <Input  name={I18n.t('price')} />
-               <Input  name={I18n.t('comment')} isTextarea rowsCount={3} />
+               <Input  
+                  name={I18n.t('price')}
+                  placeholderText={'Price'}
+                  placeholderColor={'#CCC'}
+                />
+               <Input  
+                  name={I18n.t('comment')} 
+                  placeholderText={'Comment'}
+                  placeholderColor={'#CCC'}
+                  isTextarea 
+                  rowsCount={3} />
                <View style={{flexDirection:'row',marginBottom : 10}}>
                <TallaButton   onPress={()=>{setShowEditModal(false) }}
                               label ={'cancel'}
                               labelColor={'#D1AD67'}
-                              isModal
                               style={[ModalStyle.SecondaryButton,{backgroundColor:'#FFF',
                                                                   marginEnd : 10,
                                                                   flex:1,
                                                                   borderColor  : '#D1AD67' , 
-                                                                  borderWidth : 1}]}>
-               </TallaButton>
+                                                                  borderWidth : 1}]}
+               />
                <TallaButton   onPress={()=>{ setShowDeleteModal(false)}}
                               label={'Save'}
                               labelColor={'#FFF'}
-                              isModal
-                              style={[ModalStyle.SecondaryButton,{flex:1}]}>
-               </TallaButton>
+                              style={[ModalStyle.SecondaryButton,{flex:1}]}
+               />
                </View>
             </View>
          </ScrollView>
@@ -264,7 +277,9 @@ const ClosetItemView = ({...props}) => {
             <View style={style.grayContainer}>
                <View style={GeneralStyle.rowSpaceBetween}>
                   <View></View>
-                  <BorderlessButton onPress={()=>{setShowEditModal(true)}}>
+                  <BorderlessButton 
+                     rippleColor={'#CCC'}
+                     onPress={()=>{setShowEditModal(true)}}>
                      <FastImage source={require('../../assets/icons/edit.png')}
                               style={{width:23,height:23}}
                      />
