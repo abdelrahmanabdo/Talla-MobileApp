@@ -28,6 +28,11 @@ export default {
    termsAndconditions: "Terms & conditions",
    signIn : "Sign In",
    signUp : "Sign Up",
+   nameIsRequired: "Username is required",
+   emailIsRequired: "E-mail is required",
+   passwordIsRequired: "Password is required",
+   confirmPasswordIsRequired: "Confirm Password is required",
+   confirmPasswordMismatch: "Confirm password doesn't match password",
 
    //Create account
    completeYourProfile :"Complete Your Profile",

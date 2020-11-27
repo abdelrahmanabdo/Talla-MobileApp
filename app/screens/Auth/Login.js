@@ -5,25 +5,73 @@ import Input from '../../components/Input';
 import Button from '../../components/Button';
 import SocialLogin from './SocialLogin';
 import { RectButton } from 'react-native-gesture-handler';
+import { useDispatch } from 'react-redux';
 
 import I18n from '../../lang/I18n';
 
+import Snackbar from '../../components/Snackbar';
+import {loginUser} from '../../redux/actions/user';
+
+//Apis
+import api from '../../config/api';
+import endpoints from '../../config/endpoints';
 
 const Login = ({...props}) => {
-
-   const [email , setEmail] = useState('');
-   const [password , setPassword] = useState('');
+   const dispatch = useDispatch();
+   const [ data, setData ] = useState({});
+   const [ isDoingSomething , setIsDoingSomething ] = useState(false);
 
    //Navigate to Regstration screen
    const navigateToRegisteration = () => {
       props.navigation.navigate('registration')
    }
 
-   const _login = () => {
-   }
+   /**
+    * Validator
+    */
+  const validator = () => {
+     if (!data.email) return new Snackbar({text : I18n.t('emailIsRequired') , type : 'danger'}), false ;
 
+     if (!data.password) return new Snackbar({text : I18n.t('passwordIsRequired') , type : 'danger'}), false ;
 
+     return true;
+  }
 
+  /**
+   * Login handler
+   */
+  const _login = () => {
+     if (validator()) {
+        api
+           .post(endpoints.login, data).then(async (res) => {
+           setIsDoingSomething(false);
+           if(res.data.success){
+             await new Snackbar({text : I18n.t('loginSuccessfully'), type : 'success'});
+             await assignNotificationToken(res.data.user.id);
+             dispatch(loginUser(res.data.user , res.data.token));
+             await AsyncStorage.setItem('isLoggedIn' , JSON.stringify(true));
+             await AsyncStorage.setItem('token' , res.data.token);
+             await AsyncStorage.setItem('user' , JSON.stringify(res.data.user));
+             props.navigation.navigate('createProfile');
+           }
+           }).catch((error) => {
+              setIsDoingSomething(false);
+              if(error.response.status == 400){
+                 //Validation Error
+                 if(error.response.data.message == 'unAuthorized'){
+                    new Snackbar({text : I18n.t('unAuthorized') });
+                 }else {
+                 //invalid redentials
+                    new Snackbar({text : I18n.t('invalidCredentials') })
+                 }
+              } else {
+                 new Snackbar({text : I18n.t('unknownError') })
+              }
+           });
+
+     }
+
+  }
 
    return <View style={LoginStyle.container}>
       <ImageBackground style={LoginStyle.bgContainer} 
@@ -34,11 +82,11 @@ const Login = ({...props}) => {
             </Text>
             <Input name={I18n.t('email')} 
                   placeholderText={I18n.t('email')}                  
-                  onChangeText={(value) => setEmail(value)}
+                  onChangeText={(value) => setData({...data, email: value})}
                   color={'#DCB77C'}
                   placeholderColor={'#DCB77C'} />
             <Input name={I18n.t('password')}
-                  onChangeText={(value) => setPassword(value)}
+                  onChangeText={(value) => setData({...data, password: value})}
                   placeholderText={I18n.t('password')}
                   password={true}
                   color={'#DCB77C'}
@@ -47,9 +95,10 @@ const Login = ({...props}) => {
          <View style={{flex:1.5}}>
             <View style={{marginBottom : 50}}>
                <Button
-                     style={{width:'95%'}}
+                     style={{width:'95%', marginTop: 40}}
                      onPress={_login}
                      label = {'Login'}
+                     disabled={isDoingSomething}
                      bgColor = "#FFF"
                      labelColor = "#012647"
                   />

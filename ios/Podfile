@@ -58,6 +58,7 @@ def flipper_post_install(installer)
   end
 end
 
+
 target 'Talla' do
   config = use_native_modules!
   use_react_native!(:path => config["reactNativePath"])
@@ -121,3 +122,4 @@ target 'Talla-tvOS' do
     # Pods for testing
   end
 end
+

@@ -28,6 +28,11 @@ export default {
    termsAndconditions: "الشروط والاحكام",
    signIn : "تسجيل دخول",
    signUp : "تسجيل حساب جديد",
+   nameIsRequired: "إسم المستخدم مطلوب",
+   emailIsRequired: "البريد الإلكتروني مطلوب",
+   passwordIsRequired: "كلمة المرور مطلوبة ",
+   confirmPasswordIsRequired: "تأكيد كلمة المرور مطلوبة",
+   confirmPasswordMismatch: "تأكيد كلمة المرور يجب أن تطابق كلمة المرور",
 
    //Create account
    completeYourProfile :"أكمل بيانات حسابك",
