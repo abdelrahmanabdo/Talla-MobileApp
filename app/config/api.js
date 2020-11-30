@@ -1,10 +1,13 @@
 import axios from 'axios';
-//http://localhost:8000/api/v1/
-//https://api.tallah.com/api/v1/
-export default
-axios.create({
-   baseURL: 'http://localhost:8000/api/v1/',
+
+//Urls
+const _DEV = 'http://10.0.3.2:8000/api/v1/';
+const _LOCALHOST_DEV = 'http://localhost:8000/api/v1/';
+const _PROD = '';
+
+export default axios.create({
+   baseURL: _DEV,
    headers: {
-      'Cache-control' : 'no-store, no-cache, no-transform, must-revalidate, max-age=0'
+      "Accept": "application/json",
    },
 });

@@ -15,6 +15,7 @@ import {loginUser} from '../../redux/actions/user';
 import api from '../../config/api';
 import endpoints from '../../config/endpoints';
 import { useDispatch } from 'react-redux';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const Registeration = ({...props}) => {
    const dispatch = useDispatch();
@@ -22,7 +23,7 @@ const Registeration = ({...props}) => {
    const [ isDoingSomething , setIsDoingSomething ] = useState(false);
    const [ isAcceptTerms , setIsAcceptTerms ] = useState(false);
 
-   //Navigate to login screen
+   //TODO:Navigate to login screen
    const navigateToLogin = () => {
       props
          .navigation
@@ -39,7 +40,7 @@ const Registeration = ({...props}) => {
 
       if (!data.password) return new Snackbar({text : I18n.t('passwordIsRequired') , type : 'danger'}) , false ;
 
-      if (data.password != data.confirmPassword) return new Snackbar({text : I18n.t('confirmPasswordMismatch') , type : 'danger'});
+      if (data.password != data.confirmPassword) return new Snackbar({text : I18n.t('confirmPasswordMismatch') , type : 'danger'}), false;
 
       return true;
    }
@@ -47,17 +48,20 @@ const Registeration = ({...props}) => {
    const _regiter = () => {
       if (validator()) {
          api
-            .post(endpoints.register, data).then(async (res) => {
-            setIsDoingSomething(false);
-            if(res.data.success){
-              await new Snackbar({text : I18n.t('loginSuccessfully'), type : 'success'});
-              await assignNotificationToken(res.data.user.id);
-              dispatch(loginUser(res.data.user , res.data.token));
-              await AsyncStorage.setItem('isLoggedIn' , JSON.stringify(true));
-              await AsyncStorage.setItem('token' , res.data.token);
-              await AsyncStorage.setItem('user' , JSON.stringify(res.data.user));
-              props.navigation.navigate('createProfile');
-            }}).catch((error) => {
+            .post(endpoints.register, data)
+            .then(async res => {
+               setIsDoingSomething(false);
+               if(res.data.success){
+                  await new Snackbar({text : I18n.t('loginSuccessfully'), type : 'success'});
+                  // await assignNotificationToken(res.data.user.id);
+                  dispatch(loginUser(res.data.user , res.data.token));
+                  await AsyncStorage.setItem('isLoggedIn' , JSON.stringify(true));
+                  await AsyncStorage.setItem('token' , res.data.token);
+                  await AsyncStorage.setItem('user' , JSON.stringify(res.data.user));
+                  props.navigation.navigate('createProfile');
+               }
+            })
+            .catch(error => {
                setIsDoingSomething(false);
                if(error.response.status == 400){
                   //Validation Error

@@ -66,9 +66,6 @@ const Onboarding = ({...props}) => {
                     <Text style={[OnboardingStyle.smallText ,{width : '80%',lineHeight:29} ]}>
                         " {I18n.t('taylorSwiftSay')} "
                     </Text>
-                    <Text style={[OnboardingStyle.mediumText , {marginTop:10}]}>
-                     {I18n.t('taylorSwift')}
-                    </Text>
                     <View style={OnboardingStyle.dotsContainer}>
                             <View style={[OnboardingStyle.dot]}></View>
                             <View style={[OnboardingStyle.dot, OnboardingStyle.active]}></View>

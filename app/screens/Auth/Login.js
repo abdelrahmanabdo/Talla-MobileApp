@@ -1,15 +1,19 @@
 import React, { useState } from 'react';
 import { Text, View, ImageBackground } from 'react-native';
-import LoginStyle from '../../assets/styles/LoginStyle';
-import Input from '../../components/Input';
-import Button from '../../components/Button';
-import SocialLogin from './SocialLogin';
+import AsyncStorage from '@react-native-community/async-storage';
 import { RectButton } from 'react-native-gesture-handler';
 import { useDispatch } from 'react-redux';
 
-import I18n from '../../lang/I18n';
-
+//Components
+import Input from '../../components/Input';
+import Button from '../../components/Button';
 import Snackbar from '../../components/Snackbar';
+import SocialLogin from './SocialLogin';
+
+//Styles
+import LoginStyle from '../../assets/styles/LoginStyle';
+
+import I18n from '../../lang/I18n';
 import {loginUser} from '../../redux/actions/user';
 
 //Apis
@@ -30,9 +34,9 @@ const Login = ({...props}) => {
     * Validator
     */
   const validator = () => {
-     if (!data.email) return new Snackbar({text : I18n.t('emailIsRequired') , type : 'danger'}), false ;
+     if (!data.email) return new Snackbar({text : I18n.t('emailIsRequired') , type : 'danger'}), false;
 
-     if (!data.password) return new Snackbar({text : I18n.t('passwordIsRequired') , type : 'danger'}), false ;
+     if (!data.password) return new Snackbar({text : I18n.t('passwordIsRequired') , type : 'danger'}), false;
 
      return true;
   }
@@ -40,38 +44,39 @@ const Login = ({...props}) => {
   /**
    * Login handler
    */
-  const _login = () => {
-     if (validator()) {
-        api
-           .post(endpoints.login, data).then(async (res) => {
-           setIsDoingSomething(false);
-           if(res.data.success){
-             await new Snackbar({text : I18n.t('loginSuccessfully'), type : 'success'});
-             await assignNotificationToken(res.data.user.id);
-             dispatch(loginUser(res.data.user , res.data.token));
-             await AsyncStorage.setItem('isLoggedIn' , JSON.stringify(true));
-             await AsyncStorage.setItem('token' , res.data.token);
-             await AsyncStorage.setItem('user' , JSON.stringify(res.data.user));
-             props.navigation.navigate('createProfile');
-           }
-           }).catch((error) => {
-              setIsDoingSomething(false);
-              if(error.response.status == 400){
-                 //Validation Error
-                 if(error.response.data.message == 'unAuthorized'){
-                    new Snackbar({text : I18n.t('unAuthorized') });
-                 }else {
-                 //invalid redentials
+   const _login = () => {
+      if (validator()) {
+         api
+            .post(endpoints.login, data)
+            .then(async res => {
+               setIsDoingSomething(false);
+               if(res.data.success){
+                  await new Snackbar({text : I18n.t('loginSuccessfully'), type : 'success'});
+                  // await assignNotificationToken(res.data.user.id);
+                  dispatch(loginUser(res.data.user , res.data.token));
+                  await AsyncStorage.setItem('isLoggedIn' , JSON.stringify(true));
+                  await AsyncStorage.setItem('token' , res.data.token);
+                  await AsyncStorage.setItem('user' , JSON.stringify(res.data.user));
+                  props.navigation.navigate('createProfile');
+               }
+            })
+            .catch(error => {
+               setIsDoingSomething(false);
+               if(error.response.status == 400){
+                  //Validation Error
+                  if(error.response.data.message == 'unAuthorized'){
+                     new Snackbar({text : I18n.t('unAuthorized') });
+                  }else {
+                  //invalid redentials
                     new Snackbar({text : I18n.t('invalidCredentials') })
                  }
-              } else {
-                 new Snackbar({text : I18n.t('unknownError') })
-              }
-           });
+               } else {
+                  new Snackbar({text : I18n.t('unknownError') })
+               }
+            });
+      }
 
-     }
-
-  }
+   }
 
    return <View style={LoginStyle.container}>
       <ImageBackground style={LoginStyle.bgContainer} 
@@ -95,7 +100,7 @@ const Login = ({...props}) => {
          <View style={{flex:1.5}}>
             <View style={{marginBottom : 50}}>
                <Button
-                     style={{width:'95%', marginTop: 40}}
+                     style={{width:'95%', marginTop: 20}}
                      onPress={_login}
                      label = {'Login'}
                      disabled={isDoingSomething}

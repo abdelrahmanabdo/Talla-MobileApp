@@ -12,23 +12,30 @@ import Dropdown from '../../components/Dropdown';
 import TallaButton from '../../components/Button';
 import Datepicker from '../../components/DatePicker';
 import Selector from '../../components/Selector';
+import Snackbar from '../../components/Snackbar';
 
 // 
 import I18n from '../../lang/I18n';
 import style from '../../assets/styles/CreateProfileStyle';
 import ModalStyle from '../../assets/styles/ModalStyle';
 
+//Apis
+import api from '../../config/api';
+import endpoints from '../../config/endpoints';
+
 
 const CreateProfile = ({...props}) => {
-   const [activeStep , setActiveStep] = useState(1);
-   const [showModal , setShowModal ] = useState(false);
-   const [modalText , setModalText ] = useState('');
+   const [ activeStep, setActiveStep ] = useState(1);
+   const [ showModal, setShowModal ] = useState(false);
+   const [ modalText, setModalText ] = useState('');
 
 
    //Go to Next Step 
    const goToNext = () => {
-      activeStep < 6 ? setActiveStep(activeStep + 1 ) : null;
-      if(activeStep == 6){
+      activeStep < 6 ? 
+                     setActiveStep(activeStep + 1 ) 
+                     : null;
+      if (activeStep == 6) {
          setModalText('finishCreateAccountText');
          setShowModal(true);
       }
@@ -43,7 +50,7 @@ const CreateProfile = ({...props}) => {
             <Text style={ModalStyle.text}>
                {I18n.t(modalText)}
             </Text>
-            <Button onPress={()=>{ 
+            <Button onPress={() => { 
                                     setActiveStep(1);
                                     setShowModal(false);
                                     props.navigation.navigate('profile') 
@@ -59,29 +66,56 @@ const CreateProfile = ({...props}) => {
 
    // Step One Container
    const StepOne = () => {
-      const [avatar , setAvatar] = useState('');
-      const [birthDate , setBirthDate] = useState('');
-      const [phone , setPhone] = useState('');
-      const [city , setCity] = useState('');
-      const [country , setCountry] = useState('');
-
-      const [countries , setCountries] = useState([
-         {
-            'id' : 1,
-            'name' : 'مصر',
-            'name_en' : 'egypt'
-         }
-      ])
+      const [stepOneData, setStepOneData] = useState({});
+      const [countries , setCountries] = useState()
       const [cities , setCities] = useState([
          {
             'id' : 1,
             'name' : 'القاهرة',
             'name_en' : 'Cairo'
          },
-
       ]);
 
 
+      /**
+       * Get Countries
+       */
+      const getCountries = () => {
+         api  
+            .get(endpoints.countries)
+            .then(res => setCountries(res.data.data))
+      }
+
+      /**
+       * Validator
+       */
+      const validator = () => {
+         if (!stepOneData.avatar) return new Snackbar({text : I18n.t('avatarIsRequired') , type : 'danger'}), false;
+   
+         if (!stepOneData.phone) return new Snackbar({text : I18n.t('phoneIsRequired') , type : 'danger'}), false;
+
+         if (!stepOneData.country) return new Snackbar({text : I18n.t('countryIsRequired') , type : 'danger'}), false;
+
+         if (!stepOneData.city) return new Snackbar({text : I18n.t('cityIsRequired') , type : 'danger'}), false;
+
+         if (!stepOneData.birthDate) return new Snackbar({text : I18n.t('birthdateIsRequired') , type : 'danger'}), false;
+   
+         return true;
+      }
+
+      /**
+       * Step one submition handler
+       */
+      const stepOneSubmit = () => {
+         if (validator()) {
+            goToNext();
+         }
+      }
+
+      useEffect(() => {
+         //Get all countries
+         getCountries();
+      },[])
 
       return (
          <ScrollView showsVerticalScrollIndicator={false}>
@@ -97,14 +131,12 @@ const CreateProfile = ({...props}) => {
                 format = 'JPEG'
                 photoPickerTitle = {I18n.t('selectPhoto')}
                 containerStyle={{borderRadius : 10 ,marginTop : 20}}
-                onPhotoSelect={pic => {
-                  if (pic) {
-                     setAvatar(pic)
-                  }
+                onPhotoSelect={ pic => {
+                  if (pic) setStepOneData({ ...stepOneData, avatar: pic})
                 }}>
                {
-                  avatar ?
-                  <Image source={{uri: `data:image/gif;base64,${avatar}`}} 
+                  stepOneData.avatar ?
+                  <Image source={{uri: `data:image/gif;base64,${stepOneData.avatar}`}} 
                          style={style.uploadPictureButton}/>
                   :
                   <RectButton style={style.uploadPictureButton}>
@@ -119,27 +151,27 @@ const CreateProfile = ({...props}) => {
             <Input name={I18n.t('phone')} 
                    placeholderText={I18n.t('phone')}  
                    isNumeric={true}                
-                   onChangeText={(value) => setPhone(value)}
+                   onChangeText={ value => setStepOneData({ ...stepOneData, phone: value}) }
                    placeholderColor={'#5D0D57'} 
                    color={'#5D0D57'}
             />
             <Dropdown 
                items={countries}
                name={'country'}
-               onChangeValue={(value)=>{setCountry(value)}}
+               onChangeValue={ value => setStepOneData({ ...stepOneData, country: value}) }
             />
             <Dropdown 
                items={cities}
                name={'city'}
-               onChangeValue={(value)=>{setCity(value)}}
+               onChangeValue={ value => setStepOneData({ ...stepOneData, city: value}) }
             />
             <Datepicker 
                isCalendar = {true}
                name={'Birth Date'}
-               onChangeValue={(value)=>{setBirthDate(value)}}
+               onChangeValue={ value => setStepOneData({ ...stepOneData, birthDate: value}) }
             />
             <TallaButton 
-               onPress={goToNext}
+               onPress={stepOneSubmit}
                label = {I18n.t('next')}
                bgColor = "#D1AD67"
                style={{padding: 15 , width: '91%'}}
