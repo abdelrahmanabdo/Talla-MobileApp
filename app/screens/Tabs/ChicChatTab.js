@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Text, View, ImageBackground, StatusBar, FlatList , ScrollView, Dimensions } from 'react-native';
 import { RectButton, BorderlessButton, BaseButton } from 'react-native-gesture-handler';
 
@@ -8,6 +8,11 @@ import style from '../../assets/styles/ChicChatTabStyle';
 import FastImage from 'react-native-fast-image';
 import Button from '../../components/Button';
 import BlogBox from '../../components/BlogBox';
+
+//Apis
+import api from '../../config/api';
+import endpoints from '../../config/endpoints';
+
 
 const width = Dimensions.get('window').width ;
 
@@ -32,45 +37,20 @@ const ChicChatTab = props => {
         }
     ]);
 
-    const [blogs , setBlogs ] = useState([
-        {
-            id : 1 ,
-            title : 'first post here Test',
-            image : require('../../assets/images/blog-default.png'),
-            likes : 43,
-            user : {
-                avatar : require('../../assets/icons/default-avatar.png')
-            }
-        },
-        {
-            id : 2 ,
-            title : 'Second post here Test',
-            image : require('../../assets/images/blog-default.png'),
-            likes : 77,
-            user : {
-                avatar : require('../../assets/icons/default-avatar.png')
-            }
-        },
-        {
-            id : 3 ,
-            title : 'Third post here Test',
-            image : require('../../assets/images/blog-default.png'),
-            likes : 10,
-            user : {
-                avatar : require('../../assets/icons/default-avatar.png')
-            }
-        },
-        {
-            id : 4 ,
-            title : 'fourth post here Test',
-            image : require('../../assets/images/blog-default.png'),
-            likes : 130,
-            user : {
-                avatar : require('../../assets/icons/default-avatar.png')
-            }
-        }
-    ]);
+    const [blogs , setBlogs ] = useState([]);
 
+
+    /**
+     * 
+     * @param 
+     * @returns blogs
+     */
+    const getBlogs = () => {
+        api  
+           .get(endpoints.blog)
+           .then(res => setBlogs(res.data.data))
+           .catch(err => alert(JSON.stringify(err)))
+    }
 
     /**
      * Change Active tab 
@@ -101,8 +81,13 @@ const ChicChatTab = props => {
      * Render vertical new blogs
      */
     const renderBlogBox = ({item}) => {
-        return <BlogBox data={item} onPress={ () => {props.navigation.navigate('blogView')}} />
+        return <BlogBox data={item} onPress={ () => {props.navigation.navigate('blogView', {blogId: item.id})}} />
     }
+
+    useEffect(() => {
+        //Get all blogs
+        getBlogs();
+    }, [])
 
     return  <View style={[GeneralStyle.container]}>
              <StatusBar hidden={false}  barStyle={'light-content'}  backgroundColor={'#012647'}/>

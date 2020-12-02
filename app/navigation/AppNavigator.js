@@ -50,7 +50,7 @@ const Stack = createStackNavigator();
 export function AppNavigator () {
    return (
      <Stack.Navigator
-      initialRouteName = "onboarding"
+      initialRouteName = "Home"
       headerMode = 'none'
       screenOptions = {{
         gestureEnabled : false ,

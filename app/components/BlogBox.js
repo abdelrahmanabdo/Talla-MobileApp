@@ -53,13 +53,13 @@ const BlogBox = props => {
 
       Share
          .open(options)
-         .then((res) => { console.log(res) })
-         .catch((err) => { err && console.log(err); });
+         .then(res => { console.log(res) })
+         .catch(err => {});
    }
 
    return <View style={[style.container]}>
         <View style={[style.actionsSection]}>
-            <FastImage  source={blog.user.avatar}
+            <FastImage  source={blog.user?.avatar}
                         style={{height : 50 , width : 50 ,borderRadius : 25}} />
             <View style={{alignItems:'center'}}>
                <AddToFavourites />
@@ -81,7 +81,7 @@ const BlogBox = props => {
                         resizeMode={'stretch'}/>
             <Text style={[style.blogText]}
                   numberOfLines={3}>
-               {blog.title} {blog.title}{blog.title}{blog.title}{blog.title}{blog.title}{blog.title}{blog.title} 
+               {blog.body}
             </Text>
         </RectButton>
     </View>

@@ -3,6 +3,7 @@ import { Text, View, ImageBackground, FlatList, PanResponder ,
          ScrollView, Animated, Pressable, Dimensions } from 'react-native';
 import { RectButton, BorderlessButton, BaseButton,  } from 'react-native-gesture-handler';
 import FastImage from 'react-native-fast-image';
+import { useSelector } from 'react-redux';
 
 //Styles
 import GeneralStyle from '../../assets/styles/GeneralStyle';
@@ -14,123 +15,81 @@ import Color from '../../components/Color';
 import Button from '../../components/Button';
 import Dropdown from '../../components/Dropdown';
 import Input from '../../components/Input';
+import Snackbar from '../../components/Snackbar';
 
 //
 import I18n from '../../lang/I18n';
 import Selector from '../../components/Selector';
+
+//Apis
+import api from '../../config/api';
+import endpoints from '../../config/endpoints';
+
 const {width} = Dimensions.get('screen');
 
 const AddTab = props => {
-    const [activeTab , setActiveTab ] = useState(1);
-    const [addItemActiveTab , setAddItemActiveTab ] = useState(1);
-    const [activeCategoryIndex , setActiveCategoryIndex ] = useState(1);
+    const user = useSelector(state => state.user );
+    const [addItemData, setAddItemData] = useState({});
+    const [activeTab, setActiveTab ] = useState(1);
+    const [addItemActiveTab, setAddItemActiveTab ] = useState(1);
+    const [categories , setCategories ] = useState([]);
+    const [brands , setBrands ] = useState([]);
+    const [colors, setColors ] = useState([]);
 
-    const [categories , setCategories ] = useState([
-        {
-            icon : require('../../assets/icons/hanger.png'),
-            iconActive : require('../../assets/icons/hanger-active.png'),
-            name : 'test',
-            name_en : 'test',
-            
-        },
-        {
-            icon : require('../../assets/icons/dress.png'),
-            iconActive : require('../../assets/icons/dress-active.png'),
-            name : 'Dresses',
-            name_en : 'Dresses',
-        },
-        {
-            icon : require('../../assets/icons/hanger.png'),
-            iconActive : require('../../assets/icons/hanger-active.png'),
-            name : 'test',
-            name_en : 'test',
+    /**
+    * Get categories
+     */
+    const getCategories = () => {
+        api  
+            .get(endpoints.categories)
+            .then(res => setCategories(res.data.data))
+    }
 
-        },
-        {
-            icon : require('../../assets/icons/dress.png'),
-            iconActive : require('../../assets/icons/dress-active.png'),
-            name : 'Dresses',
-            name_en : 'Dresses',
-
-        },
-        {
-            icon : require('../../assets/icons/hanger.png'),
-            iconActive : require('../../assets/icons/hanger-active.png'),
-            name : 'test',
-            name_en : 'test',
-
-        },
-        {
-            icon : require('../../assets/icons/dress.png'),
-            iconActive : require('../../assets/icons/dress-active.png'),
-            name : 'Dresses',
-            name_en : 'Dresses',
-
-        },
-        {
-            icon : require('../../assets/icons/hanger.png'),
-            iconActive : require('../../assets/icons/hanger-active.png'),
-            name : 'test',
-            name_en : 'test',
-        },
-    ]);
+    /**
+    * Get colors
+     */
+    const getColors = () => {
+        api  
+            .get(endpoints.colors)
+            .then(res => setColors(res.data.data))
+    }
 
 
+    /**
+    * Get brands
+     */
+    const getBrands = () => {
+        api  
+            .get(endpoints.brands)
+            .then(res => setBrands(res.data.data))
+    }
 
+    useEffect(() => {
+        getCategories();
+        getBrands();
+        getColors();
+    }, [])
 
     /**
      * Active tab
      */
     const AddItemFirstTab = () => {
-        const [season , setSeason ] = useState(0);
-        const [colors , setColors ] =useState([
-          {
-            id : 1 ,
-            color : '#358C2F'
-          },
-          {
-            id : 2 ,
-            color : '#88D7C1'
-          },
-          {
-            id : 3 ,
-            color : '#CC8EC1'
-          },
-          {
-            id : 4 ,
-            color : '#454B99'
-          },
-          {
-            id : 5 ,
-            color : '#D1AD67'
-          },
-          {
-            id : 6 ,
-            color : '#76B1D7'
-          },
-          {
-            id : 7 ,
-            color : '#F8D965'
-          },
-          {
-            id : 8 ,
-            color : '#9F82DE'
-          },
-          {
-            id : 9 ,
-            color : '#000000'
-          },
-        ]);
-        const [selectedColor , setSelectedColor ] = useState();
+        const [selectedSeason , setSelectedSeason ] = useState(1);
+        const [activeCategory, setActiveCategory ] = useState(1);
+        const [selectedColor , setSelectedColor ] = useState(1);
 
         /**
-         * Get active now category
-         * @param {index} param0 
+         * Go to step two
          */
-        const getActiveCategory = (index) => {
-            setActiveCategoryIndex(index)
+        const navigateToStepTwo = () => {
+            setAddItemData({
+                ...addItemData,
+                'category_id': categories[activeCategory].id,
+                'color_id': colors[selectedColor].id,
+                'season': selectedSeason  
+            })
+            setAddItemActiveTab(2);
         }
-
 
         /**
          * Render Category list item
@@ -139,68 +98,72 @@ const AddTab = props => {
         const renderCategoryBox = ({item , index}) => {
             return <View    key={index}
                             style={GeneralStyle.categoryContainer} >
-                <Pressable style={[GeneralStyle.categoryBox,{backgroundColor : activeCategoryIndex == index ? '#D1AD67' : '#FFF',
-                                                borderColor : activeCategoryIndex == index ? '#D1AD67' : '#000' }]}
+                <Pressable style={[GeneralStyle.categoryBox,{backgroundColor : activeCategory == index ? '#D1AD67' : '#FFF',
+                                   borderColor : activeCategoryIndex == index ? '#D1AD67' : '#000' }]}
                             android_ripple={{color:  ('#D1AD67')}}
-                            onPress={()=>{
-                                getActiveCategory(index)
-                            }}>
+                            onPress={() => setActiveCategory(index) }>
                     <FastImage source={activeCategoryIndex == index ? item.iconActive : item.icon}
                                 resizeMode={'contain'}
                                 style={{width:30,height:30}}/>
                 </Pressable>
                 {
-                    index == activeCategoryIndex &&  
+                    index === activeCategory &&  
                     <Text style={[GeneralStyle.categoryName , {fontWeight:'700'}]}>
                         {item.name}
                     </Text>
                 }
-
             </View>
         }
 
-        return <ScrollView 
-                        style={style.tabContainer}
-                >
-                <Text 
-                    style={[style.sectionHeaderText , {marginStart : 15}]}
-                >
-                    {I18n.t('category')}
-                </Text>
-                <FlatList 
-                                    horizontal
-                                    showsHorizontalScrollIndicator={false}
-                                    data={categories}
-                                    keyExtractor={(item,index) => index.toString()}
-                                    renderItem={renderCategoryBox}
-                                />
-                <View style={style.tabContent}>
-                    <Text style={style.sectionHeaderText}>
-                        Season
+        return <ScrollView style={style.tabContainer}>
+            {
+                categories.length > 0 && colors.length > 0 ?
+                <>
+                    <Text style={[style.sectionHeaderText , {marginStart : 15}]}>
+                        {I18n.t('category')}
                     </Text>
-                    <View style={{flexDirection:'row',justifyContent:'flex-start',marginVertical : 8}}>
-                        <View style={{flex:1}}>
-                            <Checkbox   onChange={()=>{setSeason(0)}}
-                                        isRounded
-                                        isModal
-                                        isChecked={season == 0 }
-                                        label={'Summer'}/>
+                    <FlatList 
+                            horizontal
+                            showsHorizontalScrollIndicator={false}
+                            data={categories}
+                            keyExtractor={(item,index) => index.toString()}
+                            renderItem={renderCategoryBox}
+                    />
+                    <View style={style.tabContent}>
+                        <Text style={style.sectionHeaderText}>
+                            Season
+                        </Text>
+                        <View style={{flexDirection:'row',justifyContent:'flex-start',marginVertical : 8}}>
+                            <View style={{flex:1}}>
+                                <Checkbox   onChange={active => setSelectedSeason(active && selectedSeason === 2 ? 3 : 1) }
+                                            isRounded
+                                            isModal
+                                            isChecked={selectedSeason === 1 }
+                                            label={'Summer'}/>
+                            </View>
+                            <View style={{flex:1}}>
+                                <Checkbox   onChange={active => setSelectedSeason(active && selectedSeason === 1 ? 3 : 2)}
+                                            isRounded
+                                            isModal
+                                            isChecked={selectedSeason == 2}
+                                            label={'Winter'}/>
+                            </View>
                         </View>
-                        <View style={{flex:1}}>
-                            <Checkbox   onChange={()=>{setSeason(1)}}
-                                        isRounded
-                                        isModal
-                                        isChecked={season == 1}
-                                        label={'Winter'}/>
-                        </View>
+                        <Color colors={colors}
+                            onChange={colorId => setSelectedColor(colorId)}/>
+                        <Button label ={'Next'}
+                                style={{width : '98%' , padding : 15}}
+                                onPress={navigateToStepTwo}
+                                labelColor={'#FFF'}/>
                     </View>
-                    <Color colors={colors}
-                        onChange={colorId => setSelectedColor(colorId)}/>
-                    <Button label ={'Next'}
-                            style={{width : '98%' , padding : 15}}
-                            onPress={()=>{setAddItemActiveTab(2)}}
-                            labelColor={'#FFF'}/>
-                </View>
+                </>
+                :
+                <FastImage 
+                    source={require('../../assets/gifs/loader.gif')}
+                    style={{width:150, height:150,alignSelf:'center'}}
+                    resizeMode={'contain'}
+                />
+            }
             </ScrollView>
     }
 
@@ -208,7 +171,7 @@ const AddTab = props => {
      * Active tab
      */
     const AddItemSecondTab = () => {
-        const [selectedBrand , setSelectedBrand ] = useState();
+        const [selectedBrand , setSelectedBrand ] = useState(1);
         const [price , setPrice ] = useState('');
         const [comment , setComment ] = useState('');
 
@@ -217,13 +180,30 @@ const AddTab = props => {
          * Save new item handler
          */
         const saveItemHandler = () => {
-            alert('New item Added')
+            setAddItemData({
+                ...addItemData,
+                'type' : 1,
+                'user_id': user.id,
+                'brand_id':brands[selectedBrand].id, 
+                price,
+                comment
+            });
+            //Submit data to api
+            api  
+                .post(endpoints.closet, addItemData)
+                .then(() => {
+                    new Snackbar({text : 'Item added successfully' , type : 'success'});
+                })
+                .catch(err => {
+                    alert(JSON.stringify(err.response.data))
+                    new Snackbar({text : I18n.t('unknowError') , type : 'danger'});
+                });
         }
 
         return <>
             <ScrollView style={[style.tabContent , {flex:1.4}]}>
-                    <Dropdown items={categories}
-                            onChangeValue={()=>{}}
+                    <Dropdown items={brands}
+                              onChangeValue={val => setSelectedBrand(val)}
                               name={I18n.t('brand')} />
                     <Input  name={I18n.t('price')}
                             color={'#000'}

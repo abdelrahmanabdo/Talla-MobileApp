@@ -40,11 +40,11 @@ const Color = ({...props}) => {
                                                                      props.onChange(item.id)
                                                                   }}>
                                        <View  style={[style.container,
-                                                      {borderColor : index == selectedColorIndex ? item.color : 'transparent' ,
+                                                      {borderColor : index == selectedColorIndex ? item.hexa : 'transparent' ,
                                                        borderWidth : 1,
                                                        borderRadius : 20}]}>
                                                          {/* <Octagon color={item.color}   scale={.8}/> */}
-                                                <Circle color={item.color}   scale={.8}/>
+                                                <Circle color={item.hexa}   scale={.8}/>
                                        </View>
                               </Pressable>
                         })

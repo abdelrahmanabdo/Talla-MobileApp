@@ -13,6 +13,19 @@ export default {
    taylorSwiftSay :  "Happiness and confidence are the prettiest things you can wear",
    taylorSwift : "Taylor Swift",
 
+   //Validation
+   nameIsRequired: "Username is required",
+   emailIsRequired: "E-mail is required",
+   passwordIsRequired: "Password is required",
+   confirmPasswordIsRequired: "Confirm Password is required",
+   confirmPasswordMismatch: "Confirm password doesn't match password",
+   phoneIsRequired: 'Phone is required',
+   countryIsRequired: 'Country is required',
+   cityIsRequired: 'City is required',
+   avatarIsRequired: 'Avatar is required',
+   titleIsRequired: 'Blog title is required',
+   bodyIsRequired: 'Blog body is required',
+   unknowError : "Unkonw error, Try again",
    //Login & registeration
    joinNow : "Join Now",
    userName : "User name",
@@ -28,11 +41,6 @@ export default {
    termsAndconditions: "Terms & conditions",
    signIn : "Sign In",
    signUp : "Sign Up",
-   nameIsRequired: "Username is required",
-   emailIsRequired: "E-mail is required",
-   passwordIsRequired: "Password is required",
-   confirmPasswordIsRequired: "Confirm Password is required",
-   confirmPasswordMismatch: "Confirm password doesn't match password",
 
    //Create account
    completeYourProfile :"Complete Your Profile",

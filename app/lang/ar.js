@@ -13,6 +13,17 @@ export default {
    taylorSwiftSay :"السعادة والثقة من أجمل الأشياء التي يمكنك ارتداؤها",
    taylorSwift: 'تايلور اسوفت',
 
+  //Validation
+   nameIsRequired: "إسم المستخدم مطلوب",
+   emailIsRequired: "البريد الإلكتروني مطلوب",
+   passwordIsRequired: "كلمة المرور مطلوبة ",
+   confirmPasswordIsRequired: "تأكيد كلمة المرور مطلوبة",
+   confirmPasswordMismatch: "تأكيد كلمة المرور يجب أن تطابق كلمة المرور",
+   phoneIsRequired: 'رقم الموبايل مطلوب',
+   countryIsRequired: 'البلد مطلوبة',
+   cityIsRequired: 'المدينة مطلوبة',
+   avatarIsRequired: 'الصورة مطلوبة',
+
    //Login & registeration
    joinNow : "سجل الأن",
    userName : "اسم المستخدم",
@@ -28,11 +39,7 @@ export default {
    termsAndconditions: "الشروط والاحكام",
    signIn : "تسجيل دخول",
    signUp : "تسجيل حساب جديد",
-   nameIsRequired: "إسم المستخدم مطلوب",
-   emailIsRequired: "البريد الإلكتروني مطلوب",
-   passwordIsRequired: "كلمة المرور مطلوبة ",
-   confirmPasswordIsRequired: "تأكيد كلمة المرور مطلوبة",
-   confirmPasswordMismatch: "تأكيد كلمة المرور يجب أن تطابق كلمة المرور",
+
 
    //Create account
    completeYourProfile :"أكمل بيانات حسابك",

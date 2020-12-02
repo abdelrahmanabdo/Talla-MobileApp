@@ -1,7 +1,8 @@
-import React , {useState , useEffect} from 'react';
+import React , {useState} from 'react';
 import { Text, View, ImageBackground , FlatList , ScrollView, SafeAreaView } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { BorderlessButton , BaseButton } from 'react-native-gesture-handler';
+import { useSelector } from 'react-redux';
 import Modal from 'react-native-modal';
 import { Button } from 'native-base';
 import ImagePicker from 'react-native-image-picker';
@@ -10,36 +11,25 @@ import ImagePicker from 'react-native-image-picker';
 import style from '../../assets/styles/NewBlogStyle';
 import GeneralStyle from '../../assets/styles/GeneralStyle';
 import NewBlogStyle from '../../assets/styles/NewBlogStyle';
-import Input from '../../components/Input';
-
-import I18n from '../../lang/I18n';
 import ModalStyle from '../../assets/styles/ModalStyle';
 
+import I18n from '../../lang/I18n';
+import Input from '../../components/Input';
+import Snackbar from '../../components/Snackbar';
+
+//Apis
+import api from '../../config/api';
+import endpoints from '../../config/endpoints';
+
 const NewBlog = props  => {
-  const [showModal , setShowModal ] = useState(false);
-   const [title , setTitle ] = useState('');
-   const [currentHashtag , setCurrentHashtag ] = useState('');
-   const [hashtags , setHashtags ] = useState([]);
-   const [body , setBody ] = useState('');
-   const [images , setImages ] = useState([
-      {
-          id : 1 ,
-          title : 'title Test'
-      },
-      {
-          id : 4 ,
-          title : 'title Test'
-      },
-      {
-          id : 3 ,
-          title : 'title Test'
-      },
-      {
-          id : 3 ,
-          title : 'title Test'
-      }
-   ]);
- 
+   const user = useSelector(state => state.user );
+   const [showModal, setShowModal ] = useState(false);
+   const [title, setTitle ] = useState('');
+   const [body, setBody ] = useState('');
+   const [images , setImages ] = useState([]);
+   const [hashtags, setHashtags ] = useState([]);
+   const [currentHashtag, setCurrentHashtag ] = useState('');
+
   /**
     * Remove image from list of images
     */
@@ -76,8 +66,8 @@ const NewBlog = props  => {
         console.log('User tapped custom button: ', response.customButton);
         alert(response.customButton);
       } else {
-        const source = { uri: response.uri };
-        console.log('response', JSON.stringify(response));
+        images.push(response.data);
+        setImages([...images]);
       }
     });
 
@@ -91,8 +81,6 @@ const NewBlog = props  => {
       },
     };
     ImagePicker.launchImageLibrary(options, (response) => {
-      console.log('Response = ', response);
-
       if (response.didCancel) {
         console.log('User cancelled image picker');
       } else if (response.error) {
@@ -101,18 +89,48 @@ const NewBlog = props  => {
         console.log('User tapped custom button: ', response.customButton);
         alert(response.customButton);
       } else {
-        const source = { uri: response.uri };
-        console.log('response', JSON.stringify(response));
+        images.push(response.data);
+        setImages([...images]);
       }
     });
 
   }
 
    /**
+     * Validator
+     */
+   const validator = () => {
+      if (title === '') return new Snackbar({text : I18n.t('titleIsRequired') , type : 'danger'}), false;
+
+      if (body === '') return new Snackbar({text : I18n.t('bodyIsRequired') , type : 'danger'}), false;
+   
+      return true;
+   }
+   
+   /**
     * Create New Blog handler
     */
    const createNewBlog = () => {
-    setShowModal(true)
+      //if not valid data
+      if (!validator())  return ;
+      //If user not logged in
+      if (!user) return ;
+      //Submit data to api
+      api  
+         .post(endpoints.blog, {
+            'user_id': user.id, 
+            title, hashtags, body, images
+         })
+         .then(() => {
+            setTitle('');
+            setBody('');
+            setImages([]);
+            setHashtags([]);
+            setShowModal(true);
+         })
+         .catch(err => {
+            new Snackbar({text : I18n.t('unknowError') , type : 'danger'});
+         });
    }
 
    //Submit Modal
@@ -144,7 +162,7 @@ const NewBlog = props  => {
      */
     const renderBlogImage = ({item , index}) => {
       return <View style={[style.blogImage]} >
-          <ImageBackground source={require('../../assets/images/blog-default.png')}
+          <ImageBackground source={{uri: `data:image/jpeg;base64,${item}`}}
                            style={{width : '100%' , height : 120 , justifyContent:'flex-start',
                                    borderRadius : 15 , overflow :'hidden'}}>
             <BorderlessButton onPress={() => removeImage(index)}>
@@ -182,23 +200,26 @@ const NewBlog = props  => {
                              resizeMode={'contain'}
                              style={{width : 50 , height : 50 , borderRadius : 25}} />
                   <Text style={[GeneralStyle.blackBoldText, {fontSize: 15,marginStart : 15}]}>
-                     Mohamed Ahmed Ali
+                     {user?.name}
                   </Text>
                </View>
                <View>
-                    <FlatList 
-                        horizontal
-                        showsHorizontalScrollIndicator={false}
-                        data={images}
-                        style={{backgroundColor: '#F8F8F8', paddingVertical : 15, marginHorizontal : 4}}
-                        keyExtractor={(item,index) => index.toString()}
-                        renderItem={renderBlogImage}
-                    />
+                  {
+                     images.length > 0 && 
+                     <FlatList 
+                              horizontal
+                              showsHorizontalScrollIndicator={false}
+                              data={images}
+                              style={{backgroundColor: '#F8F8F8', paddingVertical : 15, marginHorizontal : 4}}
+                              keyExtractor={(item,index) => index.toString()}
+                              renderItem={renderBlogImage}
+                     />
+                  }        
                </View>
                <View>
                   <Input name={'Title'}
                         placeholderText={I18n.t('title')}  
-                        onChangeText={(value) => setTitle(value)}
+                        onChangeText={value => setTitle(value)}
                         placeholderColor={'#C3C3C3'}  
                         title={title}
                         color={'#000000'}  
@@ -228,7 +249,7 @@ const NewBlog = props  => {
                   </View>
                   <Input name={'Body'}
                         placeholderText={I18n.t('blogBody')}  
-                        onChangeText={(value) => setBody(value)}
+                        onChangeText={value => setBody(value)}
                         isTextarea={true}
                         defaultValue={body}
                         placeholderColor={'#C3C3C3'} 
@@ -243,11 +264,11 @@ const NewBlog = props  => {
                                  resizeMode={'contain'}
                                  style={{width : 30 , height : 30 , marginStart : 15}} />
                   </BorderlessButton>
-                  <BorderlessButton>
+                  {/* <BorderlessButton>
                      <FastImage  source={require('../../assets/icons/video.png')}
                                  resizeMode={'contain'}
                                  style={{width : 30 , height : 30 , marginStart : 20 }} />
-                  </BorderlessButton>
+                  </BorderlessButton> */}
                </View>
                <BorderlessButton onPress={launchImageLibrary}>
                   <FastImage  source={require('../../assets/icons/gallary.png')}

@@ -10,10 +10,49 @@ import GeneralStyle from '../assets/styles/GeneralStyle';
 import ModalStyle from '../assets/styles/ModalStyle';
 import TallahButton from '../components/Button';
 import Input from '../components/Input';
+import Snackbar from '../components/Snackbar';
+
+//Apis
+import api from '../config/api';
+import endpoints from '../config/endpoints';
+
+import I18n from '../lang/I18n';
 
 const Support = props  => {
     const [data , setData ] = useState({});
     const [showModal , setShowModal ] = useState(false);
+
+    /**
+    * Validator
+    */
+    const validator = () => {
+   
+        if (!data.name) return new Snackbar({text : I18n.t('nameIsRequired') , type : 'danger'}), false;
+
+        if (!data.mobile) return new Snackbar({text : I18n.t('phoneIsRequired') , type : 'danger'}), false;
+
+        if (!data.message) return new Snackbar({text : I18n.t('messageIsRequired') , type : 'danger'}), false;
+   
+        return true;
+    }
+    
+    /**
+     * Send the message
+     */
+    const sendSuppotMessage = () =>{
+        if (!validator()) return;
+        
+        //Submit data to api
+        api  
+            .post(endpoints.support, data)
+            .then(res => {
+               setData({});
+               setShowModal(true);
+            })
+            .catch(err => {
+               new Snackbar({text : I18n.t('unknowError') , type : 'danger'});
+            });
+    }
 
 
    /**
@@ -42,15 +81,6 @@ const Support = props  => {
       </Modal>
    }
 
-    /**
-     * Send the message
-     */
-    const sendSuppotMessage = () =>{
-        setShowModal(true);
-        setData({name : '' , mobile : '' , message : ''});
-    }
-
-
     return  <View style={[GeneralStyle.container]}>
             <ImageBackground source={require('../assets/images/colored-bg.png')}
                             resizeMode={'stretch'}
@@ -74,14 +104,14 @@ const Support = props  => {
                 </Text>
                 <Input name={'Name'} 
                         placeholderText={'Your Name'}  
-                        onChangeText={(value) => setData({...data , name : value})}
+                        onChangeText={value => setData({...data , name : value})}
                         placeholderColor={'#ccc'} 
                         defaultValue={data.name}
                         color={'#000'}
                 />
                <Input name={'Mobile'} 
                       placeholderText={'Your Mobile number'}  
-                      onChangeText={(value) => setData({...data , mobile : value})}
+                      onChangeText={value => setData({...data , mobile : value})}
                       placeholderColor={'#ccc'} 
                       defaultValue={data.mobile}
                       color={'#000'}
@@ -89,7 +119,7 @@ const Support = props  => {
                 <Input name={'Write your message'} 
                         placeholderText={'Write Your message here....'}  
                         isTextarea={true}                
-                        onChangeText={(value) => setData({...data , message : value})}
+                        onChangeText={value => setData({...data , message : value})}
                         placeholderColor={'#ccc'} 
                         defaultValue={data.message}
                         color={'#000'}

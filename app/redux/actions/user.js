@@ -1,7 +1,9 @@
 
-export const loginUser = () => {
+export const loginUser = (user, token) => {
    return ({
       type: 'LOGIN',
+      user : user,
+      token : token
    })
 };
 

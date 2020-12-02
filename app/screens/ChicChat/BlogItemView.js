@@ -2,40 +2,37 @@ import React , {useState , useEffect} from 'react';
 import { Text, View, ImageBackground , FlatList , TextInput, SafeAreaView ,TouchableNativeFeedback, KeyboardAvoidingView } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { BorderlessButton, RectButton, BaseButton   } from 'react-native-gesture-handler';
-import EmojiSelector, { Categories } from "react-native-emoji-selector";
+import EmojiPicker from 'react-native-emoji-picker-staltz';
 import Modal from 'react-native-modal';
-
+import moment from 'moment';
+import { useSelector } from 'react-redux';
 
 //Styles
+import I18n from '../../lang/I18n';
 import style from '../../assets/styles/BlogItemStyle';
 import GeneralStyle from '../../assets/styles/GeneralStyle';
-import Input from '../../components/Input';
-import EmojiPicker from 'react-native-emoji-picker-staltz';
+import Snackbar from '../../components/Snackbar';
 
-import I18n from '../../lang/I18n';
+//Apis
+import api from '../../config/api';
+import endpoints from '../../config/endpoints';
 
 const BlogItemView = props  => {
+   const user = useSelector(state => state.user );
+   const [blog, setBlog] = useState({});
    const [showEmojis , setShowEmojis] = useState(false);
    const [comment , setComment ] = useState('');
-   const [comments , setComments ] = useState([
-      {
-          id : 1 ,
-          title : 'title Test'
-      },
-      {
-          id : 4 ,
-          title : 'title Test'
-      },
-      {
-          id : 3 ,
-          title : 'title Test'
-      },
-      {
-          id : 3 ,
-          title : 'title Test'
-      }
-   ]);
  
+   /**
+   * Get current blog data
+   */
+   const getBlogData = () => {
+      if (!props.route.params.blogId) return;
+
+      api  
+         .get(endpoints.blog + '/' + props.route.params.blogId)
+         .then(res => setBlog(res.data.data))
+   }
 
    /**
     * Render Comment
@@ -50,11 +47,11 @@ const BlogItemView = props  => {
                   Mohamed Ahmed Ali
                </Text>
                <Text style={[GeneralStyle.primaryBoldText , {fontSize : 13}]}>
-               Lorem Ipsum has been the industry's Lorem has been the industry's Lorem 
+                  {item.comment}
                </Text>
             </View>
             <Text style={[GeneralStyle.blackText , {fontSize : 13 , flex : .5}]}>
-                  54 min
+                  {moment(item.created_at).fromNow()}
             </Text>
       </View>
    }
@@ -64,11 +61,34 @@ const BlogItemView = props  => {
    /**
     * Create New Blog handler
     */
-   const submitComment = () => {
-      alert(comment)
-      setComment('')
+   const submitComment = () => {      
+      if (!comment || !user) return; 
+
+      const data = {
+            'blog_id': blog.id,
+            comment, 
+            'commenter_id': user.id, 
+            'created_at' : Date()
+      }
+
+      api  
+         .post(endpoints.blogComment, data)
+         .then(() => {
+            blog.comments.push(data);
+            setBlog({...blog});
+            setComment('');
+            new Snackbar({text : 'Comment added successfully' , type : 'success'});
+         })
+         .catch(err => {
+            alert(JSON.stringify(err.response.data))
+            new Snackbar({text : err.response.data, type : 'danger'});
+         });
    }
 
+   useEffect(() => {
+      //Get current blog data
+      getBlogData();
+   }, [])
 
    return  <View style={[GeneralStyle.container]}>
             <ImageBackground source={require('../../assets/images/colored-bg.png')}
@@ -93,10 +113,10 @@ const BlogItemView = props  => {
                               style={{width : 40 , height : 40 , borderRadius : 20}} />
                      <View style={{marginHorizontal:15}}>
                         <Text style={[GeneralStyle.secondaryText, {fontSize: 15}]}>
-                           Mohamed Ahmed Ali
+                           {blog.user?.name}
                         </Text>
                         <Text style={[GeneralStyle.blackText]}>
-                           54 min
+                           {moment(blog.created_at).fromNow()}
                         </Text>
                      </View>
                      <BorderlessButton style={[style.followButton]}>
@@ -107,30 +127,36 @@ const BlogItemView = props  => {
                   </View>
                </View>
                <View style={[style.blogContentContainer]}>
-                  <View style={[GeneralStyle.row]}>
-                     <Text style={[GeneralStyle.badge]}>
-                        Fashion   
-                     </Text>
-                     <Text style={[GeneralStyle.badge]}>
-                       Fashion 2   
-                     </Text>
+                     <View style={[GeneralStyle.row]}>
+                  {
+                     blog.hashtags &&
+                           blog.hashtags.map(item => {
+                              return <Text style={[GeneralStyle.badge]}>
+                                       {item}   
+                                    </Text>
+                           })
+                  }
                   </View>
                   <Text style={[style.blogText]}>
-                  Lorem Ipsum has been the industry's Lorem has been the industry's Lorem 
-                  Lorem Ipsum has been the industry's Lorem has been the industry's Lorem 
+                   {blog?.body}
                   </Text>
                </View>
                <View style={[style.commentsContainer]}>
                   <Text style={[GeneralStyle.blackText, {fontSize : 20}]}>
                      Comments
                   </Text>
-                  <FlatList 
-                        horizontal={false}
-                        showsVerticalScrollIndicator={false}
-                        data={comments}
-                        keyExtractor={(item,index) => index.toString()}
-                        renderItem={renderComment}
-                    />
+                  {
+                     blog.comments?.length > 0 ?
+                     <FlatList 
+                           horizontal={false}
+                           showsVerticalScrollIndicator={false}
+                           data={blog.comments}
+                           keyExtractor={(item,index) => index.toString()}
+                           renderItem={renderComment}
+                     />
+                     :
+                     <Text>No comments till now</Text>
+                  }
                </View>
             </View>
             <KeyboardAvoidingView style={[style.newCommentContainer]}>

@@ -7,8 +7,8 @@ import AsyncStorage from "@react-native-community/async-storage"
       orders :  0,
    }
   
-  AsyncStorage.getItem('isLoggedIn').then((val) => initialState.isLoggedIn = val)
-  AsyncStorage.getItem('user').then((val) => initialState.user = val)
+  AsyncStorage.getItem('isLoggedIn').then(val => initialState.isLoggedIn = val)
+  AsyncStorage.getItem('user').then(val => initialState.user = JSON.parse(val))
 
   
   export default function user(state = initialState, action) {

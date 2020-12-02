@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { RectButton, BorderlessButton, ScrollView } from 'react-native-gesture-handler';
 import PhotoUpload from 'react-native-photo-upload';
 import FastImage from 'react-native-fast-image';
+import { useSelector } from 'react-redux';
 
 //Styles
 import GeneralStyle from '../../assets/styles/GeneralStyle';
@@ -13,13 +14,10 @@ import style from '../../assets/styles/MoreStyle';
 import I18n from '../../lang/I18n';
 
 const MoreTab = props => {
-
-
-
+    const user = useSelector(state => state.user );
 
     //Logged User Info component
     const UserInfo = () => {
-
 
         /**
          * Avatar
@@ -68,10 +66,10 @@ const MoreTab = props => {
         return  <View style={style.topSection}>
             <Avatar />
             <Text style={[style.infoText,{fontSize : 19,marginTop:15}]}>
-                 John Doe
+                 {user.name}
             </Text>
             <Text style={style.infoText}>
-                John Doe@gmail.com
+                {user.email}
             </Text>
             <Text style={style.infoText}>
                 Newcairo-egypt

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Text, View, ImageBackground, StatusBar ,FlatList,ScrollView, Image } from 'react-native';
 import { Button } from 'native-base';
 import { BorderlessButton, RectButton } from 'react-native-gesture-handler';
+import { useSelector } from 'react-redux';
 import FastImage from 'react-native-fast-image';
 import PhotoUpload from 'react-native-photo-upload'
 import Modal from 'react-native-modal';
@@ -25,6 +26,7 @@ import endpoints from '../../config/endpoints';
 
 
 const CreateProfile = ({...props}) => {
+   const user = useSelector(state => state.user );
    const [ activeStep, setActiveStep ] = useState(1);
    const [ showModal, setShowModal ] = useState(false);
    const [ modalText, setModalText ] = useState('');
@@ -66,8 +68,8 @@ const CreateProfile = ({...props}) => {
 
    // Step One Container
    const StepOne = () => {
-      const [stepOneData, setStepOneData] = useState({});
-      const [countries , setCountries] = useState()
+      const [stepOneData, setStepOneData] = useState({'user_id': user.id});
+      const [countries , setCountries] = useState([])
       const [cities , setCities] = useState([
          {
             'id' : 1,
@@ -90,15 +92,15 @@ const CreateProfile = ({...props}) => {
        * Validator
        */
       const validator = () => {
-         if (!stepOneData.avatar) return new Snackbar({text : I18n.t('avatarIsRequired') , type : 'danger'}), false;
+         // if (!stepOneData.avatar) return new Snackbar({text : I18n.t('avatarIsRequired') , type : 'danger'}), false;
    
          if (!stepOneData.phone) return new Snackbar({text : I18n.t('phoneIsRequired') , type : 'danger'}), false;
 
-         if (!stepOneData.country) return new Snackbar({text : I18n.t('countryIsRequired') , type : 'danger'}), false;
+         if (!stepOneData.country_id) return new Snackbar({text : I18n.t('countryIsRequired') , type : 'danger'}), false;
 
-         if (!stepOneData.city) return new Snackbar({text : I18n.t('cityIsRequired') , type : 'danger'}), false;
+         if (!stepOneData.city_id) return new Snackbar({text : I18n.t('cityIsRequired') , type : 'danger'}), false;
 
-         if (!stepOneData.birthDate) return new Snackbar({text : I18n.t('birthdateIsRequired') , type : 'danger'}), false;
+         if (!stepOneData.birth_date) return new Snackbar({text : I18n.t('birthdateIsRequired') , type : 'danger'}), false;
    
          return true;
       }
@@ -107,9 +109,18 @@ const CreateProfile = ({...props}) => {
        * Step one submition handler
        */
       const stepOneSubmit = () => {
-         if (validator()) {
-            goToNext();
-         }
+         //if not valid data
+         if (!validator()) return
+         
+         //Submit data to api
+         api  
+            .post(endpoints.profile, stepOneData)
+            .then(res => {
+               goToNext();
+            })
+            .catch(err => {
+               new Snackbar({text : I18n.t('unknowError') , type : 'danger'});
+            });
       }
 
       useEffect(() => {
@@ -158,17 +169,17 @@ const CreateProfile = ({...props}) => {
             <Dropdown 
                items={countries}
                name={'country'}
-               onChangeValue={ value => setStepOneData({ ...stepOneData, country: value}) }
+               onChangeValue={ value => setStepOneData({ ...stepOneData, country_id: value}) }
             />
             <Dropdown 
                items={cities}
                name={'city'}
-               onChangeValue={ value => setStepOneData({ ...stepOneData, city: value}) }
+               onChangeValue={ value => setStepOneData({ ...stepOneData, city_id: value}) }
             />
             <Datepicker 
                isCalendar = {true}
                name={'Birth Date'}
-               onChangeValue={ value => setStepOneData({ ...stepOneData, birthDate: value}) }
+               onChangeValue={ value => setStepOneData({ ...stepOneData, birth_date: value}) }
             />
             <TallaButton 
                onPress={stepOneSubmit}
