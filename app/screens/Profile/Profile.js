@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Text, View, ImageBackground, StatusBar } from 'react-native';
+import { useSelector } from 'react-redux';
 
 import GeneralStyle from '../../assets/styles/GeneralStyle';
 
@@ -11,7 +12,29 @@ import { RectButton, ScrollView, BorderlessButton } from 'react-native-gesture-h
 //
 import Button from '../../components/Button';
 
+//Apis
+import api from '../../config/api';
+import endpoints from '../../config/endpoints';
+
 const Profile = ({...props}) => {
+   const user = useSelector(state => state.user.user);
+   const [data, setData ] = useState({});
+
+   /**
+      * Get Current User Profile
+      */
+   const getUserProfile = () => {
+      api  
+         .get(endpoints.profile + '/' + user.profile.id)
+         .then(res => setData(res.data.data))
+   }
+
+   useEffect(() => {
+      getUserProfile();
+
+      return () => {}
+   },[])
+
     return <View style={[GeneralStyle.container,{flex:1,backgroundColor: "#FFF"}]}>
        <StatusBar hidden />
        <ImageBackground source={require('../../assets/images/header-bg.png')}
@@ -30,11 +53,11 @@ const Profile = ({...props}) => {
             <View style={{flex:1}}></View>
        </ImageBackground>
        <View style={{flex:1,}}>
-         <ImageBackground source={require('../../assets/images/profile-default.png')}
+         <ImageBackground source={data.avatar ? {uri: data.avatar} : require('../../assets/images/profile-default.png')}
                           resizeMode={'stretch'}
                           style={style.bgImage}>
             <Text style={style.name}>
-               #name
+               {data.user?.name}
             </Text>
             <RectButton style={style.uploadImageButton}>
                <FastImage source={require('../../assets/images/change-profile-image.png')}
@@ -55,16 +78,16 @@ const Profile = ({...props}) => {
                </RectButton>
             </View>
             <Text style={[style.rowInfo]}>
-                  {I18n.t('name')} : dalia
+                  {I18n.t('name')} : {data.user?.name}
             </Text>
             <Text style={[style.rowInfo]}>
-                  {I18n.t('mobile')} : 010105252
+                  {I18n.t('mobile')} : {data?.phone}
             </Text>
             <Text style={[style.rowInfo]}>
-                  {I18n.t('country')} : Egypt
+                  {I18n.t('country')} : {data.country?.name_en}
             </Text>
             <Text style={[style.rowInfo]}>
-                  {I18n.t('city')} : Cairo
+                  {I18n.t('city')} : {data.city?.name_en}
             </Text>
          </View>
          <View style={style.grayContainer}>
@@ -79,19 +102,19 @@ const Profile = ({...props}) => {
                </RectButton>
             </View>
             <Text style={[style.rowInfo]}>
-                  {I18n.t('bodyShape')} :  fafafafa
+                  {I18n.t('bodyShape')} :  {data.body_shape?.title}
             </Text>
             <Text style={[style.rowInfo]}>
-                  {I18n.t('undertoneColors')} : fafafafa
+                  {I18n.t('undertoneColors')} : {data.skin_glow?.title}
             </Text>
             <Text style={[style.rowInfo]}>
-                  {I18n.t('youAre')} : fafafafa
+                  {I18n.t('youAre')} : {data.jobs?.title}
             </Text>
             <Text style={[style.rowInfo]}>
-                  {I18n.t('yourGoal')} : fafafafa
+                  {I18n.t('yourGoal')} : {data.goals?.title}
             </Text>
             <Text style={[style.rowInfo]}>
-                  {I18n.t('yourStyle')} : fafafafa
+                  {I18n.t('yourStyle')} : {data.favourite_styles?.title}
             </Text>
          </View>
          <Button style={{width : '95%'}}

@@ -11,6 +11,9 @@ export default {
     'brands' : 'brands',
     'colors' : 'colors',
     'support': 'supports',
+    'gifts': 'gifts',
+    'registrationChoices': 'registration-choices',
+    'specializations' : 'specializations',
 
     
     //Authorized  
@@ -24,6 +27,25 @@ export default {
      */
     'blog': 'blogs',
     'blogComment' : 'blogs/comments',
-    'closet': 'closets'
+
+    /**
+     * Closet
+     */
+    'closet': 'closets',
+
+    /**
+     * Stylist
+     */
+    'stylist': 'stylists',
+    'stylistProject': 'stylist-projects',
+    'stylistCertificate': 'stylist-certificates',
+    'stylistSpecialization': 'stylist-specializations',
+    'stylistBankAccount': 'stylist-bank-accounts',
+
+    /**
+     * Favourites
+     */
+    'favourites': 'favourites',
+
 
 }

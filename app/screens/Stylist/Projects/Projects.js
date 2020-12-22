@@ -1,21 +1,36 @@
-import React , {useState , useRef} from 'react';
+import React , {useState , useRef, useEffect} from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { Text, View, ImageBackground , FlatList, SafeAreaView} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { BorderlessButton } from 'react-native-gesture-handler';
+import { useSelector } from 'react-redux';
 
 import GeneralStyle from '../../../assets/styles/GeneralStyle';
 
 import TallahButton from '../../../components/Button';
 import AddProject from './AddProject';
 
+//Apis
+import api from '../../../config/api';
+import endpoints from '../../../config/endpoints';
+
 const Projects = props => {
+   const stylist = useSelector(state => state.stylist);
    const [projects , setProjects] = useState([]);
    const [showAddModal , setShowAddModal ] = useState(false);
    const navigation = useNavigation();
    const projectRef = useRef(null);
 
 
+   /**
+   * Get current stylist data
+   */
+   const getStylistProjects = () => {
+      const StylistId = props.route.params.stylistId ?? stylist.id ;
+      api  
+         .get(`${endpoints.stylistProject}/${StylistId}`)
+         .then(res => setProjects(res.data.data));
+   }
 
    /**
     * Render project item
@@ -41,6 +56,9 @@ const Projects = props => {
    } 
 
 
+   useEffect(() => {
+      getStylistProjects();
+   }, [])
    return <View style={[GeneralStyle.container]}>
          <ImageBackground source={require('../../../assets/images/colored-bg.png')}
                         resizeMode={'stretch'}

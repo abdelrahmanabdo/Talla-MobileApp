@@ -40,6 +40,8 @@ const Registeration = ({...props}) => {
 
       if (!data.password) return new Snackbar({text : I18n.t('passwordIsRequired') , type : 'danger'}) , false ;
 
+      if (!isAcceptTerms) return new Snackbar({text : I18n.t('acceptTermsFirst') , type : 'danger'}) , false ;
+
       if (data.password != data.confirmPassword) return new Snackbar({text : I18n.t('confirmPasswordMismatch') , type : 'danger'}), false;
 
       return true;
@@ -72,7 +74,7 @@ const Registeration = ({...props}) => {
                      new Snackbar({text : I18n.t('invalidCredentials') })
                   }
                } else {
-                  new Snackbar({text : I18n.t('unknownError') })
+                  new Snackbar({text : error.response.data.message })
                }
             });
 
@@ -117,7 +119,7 @@ const Registeration = ({...props}) => {
             <View style={{flexDirection:'row' , marginVertical: 20 , alignItems:'center'}}>
                <Checkbox onChange={ value => setIsAcceptTerms(value)}/>
                <RectButton
-                  onPress={()=>{}} >
+                  onPress={()=> props.navigation.navigate('TAndC')} >
                   <Text style={LoginStyle.termsText}>
                      {I18n.t('termsAndconditions')} 
                   </Text>
@@ -145,7 +147,6 @@ const Registeration = ({...props}) => {
                   </RectButton>
                </View>
             </View>
-            
             <SocialLogin type="registration" />
          </View>
          </ScrollView>

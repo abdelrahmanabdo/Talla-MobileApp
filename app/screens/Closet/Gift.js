@@ -1,4 +1,4 @@
-import React , {useState} from 'react';
+import React , {useEffect, useState} from 'react';
 import { Text, View,FlatList , SafeAreaView ,StatusBar } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { RectButton, BorderlessButton,  } from 'react-native-gesture-handler';
@@ -15,37 +15,22 @@ import I18n from '../../lang/I18n';
 import Selector from '../../components/Selector';
 import Button from '../../components/Button';
 
+//Apis
+import api from '../../config/api';
+import endpoints from '../../config/endpoints';
+
 const Gift = ({...props}) => {
    const [selected , setSelected] = useState(0);      
-   const [data] = useState([
-      {
-         id : 1 ,
-         image : require('../../assets/images/zara.png'),
-         label : "Find a new look"
+   const [gifts, setGifts] = useState([]);
 
-      },
-      {
-         id : 2 ,
-         image : require('../../assets/images/mango.png'),
-         label : "Total Make-over"
-      },
-      {
-         id : 3 ,
-         image : require('../../assets/images/h&m.png'),
-         label : "Create unique style"
-      },
-      {
-         id : 4 ,
-         image : require('../../assets/images/bershka.png'),
-         label : "Keep  up with tends"
-      },
-      {
-         id : 5 ,
-         image : require('../../assets/images/stradivirus.png'),
-         label : "Keep  up with tends"
-      },
-      
-   ]);
+   /**
+   * Get gifts
+   */
+   const getGifts = () => {
+      api  
+         .get(endpoints.gifts)
+         .then(res => setGifts(res.data.data));
+   }
 
    //Render brands 
    const renderItem = (item) => {
@@ -55,6 +40,11 @@ const Gift = ({...props}) => {
                         isCurrentSelected={selected == item.item.id}
                         onSelect={(value)=>{setSelected(value)}}/>
    }
+
+   useEffect(() => {
+      //Get gifts list
+      getGifts();
+   },[])
 
    return <SafeAreaView style={style.container}>
          <StatusBar hidden={false}  barStyle={'dark-content'}  backgroundColor={'#FFF'}/>
@@ -83,7 +73,7 @@ const Gift = ({...props}) => {
          <FlatList   contentContainerStyle={{alignSelf:'center',marginVertical: 5}}
                      horizontal={false}
                      showsVerticalScrollIndicator={false}
-                     data={data}
+                     data={gifts}
                      numColumns={2}
                      key={( 'h' )}
                      renderItem = {(item)=> renderItem(item)}

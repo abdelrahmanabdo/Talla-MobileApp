@@ -19,6 +19,7 @@ export default {
    passwordIsRequired: "كلمة المرور مطلوبة ",
    confirmPasswordIsRequired: "تأكيد كلمة المرور مطلوبة",
    confirmPasswordMismatch: "تأكيد كلمة المرور يجب أن تطابق كلمة المرور",
+   acceptTermsFirst: "يجب ان توافق علي الشروط والاحكام اولا",
    phoneIsRequired: 'رقم الموبايل مطلوب',
    countryIsRequired: 'البلد مطلوبة',
    cityIsRequired: 'المدينة مطلوبة',
@@ -102,9 +103,10 @@ export default {
    title : "العنوان",
    addHashtag : "أضف هاشتاج",
    body : "الموضوع",
-   blogBody : "Blog body"
+   blogBody : "Blog body",
 
-
+   //Currencies
+   EGP : "جنية"
    
 
 

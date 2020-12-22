@@ -9,11 +9,16 @@ import { useNavigation } from '@react-navigation/native';
 import GeneralStyle from '../../../../assets/styles/GeneralStyle';
 import style from '../../../../assets/styles/StylistRequestStyle';
 import TallahButton from '../../../../components/Button';
+import Snackbar from '../../../../components/Snackbar';
 
 import Add from './Add';
 
 import I18n from '../../../../lang/I18n';
 import AddProject from '../../Projects/AddProject';
+
+//Apis
+import api from '../../../../config/api';
+import endpoints from '../../../../config/endpoints';
 
 const StepFour = props => {
    const navigation = useNavigation();
@@ -25,7 +30,16 @@ const StepFour = props => {
     * Submit current step
     */
    const submitStep = () => {
-      props.goToNext();
+     //Submit projects to api
+      api  
+         .post(endpoints.stylistProject, projects)
+         .then(res => {
+            props.goToNext();
+         })
+         .catch(err => {
+            console.log(err.response);
+            new Snackbar({text : err.response.data.message , type : 'danger'});
+         });
    }
 
    /**
@@ -39,11 +53,11 @@ const StepFour = props => {
                   onPress={() => navigation.navigate('projectDetails')}
                >
                {
-                  item?.photos.map((item2 , key) => {
+                  item?.images.map((item2 , key) => {
                      return <FastImage 
                         key={key}
                         resizeMode={'contain'}
-                        source={{uri: `data:image/gif;base64,${item2}`}}
+                        source={{uri: item2}}
                         style={{flex:1,height : '100%' , width : '50%'}}
                      />
                   })
@@ -52,7 +66,7 @@ const StepFour = props => {
    } 
 
 
-   return <SafeAreaView style={{height : '88%'}}>
+   return <SafeAreaView style={{height : '86%'}}>
       <Text
          style={[GeneralStyle.blackBoldText , 
                {marginStart : 15 , marginVertical : 8 , fontSize : 16}]}

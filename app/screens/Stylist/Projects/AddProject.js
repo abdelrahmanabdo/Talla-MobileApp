@@ -2,7 +2,8 @@ import React, { useRef, useState } from 'react';
 import {ScrollView, Text , View} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import PhotoUpload from 'react-native-photo-upload'
-import { BaseButton, BorderlessButton, RectButton } from 'react-native-gesture-handler';
+import { BorderlessButton } from 'react-native-gesture-handler';
+import { useSelector } from 'react-redux';
 
 import Modal from 'react-native-modal';
 import { Button } from 'react-native-share';
@@ -16,40 +17,44 @@ import GeneralStyle from '../../../assets/styles/GeneralStyle';
 import I18n from '../../../lang/I18n';
 
 const AddProject = props => {
+   const stylist = useSelector(state => state.stylist);
    const [name , setName ] = useState('');
    const [description , setDescription ] = useState('');
-   const [photos , setPhotos] = useState([]);
+   const [images , setImages] = useState([]);
 
    const onSubmitModal = () => {
+      alert(stylist.id)
       const newProject = {
-         name , description , photos
+        'stylist_id': stylist.id, 
+        name , description , images
       }
       props.onSubmitModal(newProject);
-      setPhotos([]) 
+      setImages([]) 
    }
 
    /**
-    * Photos 
+    * Images 
     */
-   const Photos = () => {
+   const Images = () => {
 
       return <View 
          style={{flexDirection:'row' , marginVertical : 10}}
         >
          {
-            photos.length > 0 &&
+            setImages.length > 0 &&
             <View style={{flexDirection : 'row'}}>
-               {photos.map((item,key) => {
-                     return <FastImage 
-                                 key={key}
-                                 source={{uri: `data:image/gif;base64,${item}`}} 
-                                 style={{width : 65 , height:65 , borderRadius : 10 , marginRight : 5}}
-                             />
-                     })}
+               {images.map((item,key) => {
+                        return <FastImage 
+                                    key={key}
+                                    source={{uri: item}} 
+                                    style={{width : 65 , height:65 , borderRadius : 10 , marginRight : 5}}
+                              />
+                     })
+               }
             </View>
          }
          {
-            photos.length != 5 &&
+            images.length != 5 &&
             <PhotoUpload
                imagePickerProps={{  
                               title: I18n.t('selectAvatar'),
@@ -57,13 +62,11 @@ const AddProject = props => {
                               chooseFromLibraryButtonTitle :  I18n.t("chooseFromLibrary"),
                               cancelButtonTitle :  I18n.t('cancel')
                 }}
-                format = 'JPEG'
+                format = 'PNG'
                 photoPickerTitle = {I18n.t('selectPhoto')}
                 containerStyle={{alignItems:'flex-start'}}
                 onPhotoSelect={pic => {
-                  if (pic) {
-                     setPhotos([...photos , pic]);
-                  }
+                  if (pic) setImages([...images, `data:image/png;base64,${pic}` ]);
                 }}>
                <BorderlessButton>
                   <View style={{width : 'auto',justifyContent:'center',padding : 15,borderWidth: .5 ,
@@ -93,7 +96,7 @@ const AddProject = props => {
             </Text>
             <Button 
                transparent  
-               onPress={()=> {setPhotos([]) ;
+               onPress={()=> {setImages([]) ;
                               props.onCloseModal() }}>
                <FastImage source={require('../../../assets/icons/close-colored.png')}
                           style={{width:20,height:20 , flex:1}} 
@@ -118,7 +121,7 @@ const AddProject = props => {
             />
             <View>
                <Text style={[GeneralStyle.blackBoldText , {marginBottom: 5}]}>Photos</Text>
-               <Photos />
+               <Images />
             </View>
             <TallahButton  onPress={onSubmitModal}
                            label={'Add'}

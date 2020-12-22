@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View, ImageBackground, StatusBar, FlatList , ScrollView, Dimensions } from 'react-native';
 import { RectButton, BorderlessButton, BaseButton } from 'react-native-gesture-handler';
+import { useSelector } from 'react-redux';
 
 //Styles
 import GeneralStyle from '../../assets/styles/GeneralStyle';
@@ -17,6 +18,7 @@ import endpoints from '../../config/endpoints';
 const width = Dimensions.get('window').width ;
 
 const ChicChatTab = props => {
+    const user = useSelector(state => state.user.user);
     const [activeTab , setActiveTab ] = useState(1);
     const [newBlogs , setNewBlogs ] = useState([
         {
@@ -109,9 +111,9 @@ const ChicChatTab = props => {
                                        style={{width : 25,height : 25}} />
                         </BorderlessButton>
                         <BorderlessButton onPress={() => {props.navigation.navigate('profile')}}>
-                            <FastImage source={require('../../assets/images/girl.png')}
-                                    resizeMode={'contain'}
-                                    style={{width : 30,height :  30 , marginStart : 14}} />
+                            <FastImage source={user.profile?.avatar ? {uri: user.profile.avatar} : require('../../assets/images/girl.png')}
+                                    resizeMode={'stretch'}
+                                    style={{width : 30,height :  30 , marginStart : 14,borderRadius: 15}} />
                         </BorderlessButton>
                     </View>
                 </View>

@@ -63,7 +63,13 @@ export default StyleSheet.create({
       padding:  10,
    },
    blogText :{
-      alignSelf:'flex-end'
+      alignSelf:'flex-end',
+      backgroundColor:"#CCC",
+      padding: 10,
+      borderRadius:6,
+      overflow:'hidden',
+      opacity:.7,
+      lineHeight:24
    },
    commentsContainer: {
       flex:1,  

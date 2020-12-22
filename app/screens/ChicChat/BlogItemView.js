@@ -18,7 +18,7 @@ import api from '../../config/api';
 import endpoints from '../../config/endpoints';
 
 const BlogItemView = props  => {
-   const user = useSelector(state => state.user );
+   const user = useSelector(state => state.user.user);
    const [blog, setBlog] = useState({});
    const [showEmojis , setShowEmojis] = useState(false);
    const [comment , setComment ] = useState('');
@@ -27,11 +27,13 @@ const BlogItemView = props  => {
    * Get current blog data
    */
    const getBlogData = () => {
-      if (!props.route.params.blogId) return;
+      if (!props.route?.params?.blogId) return;
 
       api  
          .get(endpoints.blog + '/' + props.route.params.blogId)
-         .then(res => setBlog(res.data.data))
+         .then(res => setBlog(res.data.data));
+
+      console.log(blog)
    }
 
    /**
@@ -126,21 +128,23 @@ const BlogItemView = props  => {
                      </BorderlessButton>
                   </View>
                </View>
-               <View style={[style.blogContentContainer]}>
+               {
+                  blog.images && <ImageBackground source={{uri: blog?.images[0]?.image}} style={[style.blogContentContainer]}>
                      <View style={[GeneralStyle.row]}>
-                  {
-                     blog.hashtags &&
-                           blog.hashtags.map(item => {
-                              return <Text style={[GeneralStyle.badge]}>
-                                       {item}   
-                                    </Text>
-                           })
-                  }
-                  </View>
-                  <Text style={[style.blogText]}>
-                   {blog?.body}
-                  </Text>
-               </View>
+                     {
+                        blog.hashtags &&
+                              blog.hashtags.map(item => {
+                                 return <Text style={[GeneralStyle.badge]}>
+                                          {item}   
+                                       </Text>
+                              })
+                     }
+                     </View>
+                     <Text style={[style.blogText]}>
+                     {blog?.body}
+                     </Text>
+                  </ImageBackground>
+               }
                <View style={[style.commentsContainer]}>
                   <Text style={[GeneralStyle.blackText, {fontSize : 20}]}>
                      Comments

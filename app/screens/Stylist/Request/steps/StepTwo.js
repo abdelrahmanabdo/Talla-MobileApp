@@ -1,25 +1,41 @@
 import React, { useState } from 'react';
-import { ImageBackground, ScrollView, Text, View} from 'react-native';
-import FastImage from 'react-native-fast-image';
-import {BorderlessButton} from 'react-native-gesture-handler';
-import * as Animatable from 'react-native-animatable';
+import {  ScrollView } from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
+
 //Styles
-import GeneralStyle from '../../../../assets/styles/GeneralStyle';
-import style from '../../../../assets/styles/StylistRequestStyle';
 import Input from '../../../../components/Input';
 import Button from '../../../../components/Button';
+import Snackbar from '../../../../components/Snackbar';
 
 import I18n from '../../../../lang/I18n';
 
+//Apis
+import api from '../../../../config/api';
+import endpoints from '../../../../config/endpoints';
+
+import { updateStylistProfile } from '../../../../redux/actions/stylist';
+
 const StepTwo = props => {
-   const [yearsOfExperience , setYearsOfExperience] = useState('');
-   const [shortBio , setShortBio] = useState('');
+   const stylist = useSelector(state => state.stylist );
+   const dispatch = useDispatch();
+   const [ stepTwoData, setStepTwoData ] = useState({}); //experience_years, bio
 
    /**
     * Submit current step
     */
    const submitStep = () => {
-      props.goToNext();
+      //Submit data to api
+      api  
+         .put(endpoints.stylist +'/'+ stylist.id, stepTwoData)
+         .then(res => {
+            //Update redux stored stylist profile
+            dispatch(updateStylistProfile({...stepTwoData}));
+            props.goToNext();
+         })
+         .catch(err => {
+            console.log(err.response)
+            new Snackbar({text : I18n.t('unknowError') , type : 'danger'});
+         });
    }
 
    return <ScrollView 
@@ -27,14 +43,14 @@ const StepTwo = props => {
          <Input name={'Years of experience'} 
                 placeholderText={'Years of experience'}  
                 isNumeric={true}                
-                onChangeText={(value) => setYearsOfExperience(value)}
+                onChangeText={value =>  setStepTwoData({...stepTwoData, experience_years: value}) }
                 placeholderColor={'#ccc'} 
                 color={'#000'}
          />
          <Input name={'Short Bio'} 
                 placeholderText={'Will appear on your profile'}  
                 isTextarea={true}                
-                onChangeText={(value) => setShortBio(value)}
+                onChangeText={value =>  setStepTwoData({...stepTwoData, bio: value}) }
                 placeholderColor={'#ccc'} 
                 color={'#000'}
          />

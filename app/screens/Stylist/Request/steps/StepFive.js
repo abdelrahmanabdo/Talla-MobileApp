@@ -1,10 +1,11 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect} from 'react';
 import { Dimensions, Pressable, SafeAreaView, ScrollView, Text , View} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { Button } from 'react-native-share';
 import * as Animatable from 'react-native-animatable';
 import Modal from 'react-native-modal';
-import { BorderlessButton, RectButton } from 'react-native-gesture-handler';
+import { BorderlessButton } from 'react-native-gesture-handler';
+import { useSelector } from 'react-redux';
 
 //Styles
 import GeneralStyle from '../../../../assets/styles/GeneralStyle';
@@ -17,10 +18,15 @@ import ModalStyle from '../../../../assets/styles/ModalStyle';
 
 import I18n from '../../../../lang/I18n';
 
+//Apis
+import api from '../../../../config/api';
+import endpoints from '../../../../config/endpoints';
+
 const {width , height} = Dimensions.get('window');
 
 
 const StepFive = props => {
+   const stylist = useSelector(state => state.stylist);
    const [showAddModal , setShowAddModal ] = useState(false);
    const [specializations , setSpecializations] = useState([]);
    const specializationRef = useRef(null);
@@ -38,7 +44,16 @@ const StepFive = props => {
     * Submit current step
     */
    const submitStep = () => {
-      props.goToNext();
+      // Submit project specializations to api
+      api  
+         .post(endpoints.stylistSpecialization, specializations)
+         .then(res => {
+            props.goToNext();
+         })
+         .catch(err => {
+            console.log(err.response);
+            new Snackbar({text : err.response.data.message , type : 'danger'});
+         });
    }
 
    /**
@@ -46,27 +61,19 @@ const StepFive = props => {
     */
    const AddModal = () => {
       const [selectedItem , setSelectedItem] = useState(null);
-      const [specializationTypes , setSpecializationTypes ] = useState([{
-            name : 'Wardrobe Consultation',
-            hint : 'Organizing, declutter, mix and match existing clothes.'
-         },
-         {
-            name : 'Shopping guide/ assistance',
-            hint : 'What trends fits client’s body shape, where to shop. .etc'
-         },
-         {
-            name : 'Color analysis /make up and grooming consultation',
-            hint : 'What make up, hair and outfit colors that light up the client’s look.'
-         },
-         {
-            name : 'Event capsule',
-            hint : 'Plan & prepare client’s stylish look for more than one event.'
-         }
-      
-      ]);
+      const [specializationTypes , setSpecializationTypes ] = useState([]);
+
+
+      /**
+         * Get Countries
+         */
+      const getSpecialization = () => {
+         api  
+            .get(endpoints.specializations)
+            .then(res => setSpecializationTypes(res.data.data))
+      }
 
       const onSubmitModal = () => {
-
          if(selectedItem == null) return
          setSpecializations([...specializations , specializationTypes[selectedItem] ]);
          setIsEdit(true);
@@ -75,6 +82,10 @@ const StepFive = props => {
          specializationRef.current?.slideInRight();
 
       }
+
+      useEffect(() => {
+         getSpecialization();
+      }, [])
 
       return <Modal
                isVisible={showAddModal}
@@ -125,7 +136,7 @@ const StepFive = props => {
                                       marginBottom:5 , color : selectedItem == key ? '#fff' : '#000'
                                      }]}
                            >
-                              {item.name}
+                              {item.title}
                            </Text>
                            <Text
                               style={[GeneralStyle.blackText , 
@@ -133,7 +144,7 @@ const StepFive = props => {
                                        color : selectedItem == key ? '#fff' : '#000'
                                      }]}
                            >
-                             {item.hint}
+                             {item.description}
                            </Text>
                         </Animatable.View>
                      </Pressable>
@@ -151,7 +162,7 @@ const StepFive = props => {
    }
 
 
-   return <SafeAreaView style={{height:'88%'}}>
+   return <SafeAreaView style={{height:'86%'}}>
       <Text
          style={[GeneralStyle.blackBoldText , 
                {marginStart : 15 , marginVertical : 8 , fontSize : 16}]}
@@ -180,7 +191,7 @@ const StepFive = props => {
                               {textAlign :'center' , alignSelf:'center',fontSize : 16 ,
                                width:'75%', marginBottom : 8}]}
                      >
-                        {item.name}
+                        {item.title}
                      </Text>
                   <Input 
                       name={'Service description'} 
@@ -197,8 +208,8 @@ const StepFive = props => {
                      color={'#000'}
                      placeholderColor={'#CCC'}
                      placeholderText={'Price starts from:'}
-                     defaultValue={item.startingPrice}
-                     onChangeText={(value) => specializations[key].startingPrice = value}
+                     defaultValue={item.start_price}
+                     onChangeText={(value) => specializations[key].start_price = value}
                   />
                   <View
                      style={[GeneralStyle.rowSpaceBetween]}
@@ -211,7 +222,10 @@ const StepFive = props => {
                            style={{ padding: 15 , width : '48%' ,borderWidth : .6, borderColor : '#707070'  }}
                      />
                      <TallahButton
-                           onPress={() => { setIsEdit(false)}}
+                           onPress={() => { 
+                              specializations[key].stylist_id = stylist.id;
+                              setIsEdit(false);
+                           }}
                            labelColor = "#FFF"
                            label = {'Save'}
                            bgColor = "#D1AD67"
@@ -261,7 +275,7 @@ const StepFive = props => {
                         style={[GeneralStyle.blackText, 
                                  {flex:2,fontSize : 15}]}
                      >
-                        {item.name}
+                        {item.title}
                      </Text>
                   </View>                 
                   <View
@@ -293,7 +307,7 @@ const StepFive = props => {
                         style={[GeneralStyle.blackText, 
                                  {flex:2,fontSize : 15}]}
                      >
-                        {item.startingPrice}
+                        {item.start_price}
                      </Text>
                   </View>
                </Animatable.View>

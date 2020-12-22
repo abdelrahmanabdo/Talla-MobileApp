@@ -62,56 +62,7 @@ const StylistsList = props => {
 
   ]);
 
-  const [stylists , setStylists ] = useState([
-      {
-         id : 1 ,
-         name : 'stylist 1' ,
-         avatar : '' ,
-         sessions : 3 ,
-         rating : 3.4 ,
-         location : 'Cairo , Egypt'
-     },
-     {
-         id : 2 ,
-         name : 'stylist 2'  ,
-         avatar : '' ,
-         sessions : 3 ,
-         rating : 2.6 ,
-         location : 'Cairo , Egypt' 
-     },
-     {
-         id : 3 ,
-         name : 'stylist 3'  ,
-         avatar : '' ,
-         sessions : 3 ,
-         rating : 2.1 ,
-         location : 'Cairo , Egypt'
-     },
-     {
-         id : 4 ,
-         name : 'stylist 4'  ,
-         avatar : '' ,
-         sessions : 5 ,
-         rating : 3.9 ,
-         location : 'Cairo , Egypt'
-     },
-     {
-        id : 5 ,
-        name : 'stylist 5'  ,
-        avatar : '' ,
-        sessions : 2 ,
-        rating : 3.4 ,
-        location : 'Cairo , Egypt'
-    },
-    {
-        id : 6 ,
-        name : 'stylist 6'  ,
-        avatar : '' ,
-        sessions : 1 ,
-        rating : 4.2 ,
-        location : 'Cairo , Egypt'
-    },   
-  ]);
+  const [stylists , setStylists ] = useState([]);
 
   /**
    * Render featured stylists list

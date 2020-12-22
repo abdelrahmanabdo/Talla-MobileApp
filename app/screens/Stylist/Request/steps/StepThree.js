@@ -4,6 +4,7 @@ import FastImage from 'react-native-fast-image';
 import { Button } from 'react-native-share';
 import * as Animatable from 'react-native-animatable';
 import Modal from 'react-native-modal';
+import { useSelector } from 'react-redux';
 import { BorderlessButton } from 'react-native-gesture-handler';
 
 //Styles
@@ -14,14 +15,20 @@ import TallahButton from '../../../../components/Button';
 
 import Add from './Add';
 import ModalStyle from '../../../../assets/styles/ModalStyle';
+import Snackbar from '../../../../components/Snackbar';
 
 import I18n from '../../../../lang/I18n';
 
+//Apis
+import api from '../../../../config/api';
+import endpoints from '../../../../config/endpoints';
+
 const StepThree = props => {
-   const [showAddModal , setShowAddModal ] = useState(false);
+   const stylist = useSelector(state => state.stylist);
    const [certificates , setCertificates] = useState([]);
    const [editedItemIndex , setEditedItemIndex ] = useState(null);
    const [isEdit , setIsEdit ] = useState(false);
+   const [showAddModal , setShowAddModal ] = useState(false);
    const certificateRef = useRef(null);
 
    /**
@@ -47,17 +54,31 @@ const StepThree = props => {
     * Submit current step
     */
    const submitStep = () => {
-      props.goToNext();
+      //Submit certificates to api
+      api  
+         .post(endpoints.stylistCertificate, certificates)
+         .then(res => {
+            setCertificates([]);
+            props.goToNext();
+         })
+         .catch(err => {
+            console.log(err.response)
+            new Snackbar({text : err.response.data.message , type : 'danger'});
+         });
    }
 
    const AddModal = () => {
+      const stylist_id = stylist.id;
       const [name , setName ] = useState();
       const [issuingOrganization , setIssuingOrganization ] = useState();
       const [yearsOfIssuance , setYearsOfIssuance] = useState();
 
       const onSubmitModal = () => {
          const newCertificate = {
-            name , issuingOrganization , yearsOfIssuance
+           stylist_id, 
+           certificate_name: name, 
+           organization_name: issuingOrganization, 
+           issurance_year:  yearsOfIssuance
          }
 
          if(isEdit){
@@ -103,21 +124,21 @@ const StepThree = props => {
                      onChangeText={(value) => setName(value)}
                      placeholderColor={'#ccc'} 
                      color={'#000'}
-                     defaultValue={isEdit ? certificates[editedItemIndex].name : null}
+                     defaultValue={isEdit ? certificates[editedItemIndex].certificate_name : null}
                />
                <Input name={'Issuing organization'} 
                      placeholderText={'Issuing organization'}  
                      onChangeText={(value) => setIssuingOrganization(value)}
                      placeholderColor={'#ccc'} 
                      color={'#000'}
-                     defaultValue={isEdit ? certificates[editedItemIndex].issuingOrganization : null}
+                     defaultValue={isEdit ? certificates[editedItemIndex].organization_name : null}
                />
                <Input name={'Year of issuance'} 
                      placeholderText={'Year of issuance'}  
                      onChangeText={(value) => setYearsOfIssuance(value)}
                      placeholderColor={'#ccc'} 
                      color={'#000'}
-                     defaultValue={isEdit ? certificates[editedItemIndex].yearsOfIssuance : null}
+                     defaultValue={isEdit ? certificates[editedItemIndex].issurance_year : null}
                />
                <TallahButton  onPress={onSubmitModal}
                               label={isEdit ? 'Edit' : 'Add'}
@@ -130,7 +151,7 @@ const StepThree = props => {
    }
 
 
-   return <SafeAreaView style={{height : '88%'}}>
+   return <SafeAreaView style={{height : '86%'}}>
       <Text
          style={[GeneralStyle.blackBoldText , 
                {marginStart : 15 , marginVertical : 8 , fontSize : 16}]}
@@ -154,7 +175,7 @@ const StepThree = props => {
                      <Text
                         style={[GeneralStyle.blackText, { flex:6 ,fontSize : 17 , fontWeight : '600'}]}
                      >
-                        {item.name}
+                        {item.certificate_name}
                      </Text>
                      <View
                         style={[GeneralStyle.rowSpaceBetween , {flex:1 }]}
@@ -182,12 +203,12 @@ const StepThree = props => {
                   <Text
                      style={[GeneralStyle.grayText, {fontSize : 15 , marginTop : 8}]}
                   >
-                    Organization :  {item.issuingOrganization}
+                    Organization :  {item.organization_name}
                   </Text>
                   <Text
                      style={[GeneralStyle.grayText, {fontSize : 15 , marginTop : 8}]}
                   >
-                    Year of Issuing :  {item.yearsOfIssuance}
+                    Year of Issuing :  {item.issurance_year}
                   </Text>
                </Animatable.View>
             })

@@ -22,13 +22,14 @@ import api from '../../config/api';
 import endpoints from '../../config/endpoints';
 
 const NewBlog = props  => {
-   const user = useSelector(state => state.user );
+   const user = useSelector(state => state.user.user);
    const [showModal, setShowModal ] = useState(false);
    const [title, setTitle ] = useState('');
    const [body, setBody ] = useState('');
    const [images , setImages ] = useState([]);
    const [hashtags, setHashtags ] = useState([]);
    const [currentHashtag, setCurrentHashtag ] = useState('');
+   const [isLoadig, setIsLoadig] = useState(false)
 
   /**
     * Remove image from list of images
@@ -57,7 +58,6 @@ const NewBlog = props  => {
     };
 
     ImagePicker.launchCamera(options, (response) => {
-      console.log('Response = ', response);
       if (response.didCancel) {
         console.log('User cancelled image picker');
       } else if (response.error) {
@@ -66,7 +66,7 @@ const NewBlog = props  => {
         console.log('User tapped custom button: ', response.customButton);
         alert(response.customButton);
       } else {
-        images.push(response.data);
+        images.push('data:'+ response.type +';base64,' + response.data);
         setImages([...images]);
       }
     });
@@ -89,7 +89,7 @@ const NewBlog = props  => {
         console.log('User tapped custom button: ', response.customButton);
         alert(response.customButton);
       } else {
-        images.push(response.data);
+        images.push('data:'+ response.type +';base64,' + response.data);
         setImages([...images]);
       }
     });
@@ -115,6 +115,9 @@ const NewBlog = props  => {
       if (!validator())  return ;
       //If user not logged in
       if (!user) return ;
+
+      setIsLoadig(true);
+
       //Submit data to api
       api  
          .post(endpoints.blog, {
@@ -127,9 +130,12 @@ const NewBlog = props  => {
             setImages([]);
             setHashtags([]);
             setShowModal(true);
+            setIsLoadig(false);
          })
          .catch(err => {
+            console.log(err.response)
             new Snackbar({text : I18n.t('unknowError') , type : 'danger'});
+            setIsLoadig(false);
          });
    }
 
@@ -157,21 +163,21 @@ const NewBlog = props  => {
    }
 
 
-    /**
+   /**
      * Render vertical new blogs
      */
-    const renderBlogImage = ({item , index}) => {
+   const renderBlogImage = ({item , index}) => {
       return <View style={[style.blogImage]} >
-          <ImageBackground source={{uri: `data:image/jpeg;base64,${item}`}}
-                           style={{width : '100%' , height : 120 , justifyContent:'flex-start',
-                                   borderRadius : 15 , overflow :'hidden'}}>
+          <ImageBackground source={{uri: item}}
+                           style={{width : '100%', height : 120, justifyContent:'flex-start',
+                                   borderRadius : 15, overflow :'hidden'}}>
             <BorderlessButton onPress={() => removeImage(index)}>
                <FastImage source={require('../../assets/icons/close-bg.png')} 
-                        style={{width : 22 , height : 22 , alignSelf:'flex-end', margin:5}} />
+                        style={{width : 22, height : 22, alignSelf:'flex-end', margin:5}} />
             </BorderlessButton>
           </ImageBackground>
       </View>
-  }
+   }
 
    return  <View style={[GeneralStyle.container]}>
             <ImageBackground source={require('../../assets/images/colored-bg.png')}
@@ -186,9 +192,10 @@ const NewBlog = props  => {
                     </BorderlessButton>
                     <View style={{flexDirection : 'row'}}>
                         <BaseButton style={[NewBlogStyle.postButton]}
-                                          onPress={() => {createNewBlog()}}>
+                                    enabled={!isLoadig}
+                                    onPress={() => {createNewBlog()}}>
                             <Text style={[NewBlogStyle.postButtonText]}>
-                               Post
+                               { isLoadig ? 'Posting' : 'Post'}
                             </Text>
                         </BaseButton>
                     </View>

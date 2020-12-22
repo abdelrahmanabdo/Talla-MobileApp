@@ -25,7 +25,7 @@ const Selector = ({...props}) => {
                         rippleColor={'#F8F8f8'}
                         onPress={onSelect}>
                <Animatable.View animation={'flipInY'} style={style.imageContainer}>
-                  <FastImage source={item.image} 
+                  <FastImage source={{uri: item.image}} 
                              resizeMode="contain"
                              style={style.image}
                   />
@@ -34,17 +34,16 @@ const Selector = ({...props}) => {
                   </View>
                </Animatable.View>
                <Text style={style.label}>
-                  {item.label ?? ''}
+                  {item.title ?? ''}
                </Text>
             </BorderlessButton>
          :
          <Animatable.View animation={'slideInUp'}>
             <BorderlessButton style={[style.container ,props.style,{height : props.hideText ? 120 : 175}]}
                         rippleColor={'#F8F8f8'}
-                        
                         onPress={onSelect}>
                <View  style={style.imageContainer}>
-                  <FastImage source={item.image} 
+                  <FastImage source={{uri: item.image}} 
                              resizeMode="stretch"
                              style={[style.image]}
                   />
@@ -54,7 +53,7 @@ const Selector = ({...props}) => {
                {
                   !props.hideText &&
                   <Text style={style.label}>
-                     {item.label ?? ''}
+                     {item.title ?? ''}
                   </Text>
                }
 

@@ -1,10 +1,9 @@
 import AsyncStorage from "@react-native-community/async-storage"
+import { stat } from "react-native-fs"
 
    var initialState =  {
       isLoggedIn : false ,
       user :  {},
-      cart :  0,
-      orders :  0,
    }
   
   AsyncStorage.getItem('isLoggedIn').then(val => initialState.isLoggedIn = val)
@@ -32,7 +31,17 @@ import AsyncStorage from "@react-native-community/async-storage"
           ...state
         }
       }
- 
+
+      case 'UPDATE_USER_PROFILE' : {
+        return {
+          ...state,
+          user: {
+            ...state.user,
+            profile: action.profile
+          }
+        }
+      }
+
       default:
         return state
     }

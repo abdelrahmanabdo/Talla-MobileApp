@@ -14,4 +14,12 @@ export const logoutUser = () => ({
 
 export const getUser = () => ({
    type : 'GET_USER'
-})
+});
+
+export const updateProfile = (profile) => {
+   return ({
+      type: 'UPDATE_USER_PROFILE',
+      profile,
+   })
+};
+

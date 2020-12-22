@@ -18,171 +18,14 @@ import Color from '../components/Color';
 
 import I18n from '../lang/I18n';
 
+//Apis
+import api from '../config/api';
+import endpoints from '../config/endpoints';
+import NotFound from '../components/NotFound';
 
 const Favourites = props  => {
     const [showFilterModal , setShowFilterModal ] = useState(false);
-    const [favourites , setFavourites] = useState([
-        {
-            icon : require('../assets/icons/hanger.png'),
-            iconActive : require('../assets/icons/hanger.png'),
-            name : 'test'
-        },
-        {
-            icon : require('../assets/icons/dress-active.png'),
-            iconActive : require('..//assets/icons/dress-active.png'),
-            name : 'Dresses'
-        },
-        {
-            icon : require('../assets/icons/hanger.png'),
-            iconActive : require('../assets/icons/hanger.png'),
-            name : 'test'
-        },
-        {
-            icon : require('../assets/icons/dress-active.png'),
-            iconActive : require('../assets/icons/dress-active.png'),
-            name : 'Dresses'
-        },
-        {
-            icon : require('../assets/icons/hanger.png'),
-            iconActive : require('../assets/icons/hanger.png'),
-            name : 'test'
-        },
-        {
-            icon : require('../assets/icons/dress-active.png'),
-            iconActive : require('../assets/icons/dress-active.png'),
-            name : 'Dresses'
-        },
-        {
-            icon : require('../assets/icons/hanger.png'),
-            iconActive : require('../assets/icons/hanger.png'),
-            name : 'test'
-        },
-        {
-            icon : require('../assets/icons/dress-active.png'),
-            iconActive : require('../assets/icons/dress-active.png'),
-            name : 'Dresses'
-        },
-        {
-            icon : require('../assets/icons/hanger.png'),
-            iconActive : require('../assets/icons/hanger.png'),
-            name : 'test'
-        },
-        {
-            icon : require('../assets/icons/dress-active.png'),
-            iconActive : require('../assets/icons/dress-active.png'),
-            name : 'Dresses'
-        },
-        {
-            icon : require('../assets/icons/hanger.png'),
-            iconActive : require('../assets/icons/hanger.png'),
-            name : 'test'
-        },
-        {
-            icon : require('../assets/icons/dress-active.png'),
-            iconActive : require('../assets/icons/dress-active.png'),
-            name : 'Dresses'
-        },
-        {
-            icon : require('../assets/icons/hanger.png'),
-            iconActive : require('../assets/icons/hanger.png'),
-            name : 'test'
-        },
-        {
-            icon : require('../assets/icons/dress-active.png'),
-            iconActive : require('../assets/icons/dress-active.png'),
-            name : 'Dresses'
-        },
-        {
-            icon : require('../assets/icons/hanger.png'),
-            iconActive : require('../assets/icons/hanger.png'),
-            name : 'test'
-        },
-        {
-            icon : require('../assets/icons/dress-active.png'),
-            iconActive : require('../assets/icons/dress-active.png'),
-            name : 'Dresses'
-        },
-        {
-            icon : require('../assets/icons/hanger.png'),
-            iconActive : require('../assets/icons/hanger.png'),
-            name : 'test'
-        },
-        {
-            icon : require('../assets/icons/dress-active.png'),
-            iconActive : require('../assets/icons/dress-active.png'),
-            name : 'Dresses'
-        },
-        {
-            icon : require('../assets/icons/hanger.png'),
-            iconActive : require('../assets/icons/hanger.png'),
-            name : 'test'
-        },
-        {
-            icon : require('../assets/icons/dress-active.png'),
-            iconActive : require('../assets/icons/dress-active.png'),
-            name : 'Dresses'
-        },
-        {
-            icon : require('../assets/icons/hanger.png'),
-            iconActive : require('../assets/icons/hanger.png'),
-            name : 'test'
-        },
-        {
-            icon : require('../assets/icons/dress-active.png'),
-            iconActive : require('../assets/icons/dress-active.png'),
-            name : 'Dresses'
-        },
-    ]);
-    const [categories , setCategories ] = useState([
-        {
-            icon : require('../assets/icons/hanger.png'),
-            iconActive : require('../assets/icons/hanger-active.png'),
-            name : 'test',
-            name_en : 'test',
-            
-        },
-        {
-            icon : require('../assets/icons/dress.png'),
-            iconActive : require('../assets/icons/dress-active.png'),
-            name : 'Dresses',
-            name_en : 'Dresses',
-        },
-        {
-            icon : require('../assets/icons/hanger.png'),
-            iconActive : require('../assets/icons/hanger-active.png'),
-            name : 'test',
-            name_en : 'test',
-
-        },
-        {
-            icon : require('../assets/icons/dress.png'),
-            iconActive : require('../assets/icons/dress-active.png'),
-            name : 'Dresses',
-            name_en : 'Dresses',
-
-        },
-        {
-            icon : require('../assets/icons/hanger.png'),
-            iconActive : require('../assets/icons/hanger-active.png'),
-            name : 'test',
-            name_en : 'test',
-
-        },
-        {
-            icon : require('../assets/icons/dress.png'),
-            iconActive : require('../assets/icons/dress-active.png'),
-            name : 'Dresses',
-            name_en : 'Dresses',
-
-        },
-        {
-            icon : require('../assets/icons/hanger.png'),
-            iconActive : require('../assets/icons/hanger-active.png'),
-            name : 'test',
-            name_en : 'test',
-        },
-
-    ]);
+    const [favourites , setFavourites] = useState([]);
 
 
     /**
@@ -190,8 +33,22 @@ const Favourites = props  => {
      * @param {} param0 
      */
     const renderItem = ({item , index}) => {
-        return <ClosetItem key={index} item={item} />
+        return <ClosetItem key={index} item={{id: item.id, user_id: item.user.id, ...item.item}} />
     }
+
+   /**
+   * Get gifts
+   */
+   const getFavourites = () => {
+      api  
+         .get(endpoints.favourites)
+         .then(res => setFavourites(res.data.data));
+   }
+
+    useEffect(() =>{
+        getFavourites();
+    },[]);
+
 
     /**
     * Filter Modal
@@ -202,49 +59,42 @@ const Favourites = props  => {
         const [category , setCategory ] = useState(0);
         const [color , setColor] = useState(0);
         const [brand , setBrand ] = useState(0);
-
-        const [colors , setColors ] =useState([
-          {
-            id : 1 ,
-            color : '#358C2F'
-          },
-          {
-            id : 2 ,
-            color : '#88D7C1'
-          },
-          {
-            id : 3 ,
-            color : '#CC8EC1'
-          },
-          {
-            id : 4 ,
-            color : '#454B99'
-          },
-          {
-            id : 5 ,
-            color : '#D1AD67'
-          },
-          {
-            id : 6 ,
-            color : '#76B1D7'
-          },
-          {
-            id : 7 ,
-            color : '#F8D965'
-          },
-          {
-            id : 8 ,
-            color : '#9F82DE'
-          },
-          {
-            id : 9 ,
-            color : '#000000'
-          },
-        ]);
         const [selectedColor , setSelectedColor ] = useState();
+        const [colors , setColors ] =useState([]);
+        const [brands , setBrands ] =useState([]);
+        const [categories , setCategories ] = useState([]);
 
-        useEffect(()=>{
+        /**
+         * Get gifts
+         */
+        const getCategories = () => {
+            api  
+                .get(endpoints.categories)
+                .then(res => setCategories(res.data.data));
+        }
 
+        /**
+         * Get Colors
+         */
+        const getColors = () => {
+            api  
+                .get(endpoints.colors)
+                .then(res => setColors(res.data.data));
+        }
+
+        /**
+         * Get Brands
+         */
+        const getBrands = () => {
+            api  
+                .get(endpoints.brands)
+                .then(res => setBrands(res.data.data));
+        }
+
+        useEffect(() =>{
+            getCategories();
+            getColors();
+            getBrands();
         },[season])
 
         return <Modal  
@@ -311,7 +161,7 @@ const Favourites = props  => {
                           name={I18n.t('category')} />
                 <Color colors={colors}
                        onChange={colorId => setColor(colorId)}/>
-                <Dropdown items={categories}
+                <Dropdown items={brands}
                           isModal
                           onChangeValue={(index)=>{setBrand(index)}}
                           name={I18n.t('brand')} />
@@ -345,17 +195,26 @@ const Favourites = props  => {
                     </View>
                 </View>
             </ImageBackground>
-            <FlatList 
-                contentContainerStyle={[style.favoruitesListContainer]}
-                showsVerticalScrollIndicator={false}
-                horizontal = {false}
-                keyExtractor={(item,index) => index.toString()}
-                numColumns={3}
-                data={favourites}
-                renderItem={renderItem}
-            />
+            {
+                favourites.length === 0 ?
+                <NotFound
+                  text={'No items found in favorites'}
+                  isFavourites
+                />
+                :
+                <FlatList 
+                    contentContainerStyle={[style.favoruitesListContainer]}
+                    showsVerticalScrollIndicator={false}
+                    horizontal = {false}
+                    keyExtractor={(item,index) => index.toString()}
+                    numColumns={3}
+                    data={favourites}
+                    renderItem={renderItem}
+                />
+            }
             
-            <FilterModal /> 
+            {   showFilterModal &&
+                <FilterModal /> }
     </View>
 }
  

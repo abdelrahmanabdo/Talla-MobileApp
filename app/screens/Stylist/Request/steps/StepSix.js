@@ -3,18 +3,25 @@ import {ScrollView, Text, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import Modal from 'react-native-modal';
 import { Button } from 'native-base';
+import { useSelector } from 'react-redux';
 
 //Styles
 import GeneralStyle from '../../../../assets/styles/GeneralStyle';
 import style from '../../../../assets/styles/StylistRequestStyle';
 import ModalStyle from '../../../../assets/styles/ModalStyle';
+import Snackbar from '../../../../components/Snackbar';
 
 import Input from '../../../../components/Input';
 import TallahButton from '../../../../components/Button';
 
 import TAndC from '../../../../modals/TAndC';
 
+//Apis
+import api from '../../../../config/api';
+import endpoints from '../../../../config/endpoints';
+
 const StepSix = props => {
+   const stylist = useSelector(state => state.stylist);
    const [card , setCard ] = useState({});
    const [showTAndCModal , setShowTAndCModal] = useState(false);
    const [showSubmitModal , setShowSubmitModal ] = useState(false);
@@ -23,7 +30,31 @@ const StepSix = props => {
     * Submit current step
     */
    const submitStep = () => {
-      setShowTAndCModal(true);
+      if (card.cardNumber.length > 16 ||card.cardNumber.length < 13) 
+         return new Snackbar({text : 'Please check your card number again' , type : 'danger'});
+      if (card.expiryDate.length > 5) 
+         return new Snackbar({text : 'Please check your expiry date again' , type : 'danger'});
+      if (card.cvv.length > 3) 
+         return new Snackbar({text : 'Please check your cvv again' , type : 'danger'});     
+
+      // Submit project specializations to api
+      api  
+         .post(endpoints.stylistBankAccount , 
+            { 
+               'stylist_id' : stylist.id,
+               'name_on_card' : card.holderName,
+               'card_number' : card.cardNumber,
+               'expire_date' : card.expiryDate,
+               'CVV' : card.cvv
+            }
+            )
+         .then(res => {
+            setShowTAndCModal(true);
+         })
+         .catch(err => {
+            console.log(err.response);
+            new Snackbar({text : err.response.data.message , type : 'danger'});
+         });
    }
 
    useEffect(() => {
@@ -55,7 +86,7 @@ const StepSix = props => {
       </Modal>
    }
 
-   return <View style={{height : '88%'}}>
+   return <View style={{height : '86%'}}>
       <ScrollView style={[{padding:15}]}>
          <Text
             style={[GeneralStyle.blackBoldText , 

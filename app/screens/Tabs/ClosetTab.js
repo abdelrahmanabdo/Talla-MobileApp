@@ -16,7 +16,9 @@ import Dropdown from '../../components/Dropdown';
 import Checkbox from '../../components/Checkbox';
 import Color from '../../components/Color';
 
-
+//Apis
+import api from '../../config/api';
+import endpoints from '../../config/endpoints';
 
 //
 import I18n from '../../lang/I18n';
@@ -26,123 +28,31 @@ const ClosetTab = ({...props}) => {
     const [activeCategoryIndex , setActiveCategoryIndex ] = useState(1);
     const [showFilterModal , setShowFilterModal ] = useState(false);
     const [showMoreModal , setShowMoreModal ] = useState(false);
-    const [closetItems , setClosetItems ] = useState([
-        {
-            icon : require('../../assets/icons/hanger.png'),
-            iconActive : require('../../assets/icons/hanger-active.png'),
-            name : 'test'
-        },
-        {
-            icon : require('../../assets/icons/dress-active.png'),
-            iconActive : require('../../assets/icons/dress-active.png'),
-            name : 'Dresses'
-        },
-        {
-            icon : require('../../assets/icons/hanger.png'),
-            iconActive : require('../../assets/icons/hanger-active.png'),
-            name : 'test'
-        },
-        {
-            icon : require('../../assets/icons/dress-active.png'),
-            iconActive : require('../../assets/icons/dress-active.png'),
-            name : 'Dresses'
-        },
-        {
-            icon : require('../../assets/icons/hanger.png'),
-            iconActive : require('../../assets/icons/hanger-active.png'),
-            name : 'test'
-        },
-        {
-            icon : require('../../assets/icons/dress-active.png'),
-            iconActive : require('../../assets/icons/dress-active.png'),
-            name : 'Dresses'
-        },
-        {
-            icon : require('../../assets/icons/hanger.png'),
-            iconActive : require('../../assets/icons/hanger-active.png'),
-            name : 'test'
-        },
-        {
-            icon : require('../../assets/icons/dress-active.png'),
-            iconActive : require('../../assets/icons/dress-active.png'),
-            name : 'Dresses'
-        },
-        {
-            icon : require('../../assets/icons/hanger.png'),
-            iconActive : require('../../assets/icons/hanger-active.png'),
-            name : 'test'
-        },
-        {
-            icon : require('../../assets/icons/dress-active.png'),
-            iconActive : require('../../assets/icons/dress-active.png'),
-            name : 'Dresses'
-        },
-        {
-            icon : require('../../assets/icons/hanger.png'),
-            iconActive : require('../../assets/icons/hanger-active.png'),
-            name : 'test'
-        },
-        {
-            icon : require('../../assets/icons/dress-active.png'),
-            iconActive : require('../../assets/icons/dress-active.png'),
-            name : 'Dresses'
-        },
+    const [categories , setCategories ] = useState([]);
+    const [closetItems , setClosetItems ] = useState([]);
 
+    /**
+    * Get categories
+    */
+    const getCategories = () => {
+        api  
+            .get(endpoints.categories)
+            .then(res => setCategories(res.data.data));
+    }
 
-    ]);
+    /**
+     * 
+     * @param 
+     * @returns blogs
+     */
+    const getUserCloset = () => {
+        api  
+           .get(endpoints.closet)
+           .then(res => setClosetItems(res.data.data))
+           .catch(err => alert(JSON.stringify(err)))
+    }
 
-    const [categories , setCategories ] = useState([
-        {
-            icon : require('../../assets/icons/hanger.png'),
-            iconActive : require('../../assets/icons/hanger-active.png'),
-            name : 'test',
-            name_en : 'test',
-            
-        },
-        {
-            icon : require('../../assets/icons/dress.png'),
-            iconActive : require('../../assets/icons/dress-active.png'),
-            name : 'Dresses',
-            name_en : 'Dresses',
-        },
-        {
-            icon : require('../../assets/icons/hanger.png'),
-            iconActive : require('../../assets/icons/hanger-active.png'),
-            name : 'test',
-            name_en : 'test',
-
-        },
-        {
-            icon : require('../../assets/icons/dress.png'),
-            iconActive : require('../../assets/icons/dress-active.png'),
-            name : 'Dresses',
-            name_en : 'Dresses',
-
-        },
-        {
-            icon : require('../../assets/icons/hanger.png'),
-            iconActive : require('../../assets/icons/hanger-active.png'),
-            name : 'test',
-            name_en : 'test',
-
-        },
-        {
-            icon : require('../../assets/icons/dress.png'),
-            iconActive : require('../../assets/icons/dress-active.png'),
-            name : 'Dresses',
-            name_en : 'Dresses',
-
-        },
-        {
-            icon : require('../../assets/icons/hanger.png'),
-            iconActive : require('../../assets/icons/hanger-active.png'),
-            name : 'test',
-            name_en : 'test',
-        },
-
-    ]);
-
- /**
+    /**
     * More Modal
     */
    const MoreModal = () => {
@@ -215,49 +125,31 @@ const ClosetTab = ({...props}) => {
     */
    const FilterModal = () => {
         const [season , setSeason ] = useState(0);
-        const [colors , setColors ] =useState([
-          {
-            id : 1 ,
-            color : '#358C2F'
-          },
-          {
-            id : 2 ,
-            color : '#88D7C1'
-          },
-          {
-            id : 3 ,
-            color : '#CC8EC1'
-          },
-          {
-            id : 4 ,
-            color : '#454B99'
-          },
-          {
-            id : 5 ,
-            color : '#D1AD67'
-          },
-          {
-            id : 6 ,
-            color : '#76B1D7'
-          },
-          {
-            id : 7 ,
-            color : '#F8D965'
-          },
-          {
-            id : 8 ,
-            color : '#9F82DE'
-          },
-          {
-            id : 9 ,
-            color : '#000000'
-          },
-        ]);
+        const [colors , setColors ] =useState([]);
+        const [brands , setBrands ] =useState([]);
         const [selectedColor , setSelectedColor ] = useState();
 
+        /**
+        * Get colors
+        */
+        const getColors = () => {
+            api  
+                .get(endpoints.colors)
+                .then(res => setColors(res.data.data));
+        }
+
+        /**
+        * Get brands
+        */
+        const getBrands = () => {
+            api  
+                .get(endpoints.brands)
+                .then(res => setBrands(res.data.data));
+        }
 
         useEffect(()=>{
-
+            getColors();
+            getBrands();
         },[season])
 
         return <Modal  isVisible={showFilterModal}
@@ -303,7 +195,7 @@ const ClosetTab = ({...props}) => {
                           name={I18n.t('category')} />
                 <Color colors={colors}
                        onChange={colorId => setSelectedColor(colorId)}/>
-                <Dropdown items={categories}
+                <Dropdown items={brands}
                           isModal
                           onChangeValue={()=>{}}
                           name={I18n.t('brand')} />
@@ -333,6 +225,7 @@ const ClosetTab = ({...props}) => {
      * @param {} param0 
      */
     const renderCategoryBox = ({item , index}) => {
+        console.log(item)
         return <View    key={index}
                         style={GeneralStyle.categoryContainer} >
             <Pressable style={[GeneralStyle.categoryBox,{backgroundColor : activeCategoryIndex == index ? '#D1AD67' : '#FFF',
@@ -341,7 +234,7 @@ const ClosetTab = ({...props}) => {
                         onPress={()=>{
                             getActiveCategory(index)
                         }}>
-                <FastImage source={activeCategoryIndex == index ? item.iconActive : item.icon}
+                <FastImage source={activeCategoryIndex == index ? {uri: item.colord_icon} : {uri: item.icon}}
                             resizeMode={'contain'}
                             style={{width:30,height:30}}/>
             </Pressable>
@@ -365,6 +258,8 @@ const ClosetTab = ({...props}) => {
 
 
     useEffect(()=>{
+        getCategories();
+        getUserCloset();
     },[])
 
 

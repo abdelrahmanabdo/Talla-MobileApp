@@ -34,6 +34,10 @@ export default StyleSheet.create({
       fontSize: 19,
       color : "#5D0D57",
       fontFamily:'Roboto-Bold',
+      backgroundColor: '#CCC',
+      padding: 10,
+      borderRadius: 10,
+      overflow: 'hidden'
    },
    uploadImageButton :{
       alignSelf:'flex-end',

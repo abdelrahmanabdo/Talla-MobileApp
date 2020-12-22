@@ -19,9 +19,9 @@ const BlogBox = props => {
     */
    const share = ( ) => {
       const url = "";
-      const title = "";
-      const message = "";
-      const icon = "";
+      const title = blog.title;
+      const message = blog.body;
+      const icon = blog.image.image;
 
       const options = Platform.select({
          ios: {
@@ -59,10 +59,10 @@ const BlogBox = props => {
 
    return <View style={[style.container]}>
         <View style={[style.actionsSection]}>
-            <FastImage  source={blog.user?.avatar}
+            <FastImage  source={{uri: blog.user?.profile?.avatar}}
                         style={{height : 50 , width : 50 ,borderRadius : 25}} />
             <View style={{alignItems:'center'}}>
-               <AddToFavourites />
+               <AddToFavourites item={blog} />
                <Text style={[style.likesNumber]}>
                   {blog.likes}
                </Text>
@@ -76,7 +76,7 @@ const BlogBox = props => {
         </View>
         <RectButton rippleColor={'#F8F8F8'} style={[style.blogSection]}
               onPress={props.onPress}>
-            <FastImage  source={require('../assets/images/blog-default.png')}
+            <FastImage  source={blog.image ? {uri: blog.image.image} : require('../assets/images/blog-default.png')}
                         style={[style.blogImage]}
                         resizeMode={'stretch'}/>
             <Text style={[style.blogText]}

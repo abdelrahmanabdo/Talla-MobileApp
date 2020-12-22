@@ -9,100 +9,74 @@ import FastImage from 'react-native-fast-image';
 import { RectButton, ScrollView, BorderlessButton } from 'react-native-gesture-handler';
 import { Rating, AirbnbRating } from 'react-native-ratings';
 
+//Apis
+import api from '../../config/api';
+import endpoints from '../../config/endpoints';
+
 //
 import Button from '../../components/Button';
 
 const StylistDetails = ({...props}) => {
-   const [protfolio , setProtfolio ] = useState([
-      {
-          id : 1 ,
-          image : '' ,
-      },
-      {
-          id : 2 ,
-          image : '' ,
-      },
-      {
-          id : 3 ,
-          image : '' ,
-      },
-      {
-          id : 4 ,
-          image : '' ,
-      },
-      {
-         id : 5 ,
-         image : '' ,
-     },
-     {
-         id : 6 ,
-         image : '' ,
-     },
+   const [data, setData] = useState({});
 
-  ]);
+   /**
+   * Get current stylist data
+   */
+   const getStylistData = () => {
+      if (!props.route?.params?.stylistId) return;
+
+      api  
+         .get(`${endpoints.stylist}/${props.route.params.stylistId}`)
+         .then(res => setData(res.data.data));
+   }
 
   /**
    * Render Protfolio item
    */
-   const renderProtfolio = () => {
-      return <RectButton >
-         <View style={[style.protfolioItem]}>
-
-         </View>
+   const renderProtfolio = ({item}) => {
+      return <RectButton onPress={() => props.navigation.navigate('projectDetails',{projectId: item.id})} >
+         <FastImage
+            source={{uri:item.image.image}}
+            style={[style.protfolioItem]}
+         />
       </RectButton>
    }
 
    /**
     * Protfolio tabs 
     */
-   const ProtfolioTabs = () => {
-      const [activeTab , setActiveTab ] = useState(1);
-      const [tabs , setTabs ] = useState([
-         {
-            id : 1,
-            tabName : 'Shopping Assistance',
-         },
-         {
-            id : 2,
-            tabName : 'Shopping Guide',           
-         },
-         {
-            id : 3,
-            tabName : 'Event Capsule',           
-         },
-         {
-            id : 4,
-            tabName : 'One Event',           
-         }
-      ])
+   const SpecializationTabs = () => {
+      const [activeTab , setActiveTab ] = useState(0);
+      const [activeSpecialzation, setActiveSpecialzation ] = useState(data.specializations ? data?.specializations[activeTab] : {})
 
-      const changeTab = (id) => {
-         setActiveTab(id)
+      const changeTab = (item) => {
+         setActiveTab(item.id);
+         setActiveSpecialzation(item);
       }
 
       return <View>
           <FlatList 
-                     horizontal
-                     showsHorizontalScrollIndicator={false}
-                     data={tabs}
-                     keyExtractor={(item,index) => index.toString()}
-                     renderItem={({item}) => {
-                        return <BorderlessButton onPress={() => changeTab(item.id)}>
-                           <View style={[style.tabButton, activeTab == item.id ? style.activeTab : null]}>
-                              <Text style={[GeneralStyle.blackText , {color : activeTab == item.id ?  '#D1AD67' : '#000'}]}>
-                              {item.tabName}
+               horizontal
+               showsHorizontalScrollIndicator={false}
+               data={data?.specializations}
+               keyExtractor={(item,index) => index.toString()}
+               renderItem={({item,index}) => {
+                        return <BorderlessButton onPress={() => changeTab(item)}>
+                           <View style={[style.tabButton, activeTab == index ? style.activeTab : null]}>
+                              <Text style={[GeneralStyle.blackText , {color : activeTab == index ?  '#D1AD67' : '#000'}]}>
+                               {item.specialization.title}
                               </Text>
                            </View>
                         </BorderlessButton>
-                     }}
-                  />
+               }}
+            />
             <View style={[style.tabContent]}>
                <View style={[GeneralStyle.row , {marginVertical : 10}]}>
                   <Text style={{color : '#7B7B7B' , fontSize : 14 }}>
                    Specialization:
                   </Text>
                   <Text style={{flex:2 , color : '#000' , fontSize : 13,marginHorizontal : 10}}> 
-                     Wardrobe closet consultation 
+                     {activeSpecialzation?.specialization?.title}
                   </Text>
                </View>
                <View style={[GeneralStyle.row , {marginVertical : 10}]}>
@@ -110,8 +84,7 @@ const StylistDetails = ({...props}) => {
                      Description:
                   </Text>
                   <Text style={{flex:2 , color : '#000' , fontSize : 13,marginHorizontal : 10}}> 
-                  Lorem ipsum dolor sit amet, ecte  elit, 
-                  sed do eiusmod por incididunt
+                     {activeSpecialzation?.description}
                   </Text>
                </View>
                <View style={[GeneralStyle.row , {marginVertical : 10}]}>
@@ -119,7 +92,7 @@ const StylistDetails = ({...props}) => {
                      Starting price:
                   </Text>
                   <Text style={{flex:2 , color : '#000' , fontSize : 13,marginHorizontal : 10}}> 
-                    Lorem ipsum
+                    {activeSpecialzation?.start_price}
                   </Text>
                </View>
                <Button  label={'Ask for packages'}
@@ -132,6 +105,10 @@ const StylistDetails = ({...props}) => {
    }
 
 
+   useEffect(() => {
+      getStylistData();
+
+   }, [])
 
    return <View style={[GeneralStyle.container,{flex:1,backgroundColor: "#FFF"}]}>
          <ImageBackground source={require('../../assets/images/colored-bg.png')}
@@ -143,7 +120,7 @@ const StylistDetails = ({...props}) => {
                               style={{width : 25 , height : 25}} />
                </BorderlessButton>
                <Text style={GeneralStyle.headerText}>
-                  Stylists
+                  Stylist
                </Text>
                <View>
                </View>
@@ -154,7 +131,7 @@ const StylistDetails = ({...props}) => {
                            resizeMode={'stretch'}
                            style={style.bgImage}>
                <Text style={[GeneralStyle.secondaryBoldText, { fontSize : 19}]}>
-                  #Stylist name
+                  {data?.user?.name}
                </Text>                           
                <View style={[GeneralStyle.rowSpaceBetween,{width :'90%' , padding : 10}]}>
                   <View style={{alignItems:'center'}}>
@@ -186,9 +163,7 @@ const StylistDetails = ({...props}) => {
                      Short Bio
                   </Text>
                   <Text style={[style.bioText]}>
-                     Lorem ipsum dolor sit amet, consectetur adipisicing elit, 
-                     sed do eiusmod tempor incididunt Lorem ipsum dolor sit amet, 
-                     consectetur adipisicing elit, sed do eiusmod tempor incididunt
+                     {data?.bio}
                   </Text>
                </View>
                <View>
@@ -205,15 +180,18 @@ const StylistDetails = ({...props}) => {
                   <FlatList 
                      horizontal
                      showsHorizontalScrollIndicator={false}
-                     data={protfolio}
+                     data={data?.projects}
                      style={{ paddingVertical : 5}}
                      keyExtractor={(item,index) => index.toString()}
                      renderItem={renderProtfolio}
                   />
                </View>
-               <View style={[style.grayContainer]}>
-                  <ProtfolioTabs />
-               </View>
+               {
+                  data?.specializations?.length !== 0 &&
+                  <View style={[style.grayContainer]}>
+                     <SpecializationTabs />
+                  </View>
+               }
                <View style={[style.grayContainer  , GeneralStyle.rowSpaceBetween]}>
                   <Text style={[GeneralStyle.secondaryText,{fontWeight : '500'}]}>
                         Stylist Info
@@ -236,7 +214,7 @@ const StylistDetails = ({...props}) => {
                </View>   
                <BorderlessButton 
                   style={[style.grayContainer  , GeneralStyle.rowSpaceBetween]}
-                  onPress={() => props.navigation.navigate('projects')}
+                  onPress={() => props.navigation.navigate('projects', {stylistId: data?.id})}
                >
                   <Text style={[GeneralStyle.secondaryText,{fontWeight : '500'}]}>
                        Portfolio 

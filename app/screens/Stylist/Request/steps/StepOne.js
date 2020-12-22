@@ -1,60 +1,103 @@
-import React, { useState } from 'react';
-import { Image, SafeAreaView, ScrollView, Text, View} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { Image, ScrollView, Text, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {BorderlessButton , RectButton} from 'react-native-gesture-handler';
-import * as Animatable from 'react-native-animatable';
 import PhotoUpload from 'react-native-photo-upload';
+import { useDispatch, useSelector } from 'react-redux';
+import AsyncStorage from '@react-native-community/async-storage';
 
 //Styles
 import GeneralStyle from '../../../../assets/styles/GeneralStyle';
-import style from '../../../../assets/styles/StylistRequestStyle';
 import stepsStyle from '../../../../assets/styles/CreateProfileStyle';
 
 //Components
 import Input from '../../../../components/Input';
 import Button from '../../../../components/Button';
 import Dropdown from '../../../../components/Dropdown';
+import Snackbar from '../../../../components/Snackbar';
 
 import I18n from '../../../../lang/I18n';
 
+//Apis
+import api from '../../../../config/api';
+import endpoints from '../../../../config/endpoints';
+
+import { setStylistProfile } from '../../../../redux/actions/stylist';
+
 const StepOne = props => {
-   const [avatar , setAvatar] = useState('');
-   const [email , setEmail] = useState('');
-   const [country , setCountry] = useState('');
-   const [language , setLanguage] = useState('');
-   const [phoneNumbers , setPhoneNumbers] = useState([]);
+   const user = useSelector(state => state.user.user);
+   const stylist = useSelector(state => state.stylist);
+   const dispatch = useDispatch()
+   const [stepOneData, setStepOneData ] = useState({'user_id': user.id, 'mobile_numbers': []});
    const [currentPhoneNumber , setCurrentPhoneNumber ] = useState('');
+   const [countries , setCountries] = useState([]);
 
-   const [countries , setCountries] = useState([
-      {
-         'id' : 1,
-         'name' : 'مصر',
-         'name_en' : 'egypt'
-      }
-   ])
-   const [languages , setLanguages] = useState([
-      {
-         'id' : 1,
-         'name' : 'الإنجليزية',
-         'name_en' : 'English'
-      },
-      {
-         'id' : 1,
-         'name' : 'العربية',
-         'name_en' : 'Arabic'
-      },
-   ]);
+   /**
+      * Get Countries
+      */
+   const getCountries = () => {
+      api  
+         .get(endpoints.countries)
+         .then(res => setCountries(res.data.data))
+   }
 
+   /**
+      * Validator
+   */
+   const validator = () => {
+      if (!stepOneData.email) return new Snackbar({text : I18n.t('emailIsRequired') , type : 'danger'}), false;
+
+      if (!stepOneData.country_id) return new Snackbar({text : I18n.t('countryIsRequired') , type : 'danger'}), false;
+
+      return true;
+   }
 
    /**
     * Submit current step
     */
-   const submitStep = () => {
-      props.goToNext();
+   const submitStep = async () => {
+      //if not valid data
+      if (!validator()) return
+         
+      //Submit data to api
+      api  
+         .post(endpoints.stylist, stepOneData)
+         .then( async (res) => {
+            if (res.data.success) {
+               //Remove user object from result 
+               delete res.data.data.user;
+               //Save stylist profile to redux
+               dispatch(setStylistProfile(res.data.data ));
+               //Save stylist profile to asyncStorage
+               await AsyncStorage.setItem('stylist' , JSON.stringify(res.data.data ));
+               //Go to next step
+               props.goToNext();
+            }
+         })
+         .catch(err => {
+            console.log(err.response)
+            new Snackbar({text : I18n.t('unknowError') , type : 'danger'});
+         });
+
    }
 
+   useEffect(() => {
+      getCountries();
+
+      //restore previous registered data
+      if (stylist) {
+         setStepOneData({
+               ...stepOneData,
+               avatar: stylist.avatar,
+               mobile_numbers:  stylist.mobile_numbers ?? [],
+               country_id: stylist.country_id,
+               email: stylist.email,
+         })
+      }
+   }, [])
+
    return (
-   <View style={{height : '88%'}}>
+   <View style={{height : '86%'}}>
       <ScrollView 
          showsVerticalScrollIndicator={false}>
          <Text style={[stepsStyle.stepHeaderText , {color : '#000' , marginStart : 25}]}>
@@ -66,18 +109,16 @@ const StepOne = props => {
                            chooseFromLibraryButtonTitle :  I18n.t("chooseFromLibrary"),
                            cancelButtonTitle :  I18n.t('cancel')
              }}
-             format = 'JPEG'
+             format = 'PNG'
              photoPickerTitle = {I18n.t('selectPhoto')}
              containerStyle={{borderRadius : 10 ,marginTop : 20}}
              onPhotoSelect={pic => {
-               if (pic) {
-                  setAvatar(pic)
-               }
+               if (pic) setStepOneData({...stepOneData, avatar: 'data:image/png;base64,' + pic});
              }}>
             {
-               avatar ?
+               stepOneData.avatar ?
                <Image 
-                  source={{uri: `data:image/gif;base64,${avatar}`}} 
+                  source={{uri: `${stepOneData.avatar}`}} 
                   style={stepsStyle.uploadPictureButton}
                />
                :
@@ -94,8 +135,9 @@ const StepOne = props => {
          </PhotoUpload>
          <Input name={I18n.t('email')} 
                 placeholderText={I18n.t('email')}  
-                isNumeric={true}                
-                onChangeText={(value) => setEmail(value)}
+                isNumeric={true}             
+                defaultValue={stepOneData.email}   
+                onChangeText={value => setStepOneData({...stepOneData, email: value})}
                 placeholderColor={'#ccc'} 
                 color={'#000'}
          />
@@ -103,14 +145,7 @@ const StepOne = props => {
             items={countries}
             name={'country'}
             placeholderText={'#000'} 
-            onChangeValue={(value)=> setCountry(value)}
-         />
-         <Dropdown 
-            items={languages}
-            placeholderText={'#000'} 
-            color={'#000'}
-            name={'Preferred Language'}
-            onChangeValue={(value)=> setLanguage(value)}
+            onChangeValue={value => setStepOneData({...stepOneData, country_id: value})}
          />
 
          <View style={{backgroundColor : '#F8F8F8',borderTopLeftRadius : 10 , 
@@ -129,14 +164,15 @@ const StepOne = props => {
                   />
                   <BorderlessButton
                      rippleColor={'#CCC'} 
+                     enabled={currentPhoneNumber !== ''}
                      onPress={() => {
                         if(!currentPhoneNumber)
                            return
                         else if(currentPhoneNumber.length != 11)
-                           return alert('Mobile Number should be 11 digts')
-                           // return new Toast({'message'  : 'Mobile Number should be 11 digts' , type  : 'danger'})
+                           return new Snackbar({text  : 'Mobile Number should be 11 digts' , type  : 'danger'})
                         else 
-                           setPhoneNumbers([...phoneNumbers , currentPhoneNumber]);
+                           stepOneData.mobile_numbers.push(currentPhoneNumber)
+                           setStepOneData({...stepOneData, mobile_numbers: stepOneData.mobile_numbers})
                            setCurrentPhoneNumber('');
                      }}
                   >
@@ -148,7 +184,7 @@ const StepOne = props => {
                   </BorderlessButton>
                </View>
                {
-                  phoneNumbers.map((item , key) => {
+                  stepOneData.mobile_numbers.map((item , key) => {
                      return <View 
                               key={key}
                               style={[GeneralStyle.rowSpaceBetween , 
@@ -161,8 +197,8 @@ const StepOne = props => {
                            </Text>
                            <BorderlessButton
                               onPress= {() => {
-                                 phoneNumbers.splice(key,1);
-                                 setPhoneNumbers([...phoneNumbers])
+                                 stepOneData.phoneNumbers.splice(key,1);
+                                 setStepOneData({...stepOneData, phoneNumbers: stepOneData.phoneNumbers});
                               }}
                            >
                               <FastImage 

@@ -1,4 +1,4 @@
-import React  , {useState}from 'react';
+import React  , {useState, useEffect}from 'react';
 import { Text, View, Image,ImageBackground ,StatusBar} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { RectButton, BorderlessButton, ScrollView } from 'react-native-gesture-handler';
@@ -14,7 +14,7 @@ import style from '../../assets/styles/MoreStyle';
 import I18n from '../../lang/I18n';
 
 const MoreTab = props => {
-    const user = useSelector(state => state.user );
+    const user = useSelector(state => state.user.user);
 
     //Logged User Info component
     const UserInfo = () => {
@@ -30,6 +30,11 @@ const MoreTab = props => {
 
             }
 
+            useEffect(() => {
+                user.profile?.avatar ? setAvatar(user.profile?.avatar) : null ;
+                return () => {}
+            }, []);
+
             return  <PhotoUpload
                imagePickerProps={{  title: I18n.t('selectAvatar'),
                               takePhotoButtonTitle : I18n.t('takeCameraPhoto'),
@@ -41,12 +46,12 @@ const MoreTab = props => {
                 containerStyle={{borderRadius : 10 ,marginTop : 20}}
                 onPhotoSelect={pic => {
                   if (pic) {
-                     setAvatar(pic)
+                     setAvatar('data:image/png;base64,' + pic)
                   }
                 }}>
                {
                   avatar ?
-                    <Image source={{uri: `data:image/gif;base64,${avatar}`}} 
+                    <Image source={{uri: `${avatar}`}} 
                            style={style.avatar}/>
                   :
                     <BorderlessButton onPress={changeAvatar}>
@@ -71,11 +76,11 @@ const MoreTab = props => {
             <Text style={style.infoText}>
                 {user.email}
             </Text>
+            { user.profile?.country && <Text style={style.infoText}>
+                {user.profile?.country?.name_en}
+            </Text>}
             <Text style={style.infoText}>
-                Newcairo-egypt
-            </Text>
-            <Text style={style.infoText}>
-              01200000000
+              {user.profile?.phone}
             </Text>
         </View>
     }
@@ -109,9 +114,9 @@ const MoreTab = props => {
                 <ListItem   icon={require('../../assets/icons/profile.png')} 
                             label={'Profile'} 
                             onPress={()=>{navigation.navigate('profile')}}/>
-                <ListItem   icon={require('../../assets/icons/closet-value.png')} 
+                {/* <ListItem   icon={require('../../assets/icons/closet-value.png')} 
                             label={'Closet value'} 
-                            onPress={()=>{navigation.navigate('')}}/>
+                            onPress={()=>{navigation.navigate('')}}/> */}
                 <ListItem   icon={require('../../assets/icons/outfits.png')}
                             label={'Outfits'} 
                             onPress={()=>{navigation.navigate('')}}/>

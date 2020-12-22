@@ -19,13 +19,16 @@ export default {
    passwordIsRequired: "Password is required",
    confirmPasswordIsRequired: "Confirm Password is required",
    confirmPasswordMismatch: "Confirm password doesn't match password",
+   acceptTermsFirst: "You have to accept terms first",
    phoneIsRequired: 'Phone is required',
    countryIsRequired: 'Country is required',
    cityIsRequired: 'City is required',
    avatarIsRequired: 'Avatar is required',
    titleIsRequired: 'Blog title is required',
    bodyIsRequired: 'Blog body is required',
-   unknowError : "Unkonw error, Try again",
+   unknownError : "Unkonw error, Try again",
+   shouldSelectOneAtLeast : 'You should select at least one',
+   maximun3: 'Maximun 3 selection',
    //Login & registeration
    joinNow : "Join Now",
    userName : "User name",
@@ -68,8 +71,8 @@ export default {
    hips : "Hips",
    hipsInfo : "HIPS: Put your feet together, use a measure tape and wrap it around your hip and buttocks.",
    calculate : "Calculate",
-   finishCreateAccountText : "We will send you a quiz To determine your style prefrences",
-
+   finishCreateAccountText : "Thanks for completing you profile and registering with us ",
+  
    //Profile
    profile : "Profile",
    personalInfo : "Personal Info ",
@@ -104,7 +107,11 @@ export default {
    title : "Title",
    addHashtag : "Add hashtag",
    body : "Body",
-   blogBody : "Blog body"
+   blogBody : "Blog body",
+
+   //Currencies
+   EGP : "EGP"
+   
 
 
 

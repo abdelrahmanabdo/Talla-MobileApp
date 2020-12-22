@@ -10,6 +10,11 @@ import style from '../../assets/styles/StylistTabStyle';
 import FastImage from 'react-native-fast-image';
 import Button from '../../components/Button';
 
+//Apis
+import api from '../../config/api';
+import endpoints from '../../config/endpoints';
+import NotFound from '../../components/NotFound';
+
 const width = Dimensions.get('window').width ;
 
 const StylistTab = props => {
@@ -124,57 +129,18 @@ const StylistTab = props => {
      
        ]);
      
-       const [stylists , setStylists ] = useState([
-           {
-              id : 1 ,
-              name : 'stylist 1' ,
-              avatar : '' ,
-              sessions : 3 ,
-              rating : 3.4 ,
-              location : 'Cairo , Egypt'
-          },
-          {
-              id : 2 ,
-              name : 'stylist 2'  ,
-              avatar : '' ,
-              sessions : 3 ,
-              rating : 2.6 ,
-              location : 'Cairo , Egypt' 
-          },
-          {
-              id : 3 ,
-              name : 'stylist 3'  ,
-              avatar : '' ,
-              sessions : 3 ,
-              rating : 2.1 ,
-              location : 'Cairo , Egypt'
-          },
-          {
-              id : 4 ,
-              name : 'stylist 4'  ,
-              avatar : '' ,
-              sessions : 5 ,
-              rating : 3.9 ,
-              location : 'Cairo , Egypt'
-          },
-          {
-             id : 5 ,
-             name : 'stylist 5'  ,
-             avatar : '' ,
-             sessions : 2 ,
-             rating : 3.4 ,
-             location : 'Cairo , Egypt'
-         },
-         {
-             id : 6 ,
-             name : 'stylist 6'  ,
-             avatar : '' ,
-             sessions : 1 ,
-             rating : 4.2 ,
-             location : 'Cairo , Egypt'
-         },   
-       ]);
+       const [stylists , setStylists ] = useState([]);
      
+
+       /**
+        * Get list of all stylusts
+        */
+       const getStylists = () => {
+          api  
+            .get(endpoints.stylist)
+            .then(res => setStylists(res.data.data));
+       }
+
        /**
         * Render featured stylists list
         */
@@ -194,7 +160,7 @@ const StylistTab = props => {
         * Render featured stylists list
         */
        const renderStylist = ({item}) => {
-          return <BaseButton onPress={()=> {props.navigation.navigate('stylistDetails')}}
+          return <BaseButton onPress={()=> {props.navigation.navigate('stylistDetails',{stylistId: item.id})}}
                              style={[style.stylistBox]}>
               <View style={{flex:1}}>
      
@@ -202,16 +168,16 @@ const StylistTab = props => {
               <View style={{flex:2}}>
                  <View style={[GeneralStyle.rowSpaceBetween,{marginBottom : 8}]}>
                     <View style={[GeneralStyle.row , {alignItems:'center'}]}>
-                       <FastImage source={require('../../assets/icons/default-avatar.png')} 
+                       <FastImage source={item.avatar ? {uri: item.avatar} : require('../../assets/icons/default-avatar.png')} 
                                   style={{width : 35 , height : 35 , borderRadius : 18 , marginEnd : 10}} />
                        <View>
                           <Text style={[GeneralStyle.blackText,{marginTop : 5}]} 
                                 numberOfLines={1}>
-                             {item.name}
+                             {item.user.name}
                           </Text>
-                          <Text style={[GeneralStyle.blackText,{marginTop : 5 , color : '#BBB'}]} >
+                          {/* <Text style={[GeneralStyle.blackText,{marginTop : 5 , color : '#BBB'}]} >
                           {item.sessions} Session
-                          </Text>
+                          </Text> */}
                        </View>
                     </View>
                     <View>
@@ -223,18 +189,21 @@ const StylistTab = props => {
                        </Text>
                        <Text style={[GeneralStyle.blackText,{marginTop : 5 , fontSize : 13}]} 
                           numberOfLines={1}>
-                        {item.location} 
+                        {item.country.name_en} 
                        </Text>
                     </View>
                  </View>
                  <Text style={[GeneralStyle.blackText]}>
-                    Lorem ipsum dolor sit amet,
-                    consect etur adipisicing elit, 
-                    sed do
+                    {item.bio}
                  </Text>
               </View>
           </BaseButton>
        }
+
+       useEffect(() => {
+          //Get list of all stylists
+         getStylists();
+       },[])
      
         return  <View style={[GeneralStyle.container]}>
               <StatusBar hidden={false}  barStyle={'light-content'}  backgroundColor={'#012647'}/>
@@ -264,17 +233,23 @@ const StylistTab = props => {
                  </View>
            </ImageBackground>
            <View style={[GeneralStyle.rowSpaceBetween,{padding:15}]}>
-              <BorderlessButton style={[GeneralStyle.SecondaryButton]}>
+              <BorderlessButton 
+                  onPress={() => props.navigation.navigate('stylistRequestIntro')}
+                  style={[GeneralStyle.SecondaryButton]}
+               >
                  <Text style={[GeneralStyle.SecondaryButtonText]}>
                     Be a Stylist
                  </Text>
               </BorderlessButton>
               <View style={[GeneralStyle.row]}>
                  <BaseButton style={{marginEnd : 20}}>
-                    <FastImage source={require('../../assets/icons/search.png')} style={{width : 20 , height : 20}}/>
+                    <FastImage 
+                       source={require('../../assets/icons/search.png')} 
+                       style={{width : 20 , height : 20}}
+                    />
                  </BaseButton>
                  <BaseButton>
-                 <Text style={[GeneralStyle.goldText, {fontSize : 17}]}>
+                 <Text style={[GeneralStyle.goldText, {fontSize: 17}]}>
                        Filter
                     </Text>
                   </BaseButton>
@@ -293,13 +268,21 @@ const StylistTab = props => {
                  renderItem={renderFeaturedStylist}
               />
            </View>
-           <FlatList 
-                 showsVerticalScrollIndicator={false}
-                 data={stylists}
-                 style={{padding : 10}}
-                 keyExtractor={(item,index) => index.toString()}
-                 renderItem={renderStylist}
+           {
+              stylists.length === 0 ?
+              <NotFound
+                  text={'No Stylist till now'}
               />
+              :
+               <FlatList 
+                     showsVerticalScrollIndicator={false}
+                     data={stylists}
+                     style={{padding : 10}}
+                     keyExtractor={(item,index) => index.toString()}
+                     renderItem={renderStylist}
+                  />
+           }
+
        </View>
      
      

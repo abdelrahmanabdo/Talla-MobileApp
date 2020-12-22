@@ -89,11 +89,13 @@ const Login = ({...props}) => {
                   placeholderText={I18n.t('email')}                  
                   onChangeText={(value) => setData({...data, email: value})}
                   color={'#DCB77C'}
+                  defaultValue={'user@tallah.com'}
                   placeholderColor={'#DCB77C'} />
             <Input name={I18n.t('password')}
                   onChangeText={(value) => setData({...data, password: value})}
                   placeholderText={I18n.t('password')}
                   password={true}
+                  defaultValue={'12345678'}
                   color={'#DCB77C'}
                   placeholderColor={'#DCB77C'} />
          </View>
